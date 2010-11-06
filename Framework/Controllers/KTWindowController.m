@@ -40,10 +40,9 @@
 //=========================================================== 
 - (id)initWithWindowNibName:(NSString *)theNibName;
 {
-	if (![super initWithWindowNibName:theNibName])
-		return nil;
-	
-	mViewControllers = [[NSMutableArray alloc] init];
+	if ((self = [super initWithWindowNibName:theNibName])) {
+		mViewControllers = [[NSMutableArray alloc] init];		
+	}
 	return self;
 }
 
@@ -137,6 +136,7 @@
 {
 	[mViewControllers makeObjectsPerformSelector:@selector(removeObservations)];
 	[mViewControllers removeAllObjects];
+	[self patchResponderChain];
 }
 
 //=========================================================== 
