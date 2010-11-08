@@ -53,7 +53,7 @@ static void *_KTTVCTabItemArrayControllerSelectionIndexObservationContext = (voi
 		
 		// create an array that will hold our list of KSTabItems - users can bind to the
 		// arranged objects and selectionIndex property to control the tab (to a pop up button or a custom tab view, for example)
-		// we let this view controller manage selection for us
+		// we let this array controller manage selection for us
 		mTabItemArrayController = [[NSArrayController alloc] init];
 		[mTabItemArrayController setSelectsInsertedObjects:YES];
 		[mTabItemArrayController addObserver:self forKeyPath:@"selectionIndex"options:0 context:&_KTTVCTabItemArrayControllerSelectionIndexObservationContext];
@@ -297,11 +297,10 @@ static void *_KTTVCTabItemArrayControllerSelectionIndexObservationContext = (voi
 	[self selectTabItem:aTabForIndex];
 }
 
-//=========================================================== 
-// - selectTabForViewController
-//===========================================================
-- (void)_selectTabItem:(KTTabItem*)theTabItem
+- (void)_selectTabItem:(KTTabItem *)theTabItem
 {
+	if (wCurrentSelectedTab == theTabItem)
+		return;
 	/*
 		When switching tabs we are doing two different things:
 		1.  Switching views
