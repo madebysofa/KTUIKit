@@ -107,6 +107,14 @@ static void *_KTTVCTabItemArrayControllerSelectionIndexObservationContext = (voi
 }
 
 #pragma mark -
+#pragma mark Fast Enumeration
+
+- (NSUInteger)countByEnumeratingWithState:(NSFastEnumerationState *)theState objects:(id *)theStackBuffer count:(NSUInteger)theLength;
+{
+	return [[self tabItems] countByEnumeratingWithState:theState objects:theStackBuffer count:theLength];
+}
+
+#pragma mark -
 #pragma mark Managing Tabs
 //=========================================================== 
 // - addTabItem

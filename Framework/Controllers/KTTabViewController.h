@@ -12,8 +12,7 @@
 @class KTView;
 @class KTTabItem;
 
-@interface KTTabViewController : KTViewController 
-{
+@interface KTTabViewController : KTViewController <NSFastEnumeration> {
 	@private
 	NSArrayController *		mTabItemArrayController;
 	KTTabItem *				wCurrentSelectedTab;
