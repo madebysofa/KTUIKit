@@ -70,7 +70,7 @@
 		
 		//	This flag won't change until the first time the split view has a width/height.
 		//	If the position is set before the flag changes, we'll cache the value and apply it later.
-		mCanSetDividerPosition = NO; 
+		mCanSetDividerPosition = YES; 
 		[self setUserInteractionEnabled:YES];
 		
 		[mDivider setLabel:@"KTSplitView Divider view"];
@@ -821,11 +821,11 @@
 {
 	mResizeBehavior = theResizeBehavior;
 	
-	if(theResizeBehavior==KTSplitViewResizeBehavior_MaintainProportions)
-	{
+//	if(theResizeBehavior==KTSplitViewResizeBehavior_MaintainProportions)
+//	{
 		[self resetResizeInformation];
 		//		[self setNeedsDisplay:YES];
-	}
+//	}
 }
 
 
