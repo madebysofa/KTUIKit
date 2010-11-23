@@ -7,7 +7,7 @@
 //
 
 #import <Cocoa/Cocoa.h>
-
+#import <KTUIKit/KTMacros.h>
 
 @interface KTSharedContextOpenGLView : NSView 
 {

@@ -1,3 +1,7 @@
+
+#import <Cocoa/Cocoa.h>
+
+#import <KTUIKit/KTMacros.h>
 #import <KTUIKit/KTWindowController.h>
 #import <KTUIKit/KTViewController.h>
 #import <KTUIKit/KTLayerController.h>

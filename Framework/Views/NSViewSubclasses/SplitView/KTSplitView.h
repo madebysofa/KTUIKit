@@ -64,14 +64,14 @@ typedef enum
 	
 	KTSplitViewDividerOrientation		mDividerOrientation;
 	KTSplitViewResizeBehavior			mResizeBehavior;
-	BOOL								mAdjustable;
+//	BOOL								mAdjustable;
 	BOOL								mUserInteractionEnabled;
 	
 	KTSplitViewFocusedViewFlag			mPositionRelativeToViewFlag;
 	BOOL								mCanSetDividerPosition;
 	CGFloat								mDividerPositionToSet;
-	BOOL								mResetResizeInformation;
-	CGFloat								mResizeInformation;
+//	BOOL								mResetResizeInformation;
+//	CGFloat								mResizeInformation;
 	CGFloat								mAbsoluteResizeInformation;
 	CGFloat								mProportionalResizeInformation;
 	NSViewAnimation *					mAnimator;

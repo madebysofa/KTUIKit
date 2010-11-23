@@ -109,7 +109,7 @@
 		NSString * aLabel = [theCoder decodeObjectForKey:@"label"];
 		if(aLabel == nil)
 			aLabel = [self description];
-		[self setLabel:[theCoder decodeObjectForKey:@"label"]];
+		[self setLabel:aLabel];
 	}
 	return self;
 }

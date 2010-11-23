@@ -219,7 +219,7 @@
 	// that the entire bounds are used and not an update rect 
 	// from 'setNeedsDisplay:inRect:' because we're always
 	// clearing all the pixels on every redraw in an openGLView
-	theRect = [self bounds];
+//	theRect = [self bounds];
 	
 	NSOpenGLContext * aCurrentContext = [self openGLContext];
 	[aCurrentContext makeCurrentContext];

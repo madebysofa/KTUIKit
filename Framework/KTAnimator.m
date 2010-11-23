@@ -288,9 +288,7 @@ NSString *const KTAnimatorPointAnimation = @"KTAnimatorPointAnimation";
 					CGFloat	anEndValue = [[anAnimationObject valueForKey:KTAnimatorAnimationEndValueKey] floatValue];
 					CGFloat	aStartValue = [[anAnimationObject valueForKey:KTAnimatorAnimationStartValueKey] floatValue];
 					CGFloat	aDistanceOfAnimation = (anEndValue - aStartValue);
-					CGFloat aFloatValueToSet = anEndValue;
-
-					aFloatValueToSet = aStartValue + (aLocationInAnimation * aDistanceOfAnimation);
+					CGFloat aFloatValueToSet = aStartValue + (aLocationInAnimation * aDistanceOfAnimation);
 					
 					// set the new value to an NSNumber from a float
 					aNewValue = [NSNumber numberWithFloat:aFloatValueToSet];

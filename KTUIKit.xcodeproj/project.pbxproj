@@ -138,7 +138,6 @@
 		4CB5E6BE0FCC05B80077E788 /* KTAnimator.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CB5E6BA0FCC05B80077E788 /* KTAnimator.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4CB5E6BF0FCC05B80077E788 /* KTAnimator.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CB5E6BB0FCC05B80077E788 /* KTAnimator.m */; };
 		4CB5E6C00FCC05B80077E788 /* KTLayoutDynamicImplementation.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CB5E6BC0FCC05B80077E788 /* KTLayoutDynamicImplementation.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		4CB5E6C10FCC05B80077E788 /* KTLayoutDynamicImplementation.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CB5E6BD0FCC05B80077E788 /* KTLayoutDynamicImplementation.m */; };
 		4CB5E6C70FCC061C0077E788 /* KTScroller.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CB5E6C50FCC061C0077E788 /* KTScroller.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4CB5E6C80FCC061C0077E788 /* KTScroller.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CB5E6C60FCC061C0077E788 /* KTScroller.m */; };
 		4CB5E6CE0FCC06680077E788 /* KTSplitView.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CB5E6CA0FCC06680077E788 /* KTSplitView.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -186,6 +185,7 @@
 		AB06FAC80EE973A5008A85C9 /* KTWindowController.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C9C5D900DE9F43400AE6913 /* KTWindowController.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		AB06FAC90EE973A5008A85C9 /* KTWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C9C5D910DE9F43400AE6913 /* KTWindowController.m */; };
 		AB68052C0EE41E090082FC43 /* KTUIKit.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 53DF68FD067E5B5A0090B5B0 /* KTUIKit.framework */; };
+		ABEADA93129C0D2E00A2C90C /* KTMacros.h in Headers */ = {isa = PBXBuildFile; fileRef = ABEADA91129C0D2E00A2C90C /* KTMacros.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		C08787290A49DE9A00E9B151 /* KTUIKit.m in Sources */ = {isa = PBXBuildFile; fileRef = 0259C576FE90428111CA0C5A /* KTUIKit.m */; };
 		C0D069560A49DF9100C95564 /* InterfaceBuilderKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C0D069550A49DF9100C95564 /* InterfaceBuilderKit.framework */; };
 /* End PBXBuildFile section */
@@ -404,6 +404,7 @@
 		53DF68FE067E5B5A0090B5B0 /* KTUIKitFramework-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "KTUIKitFramework-Info.plist"; path = "../Framework/Resources/KTUIKitFramework-Info.plist"; sourceTree = "<group>"; };
 		8D1AC9730486D14A00FE50C9 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		8D1AC9740486D14A00FE50C9 /* KTUIKitIBPlugin.ibplugin */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = KTUIKitIBPlugin.ibplugin; sourceTree = BUILT_PRODUCTS_DIR; };
+		ABEADA91129C0D2E00A2C90C /* KTMacros.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTMacros.h; sourceTree = "<group>"; };
 		C0D069550A49DF9100C95564 /* InterfaceBuilderKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = InterfaceBuilderKit.framework; path = /Developer/Library/Frameworks/InterfaceBuilderKit.framework; sourceTree = "<absolute>"; };
 		DD92D38A0106425D02CA0E72 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = /System/Library/Frameworks/Cocoa.framework; sourceTree = "<absolute>"; };
 /* End PBXFileReference section */
@@ -822,6 +823,7 @@
 		54D33B2C06778E4400C9C163 /* Framework */ = {
 			isa = PBXGroup;
 			children = (
+				ABEADA91129C0D2E00A2C90C /* KTMacros.h */,
 				4CB5E6BA0FCC05B80077E788 /* KTAnimator.h */,
 				4CB5E6BB0FCC05B80077E788 /* KTAnimator.m */,
 				4CB5E6BC0FCC05B80077E788 /* KTLayoutDynamicImplementation.h */,
@@ -886,6 +888,7 @@
 				4C5C4B251068D1CE00D72FD8 /* KTViewOverlayWindow.h in Headers */,
 				4CAFCB3F1091BD0900F9D292 /* KTSharedContextOpenGLView.h in Headers */,
 				4CB9F151109866E7006F730B /* KTControl.h in Headers */,
+				ABEADA93129C0D2E00A2C90C /* KTMacros.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -937,6 +940,7 @@
 			isa = PBXProject;
 			buildConfigurationList = C056398B08A954F8003078D8 /* Build configuration list for PBXProject "KTUIKit" */;
 			compatibilityVersion = "Xcode 3.1";
+			developmentRegion = English;
 			hasScannedForEncodings = 1;
 			knownRegions = (
 				English,
@@ -1054,7 +1058,6 @@
 				4CB5E6B70FCC05A50077E788 /* KTOpenGLTexture.m in Sources */,
 				4CB5E6B90FCC05A50077E788 /* KTOpenGLView.m in Sources */,
 				4CB5E6BF0FCC05B80077E788 /* KTAnimator.m in Sources */,
-				4CB5E6C10FCC05B80077E788 /* KTLayoutDynamicImplementation.m in Sources */,
 				4CB5E6C80FCC061C0077E788 /* KTScroller.m in Sources */,
 				4CB5E6CF0FCC06680077E788 /* KTSplitView.m in Sources */,
 				4CB5E6D10FCC06680077E788 /* KTSplitViewDivider.m in Sources */,

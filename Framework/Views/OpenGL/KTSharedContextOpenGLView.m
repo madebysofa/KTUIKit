@@ -8,6 +8,9 @@
 
 #import "KTSharedContextOpenGLView.h"
 
+@interface KTSharedContextOpenGLView ()
++ (NSOpenGLContext*)_createNewNSOpenGLContextWithSharedContext NS_RETURNS_RETAINED;
+@end
 
 static NSOpenGLContext * gSharedOpenGLContext = nil;
 
@@ -25,7 +28,7 @@ static NSOpenGLContext * gSharedOpenGLContext = nil;
 }
 
 
-+ (NSOpenGLContext*)_createNewNSOpenGLContextWithSharedContext
++ (NSOpenGLContext*)_createNewNSOpenGLContextWithSharedContext;
 {
 
 	if(!gSharedOpenGLContext)
