@@ -126,6 +126,11 @@
 	[super dealloc];
 }
 
+- (NSString *)description;
+{
+	return [NSString stringWithFormat:@"%@ %@ frame:%@ numberOfSubviews:%i", [super description], [self label], NSStringFromRect([self frame]), [[self subviews] count]];
+}
+
 //=========================================================== 
 // - isOpaque
 //=========================================================== 
