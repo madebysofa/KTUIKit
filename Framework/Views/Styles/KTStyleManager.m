@@ -371,7 +371,11 @@
 		[mBackgroundImage release];
 		CGImageRelease(mBackgroundImageRef);
 		mBackgroundImage = theBackgroundImage;
+
 		NSData * anImageData = [NSBitmapImageRep TIFFRepresentationOfImageRepsInArray: [mBackgroundImage representations]];
+		if(anImageData==nil)
+			anImageData = [mBackgroundImage TIFFRepresentation];
+
 		CGImageSourceRef aCGImageSourceRef = CGImageSourceCreateWithData((CFDataRef)anImageData, NULL);
 		mBackgroundImageRef = CGImageSourceCreateImageAtIndex(aCGImageSourceRef, 0, NULL);
 		CFRelease(aCGImageSourceRef);		
