@@ -171,6 +171,8 @@
 //=========================================================== 
 - (void)patchResponderChain
 {
+	NSAutoreleasePool *aPool = [[NSAutoreleasePool alloc] init];
+	
 	NSArray *aControllersList = [self _descendants];
 		
 	if ([aControllersList count] > 0) {
@@ -184,10 +186,7 @@
 		[aPreviousContoller setNextResponder:nil];
 	}
 	
-	id aNextResponder = [self nextResponder];
-	while (aNextResponder != nil) {
-		aNextResponder = [aNextResponder nextResponder];
-	}
+	[aPool drain];
 }
 
 @end

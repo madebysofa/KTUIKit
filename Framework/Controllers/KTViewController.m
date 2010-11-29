@@ -283,6 +283,8 @@
 - (NSArray *)descendants
 {
 	CFMutableArrayRef aMutableDescendants = CFArrayCreateMutable(kCFAllocatorDefault, 0, &kCFTypeArrayCallBacks);
+
+	NSAutoreleasePool *aPool = [[NSAutoreleasePool alloc] init];
 	for (KTViewController *aSubViewController in mSubcontrollers) {
 		CFArrayAppendValue(aMutableDescendants, aSubViewController);
 		NSArray *aSubDescendants = [aSubViewController descendants];
@@ -292,7 +294,12 @@
 				CFArrayAppendArray(aMutableDescendants, (CFArrayRef)aSubDescendants, CFRangeMake(0, aDescendantsCount));
 			}
 		}
+		[aPool drain];
+		aPool = [[NSAutoreleasePool alloc] init];
 	}
+	[aPool drain];
+	
+	aPool = [[NSAutoreleasePool alloc] init];	
 	for (KTLayerController *aLayerController in mLayerControllers) {
 		CFArrayAppendValue(aMutableDescendants, aLayerController);
 		NSArray *aSubDescendants = [aLayerController descendants];
@@ -302,7 +309,10 @@
 				CFArrayAppendArray(aMutableDescendants, (CFArrayRef)aSubDescendants, CFRangeMake(0, aDescendantsCount));
 			}
 		}
+		[aPool drain];
+		aPool = [[NSAutoreleasePool alloc] init];
 	}
+	[aPool drain];
 	
 	CFArrayRef aDescendants = CFArrayCreateCopy(kCFAllocatorDefault, aMutableDescendants);
 	CFRelease(aMutableDescendants);
