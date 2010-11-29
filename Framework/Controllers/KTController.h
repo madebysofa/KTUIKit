@@ -1,5 +1,8 @@
-@protocol KTController
-- (NSArray*)descendants;
+
+#import <Cocoa/Cocoa.h>
+
+@protocol KTController <NSObject>
+- (NSArray *)descendants;
 - (void)removeObservations;
-- (BOOL)hidden;
+@property (readwrite, nonatomic, assign) BOOL hidden;
 @end
