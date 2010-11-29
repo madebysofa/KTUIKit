@@ -82,10 +82,35 @@ static void *_KTTVCTabItemArrayControllerSelectionIndexObservationContext = (voi
 	[super removeObservations];
 }
 
+#pragma mark -
+#pragma mark Accessors
+
 - (KTView *)view
 {
 	return (KTView *)[super view];
 }
+
+// When showing a tab view controller, calling super will make all sub controllers for all tabs visible, therefore they will be in the responder chain. We need to hide the view controllers for the non-selected tab items and re-patch the responder chain.
+- (void)_setHidden:(BOOL)theHidden patchResponderChain:(BOOL)thePatch;
+{
+	[super _setHidden:theHidden patchResponderChain:thePatch];
+	
+	if (!theHidden) {
+		NSMutableArray *aMutableTabItems = [[self tabItems] mutableCopy];
+		KTTabItem *aSelectedTab = [self selectedTabItem];
+		[aMutableTabItems removeObject:aSelectedTab];
+		for (KTTabItem *aTabItem in aMutableTabItems) {
+			KTViewController *aViewController = [aTabItem viewController];
+			[aViewController _setHidden:YES patchResponderChain:NO];
+		}
+		[aMutableTabItems release];
+		
+		[[self windowController] patchResponderChain];		
+	}
+}
+
+#pragma mark -
+#pragma mark KVO Callbacks
 
 //=========================================================== 
 // - observeValueForKeyPath
