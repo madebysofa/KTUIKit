@@ -126,14 +126,17 @@
 //=========================================================== 
 - (void)releaseNibObjects
 {
-	NSInteger i;
-	for(i = 0; i < [mTopLevelNibObjects count]; i++)
+	for(NSInteger i = 0; i < [mTopLevelNibObjects count]; i++)
 	{
 		[[mTopLevelNibObjects objectAtIndex:i] release];
 	}
 	[mTopLevelNibObjects release];
 }
 
+- (NSString *)description;
+{
+	return [NSString stringWithFormat:@"%@ hidden:%@", [super description], [self hidden] ? @"YES" : @"NO"];
+}
 
 // CS: I wonder about this situation
 // if the window controller changes, say a view controller is moved from one window to another
@@ -151,42 +154,28 @@
 	[[self windowController] patchResponderChain];
 }
 
-
-//=========================================================== 
-// - setHidden
-//=========================================================== 
 - (void)setHidden:(BOOL)theBool
 {
-	mHidden = theBool;	
-	for(KTViewController * aSubcontroller in [self subcontrollers])
-		[aSubcontroller setHidden:theBool];
-	//	[aSubcontroller _setHidden:theBool patchResponderChain:NO];//
-	[[self windowController] patchResponderChain];
+	[self _setHidden:theBool patchResponderChain:YES];
 }
 
-
-- (void)_setHidden:(BOOL)theHiddenFlag patchResponderChain:(BOOL)thePatchFlag
+- (void)_setHidden:(BOOL)theHidden patchResponderChain:(BOOL)thePatch;
 {
-	[self willChangeValueForKey:@"hidden"];
-	mHidden = theHiddenFlag;
-	if(thePatchFlag)
-		[[self windowController] patchResponderChain];
-	[self didChangeValueForKey:@"hidden"];
+	if (mHidden == theHidden) return;
+	mHidden = theHidden;	
+	
+	for (KTViewController *aViewController in [self subcontrollers]) {
+		[aViewController _setHidden:theHidden patchResponderChain:NO];
+	}
+	
+	for (KTLayerController *aLayerController in [self layerControllers]) {
+		[aLayerController _setHidden:theHidden patchResponderChain:NO];
+	}
+	
+	if (thePatch) {
+		[[self windowController] patchResponderChain];			
+	}
 }
-
-
-//#pragma mark -
-//#pragma mark View
-//- (NSView<KTView>*)view
-//{
-//	return (NSView<KTView>*)[super view];
-//}
-//
-//- (void)setView:(NSView<KTView>*)theView
-//{
-//	[super setView:theView];
-//}
-
 
 #pragma mark Subcontrollers
 //=========================================================== 
@@ -208,12 +197,10 @@
 //=========================================================== 
 // - subcontrollers
 //=========================================================== 
-- (NSArray*)subcontrollers
+- (NSArray *)subcontrollers
 {
 	return mSubcontrollers;
 }
-
-
 
 //=========================================================== 
 // - addSubcontroller
@@ -285,8 +272,6 @@
 	}
 }
 
-
-
 //=========================================================== 
 // - layerControllers
 //=========================================================== 
@@ -295,31 +280,33 @@
 	return mLayerControllers;
 }
 
-
-//=========================================================== 
-// - descendants
-//=========================================================== 
 - (NSArray *)descendants
 {
-	NSMutableArray *aDescendantsList = [[[NSMutableArray alloc] init] autorelease];
-	
-	for (KTViewController * aSubViewController in mSubcontrollers) 
-	{
-		if([aSubViewController hidden]==NO)
-		{
-			[aDescendantsList addObject:aSubViewController];
-			if (	[[aSubViewController subcontrollers] count] > 0
-				||  [[aSubViewController layerControllers] count] > 0)
-				[aDescendantsList addObjectsFromArray:[aSubViewController descendants]];
+	CFMutableArrayRef aMutableDescendants = CFArrayCreateMutable(kCFAllocatorDefault, 0, &kCFTypeArrayCallBacks);
+	for (KTViewController *aSubViewController in mSubcontrollers) {
+		CFArrayAppendValue(aMutableDescendants, aSubViewController);
+		NSArray *aSubDescendants = [aSubViewController descendants];
+		if (aSubDescendants != nil) {
+			CFIndex aDescendantsCount = CFArrayGetCount((CFArrayRef)aSubDescendants);
+			if (aDescendantsCount > 0) {
+				CFArrayAppendArray(aMutableDescendants, (CFArrayRef)aSubDescendants, CFRangeMake(0, aDescendantsCount));
+			}
 		}
 	}
-	for(KTLayerController * aLayerController in mLayerControllers)
-	{
-		[aDescendantsList addObject:aLayerController];
-		if([[aLayerController subcontrollers] count] > 0)
-			[aDescendantsList addObjectsFromArray:[aLayerController descendants]];
+	for (KTLayerController *aLayerController in mLayerControllers) {
+		CFArrayAppendValue(aMutableDescendants, aLayerController);
+		NSArray *aSubDescendants = [aLayerController descendants];
+		if (aSubDescendants != nil) {
+			CFIndex aDescendantsCount = CFArrayGetCount((CFArrayRef)aSubDescendants);
+			if (aDescendantsCount > 0) {
+				CFArrayAppendArray(aMutableDescendants, (CFArrayRef)aSubDescendants, CFRangeMake(0, aDescendantsCount));
+			}
+		}
 	}
-	return aDescendantsList;
+	
+	CFArrayRef aDescendants = CFArrayCreateCopy(kCFAllocatorDefault, aMutableDescendants);
+	CFRelease(aMutableDescendants);
+	return [NSMakeCollectable(aDescendants) autorelease];
 }
 
 

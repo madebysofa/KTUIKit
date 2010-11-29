@@ -19,7 +19,7 @@
 @synthesize subcontrollers = mSubcontrollers;
 @synthesize representedObject = wRepresentedObject;
 @synthesize layer = mLayer;
-
+@synthesize hidden = mHidden;
 
 //=========================================================== 
 // - layerControllerWithViewController
@@ -35,8 +35,7 @@
 //===========================================================
 - (id)initWithViewController:(KTViewController*)theViewController
 {
-	if(self = [super init])
-	{
+	if ((self = [super init])) {
 		wViewController = theViewController;
 		mSubcontrollers = [[NSMutableArray alloc] init];
 	}
@@ -51,6 +50,28 @@
 	[mSubcontrollers release];
 	[mLayer release];
 	[super dealloc];
+}
+
+#pragma mark -
+#pragma mark Accessors
+
+- (void)setHidden:(BOOL)theHidden;
+{
+	[self _setHidden:theHidden patchResponderChain:YES];
+}
+
+- (void)_setHidden:(BOOL)theHidden patchResponderChain:(BOOL)thePatch;
+{
+	if (mHidden == theHidden) return;
+	mHidden = theHidden;	
+	
+	for (KTLayerController *aLayerController in [self subcontrollers]) {
+		[aLayerController _setHidden:theHidden patchResponderChain:NO];
+	}
+	
+	if (thePatch) {
+		[[[self viewController] windowController] patchResponderChain];			
+	}
 }
 
 //=========================================================== 
@@ -97,25 +118,23 @@
 
 
 #pragma mark Controller Responder Chain Protocol
-//=========================================================== 
-// - descendants
-//===========================================================
+
 - (NSArray *)descendants
 {
-	NSMutableArray * anArray = [NSMutableArray array];
-	for(KTLayerController * aLayerController in mSubcontrollers)
-	{
-		[anArray addObject:aLayerController];
-		if([[aLayerController subcontrollers] count] > 0)
-			[anArray addObjectsFromArray:[aLayerController descendants]];
+	CFMutableArrayRef aMutableDescendants = CFArrayCreateMutable(kCFAllocatorDefault, 0, &kCFTypeArrayCallBacks);
+	for (KTLayerController *aLayerController in [self subcontrollers]) {
+		CFArrayAppendValue(aMutableDescendants, aLayerController);
+		NSArray *aDescendants = [aLayerController descendants];
+		if (aDescendants != nil) {
+			CFIndex aDescendantsCount = CFArrayGetCount((CFArrayRef)aDescendants);
+			if (aDescendantsCount > 0) {
+				CFArrayAppendArray(aMutableDescendants, (CFArrayRef)aDescendants, CFRangeMake(0, aDescendantsCount));
+			}
+		}
 	}
-	return [[anArray copy] autorelease]; // return an immutable array
-}
-
-
-- (BOOL)hidden
-{
-	return NO;
+	CFArrayRef aDescendants = CFArrayCreateCopy(kCFAllocatorDefault, aMutableDescendants);
+	CFRelease(aMutableDescendants);
+	return [NSMakeCollectable(aDescendants) autorelease];
 }
 
 @end

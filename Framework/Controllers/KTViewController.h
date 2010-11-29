@@ -74,3 +74,7 @@
 - (NSArray*)layerControllers;
 
 @end
+
+@interface KTViewController (KTPrivate)
+- (void)_setHidden:(BOOL)theHidden patchResponderChain:(BOOL)thePatch;
+@end

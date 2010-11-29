@@ -32,6 +32,7 @@
 
 #import "KTWindowController.h"
 #import "KTViewController.h"
+#import "KTLayerController.h"
 
 @implementation KTWindowController
 
@@ -139,6 +140,24 @@
 	[self patchResponderChain];
 }
 
+- (NSArray *)_descendants;
+{	
+	CFMutableArrayRef aMutableDescendants = CFArrayCreateMutable(kCFAllocatorDefault, 0, &kCFTypeArrayCallBacks);
+	for (KTViewController *aSubViewController in mViewControllers) {
+		CFArrayAppendValue(aMutableDescendants, aSubViewController);
+		NSArray *aSubDescendants = [aSubViewController descendants];
+		if (aSubDescendants != nil) {
+			CFIndex aDescendantsCount = CFArrayGetCount((CFArrayRef)aSubDescendants);
+			if (aDescendantsCount > 0) {
+				CFArrayAppendArray(aMutableDescendants, (CFArrayRef)aSubDescendants, CFRangeMake(0, aDescendantsCount));
+			}
+		}
+	}
+	CFArrayRef aDescendants = CFArrayCreateCopy(kCFAllocatorDefault, aMutableDescendants);
+	CFRelease(aMutableDescendants);
+	return [NSMakeCollectable(aDescendants) autorelease];
+}
+
 //=========================================================== 
 // - removeObservations
 //=========================================================== 
@@ -152,29 +171,23 @@
 //=========================================================== 
 - (void)patchResponderChain
 {
-
-	NSMutableArray * aFlatViewControllersList = [NSMutableArray array];
-	for (KTViewController * aViewController in mViewControllers) 
-	{ // flatten the view controllers into an array
-		if([aViewController hidden]==NO)
-		{
-			[aFlatViewControllersList addObject:aViewController];
-			[aFlatViewControllersList addObjectsFromArray:[aViewController descendants]];
+	NSArray *aControllersList = [self _descendants];
+		
+	if ([aControllersList count] > 0) {
+		[self setNextResponder:[aControllersList objectAtIndex:0]];
+		NSResponder <KTController> *aPreviousContoller = nil;
+		for (NSResponder <KTController> *aController in aControllersList) {
+			if ([aController hidden]) continue;
+			[aPreviousContoller setNextResponder:aController]; // This is a no-op on first pass.
+			aPreviousContoller = aController;
 		}
+		[aPreviousContoller setNextResponder:nil];
 	}
-	if([aFlatViewControllersList count]>0)
-	{
-		[self setNextResponder:[aFlatViewControllersList objectAtIndex:0]];
-		NSUInteger i = 0;
-		NSUInteger viewControllerCount = [aFlatViewControllersList count] - 1;
-		for (i = 0; i < viewControllerCount ; i++) 
-		{ 
-			// set the next responder of each controller to the next, the last in the array has no next responder.
-			[[aFlatViewControllersList objectAtIndex:i] setNextResponder:[aFlatViewControllersList objectAtIndex:i + 1]];
-		}
-		[[aFlatViewControllersList lastObject] setNextResponder:nil];
+	
+	id aNextResponder = [self nextResponder];
+	while (aNextResponder != nil) {
+		aNextResponder = [aNextResponder nextResponder];
 	}
 }
-
 
 @end
