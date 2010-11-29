@@ -172,65 +172,75 @@
 		[super setNilValueForKey:key];
 }
 
-//=========================================================== 
-// - setView:
-//=========================================================== 
 - (void)setView:(id<KTStyle>)theView
 {
 	wView = theView;
 }
 
+- (void)_drawBackgroundGradientInRect:(NSRect)theRect context:(CGContextRef)theContext controlView:(KTView <KTStyle> *)theView;
+{
+	CGContextSaveGState(theContext);
+	{
+		CGContextClipToRect(theContext, theRect);
+		[mBackgroundGradient drawInRect:[theView bounds] angle:mGradientAngle];
+	}
+	CGContextRestoreGState(theContext);
+}
 
-//=========================================================== 
-// - drawStylesInRect:
-//=========================================================== 
-- (void)drawStylesInRect:(NSRect)theRect context:(CGContextRef)theContext view:(id<KTStyle>)theView
+- (void)_drawBackgroundFillInRect:(NSRect)theRect context:(CGContextRef)theContext controlView:(KTView <KTStyle> *)theView;
+{
+	CGFloat r, g, b, a;
+	[[mBackgroundColor colorUsingColorSpaceName:NSCalibratedRGBColorSpace] getRed:&r green:&g blue:&b alpha:&a];
+	CGContextSetRGBFillColor(theContext, r, g, b, a);
+	CGContextFillRect(theContext, NSRectToCGRect(theRect));	
+}
+
+// TODO: stop using the bounds of the view here.
+- (void)_drawBackgroundImageInRect:(NSRect)theBounds context:(CGContextRef)theContext controlView:(KTView <KTStyle> *)theView;
+{
+	NSPoint anImagePoint = theBounds.origin;
+	NSSize anImageSize = [mBackgroundImage size];
+	
+//		NSData * anImageData = [NSBitmapImageRep TIFFRepresentationOfImageRepsInArray: [mBackgroundImage representations]];
+//		CGImageSourceRef aCGImageSourceRef = CGImageSourceCreateWithData((CFDataRef)anImageData, NULL);
+//		CGImageRef aCGBackgroundImage = CGImageSourceCreateImageAtIndex(aCGImageSourceRef, 0, NULL);
+	
+	if(mTileImage)
+		CGContextDrawTiledImage(theContext, CGRectMake(anImagePoint.x,anImagePoint.y, anImageSize.width, anImageSize.height), mBackgroundImageRef);
+	else 
+	{
+		// draw from the center
+		anImagePoint.x = floor(theBounds.origin.x+theBounds.size.width*.5-anImageSize.width*.5);
+		anImagePoint.y = floor(theBounds.origin.y+theBounds.size.height*.5-anImageSize.height*.5);
+		CGContextDrawImage(theContext, CGRectMake(anImagePoint.x,anImagePoint.y, anImageSize.width, anImageSize.height), mBackgroundImageRef);	
+	}
+//		CFRelease(aCGImageSourceRef);
+//		CGImageRelease(aCGBackgroundImage);	
+}
+
+- (void)_drawBordersInRect:(NSRect)theRect context:(CGContextRef)theContext controlView:(KTView <KTStyle> *)theView;
+{
+	
+}
+
+- (void)drawStylesInRect:(NSRect)theRect context:(CGContextRef)theContext view:(KTView <KTStyle> *)theView;
 {
 	NSRect aViewBounds = [(NSView*)theView bounds];
 	CGFloat r, g, b, a;
 	
-	// Background
-	
-	// Either draw a background gradient of solid color fill
-	
-	// not sure how to partially draw a gradient, so we'll have it draw in the entire view bounds
-	// would like to find a way to optimize this
-	if(mBackgroundGradient != nil)
-		[mBackgroundGradient drawInRect:aViewBounds angle:mGradientAngle];
-	else if(mBackgroundColor != [NSColor clearColor])
-	{
-		[[mBackgroundColor colorUsingColorSpaceName:NSCalibratedRGBColorSpace] getRed:&r green:&g blue:&b alpha:&a];
-		CGContextSetRGBFillColor(theContext, r, g, b, a);
-		
-		// only draw the dirty rect
-		CGContextFillRect(theContext, NSRectToCGRect(theRect));
+	// Either draw a background gradient of solid color fill.
+	if(mBackgroundGradient != nil) {
+		[self _drawBackgroundGradientInRect:theRect context:theContext controlView:theView];
+	} else if(mBackgroundColor != [NSColor clearColor]) {
+		[self _drawBackgroundFillInRect:theRect context:theContext controlView:theView];
 	}
 	
 	// also need to figure out a way to optimize image drawing so it only draws in the dirty rect of the view
 	if(		mBackgroundImage != nil
 		&&	mBackgroundImageRef != nil)
 	{
-		NSPoint anImagePoint = aViewBounds.origin;
-		NSSize anImageSize = [mBackgroundImage size];
-		
-//		NSData * anImageData = [NSBitmapImageRep TIFFRepresentationOfImageRepsInArray: [mBackgroundImage representations]];
-//		CGImageSourceRef aCGImageSourceRef = CGImageSourceCreateWithData((CFDataRef)anImageData, NULL);
-//		CGImageRef aCGBackgroundImage = CGImageSourceCreateImageAtIndex(aCGImageSourceRef, 0, NULL);
-		
-		if(mTileImage)
-			CGContextDrawTiledImage(theContext, CGRectMake(anImagePoint.x,anImagePoint.y, anImageSize.width, anImageSize.height), mBackgroundImageRef);
-		else 
-		{
-			// draw from the center
-			anImagePoint.x = floor(aViewBounds.origin.x+aViewBounds.size.width*.5-anImageSize.width*.5);
-			anImagePoint.y = floor(aViewBounds.origin.y+aViewBounds.size.height*.5-anImageSize.height*.5);
-			CGContextDrawImage(theContext, CGRectMake(anImagePoint.x,anImagePoint.y, anImageSize.width, anImageSize.height), mBackgroundImageRef);	
-		}
-//		CFRelease(aCGImageSourceRef);
-//		CGImageRelease(aCGBackgroundImage);		
+		[self _drawBackgroundImageInRect:aViewBounds context:theContext controlView:theView];
 	}
-	
-	
 	
 	// Stroke - we can control color & line thickness of individual sides of the rectangle
 
