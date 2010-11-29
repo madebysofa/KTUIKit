@@ -201,9 +201,9 @@
 	NSPoint anImagePoint = theBounds.origin;
 	NSSize anImageSize = [mBackgroundImage size];
 	
-//		NSData * anImageData = [NSBitmapImageRep TIFFRepresentationOfImageRepsInArray: [mBackgroundImage representations]];
-//		CGImageSourceRef aCGImageSourceRef = CGImageSourceCreateWithData((CFDataRef)anImageData, NULL);
-//		CGImageRef aCGBackgroundImage = CGImageSourceCreateImageAtIndex(aCGImageSourceRef, 0, NULL);
+//	NSData * anImageData = [NSBitmapImageRep TIFFRepresentationOfImageRepsInArray: [mBackgroundImage representations]];
+//	CGImageSourceRef aCGImageSourceRef = CGImageSourceCreateWithData((CFDataRef)anImageData, NULL);
+//	CGImageRef aCGBackgroundImage = CGImageSourceCreateImageAtIndex(aCGImageSourceRef, 0, NULL);
 	
 	if(mTileImage)
 		CGContextDrawTiledImage(theContext, CGRectMake(anImagePoint.x,anImagePoint.y, anImageSize.width, anImageSize.height), mBackgroundImageRef);
@@ -214,8 +214,8 @@
 		anImagePoint.y = floor(theBounds.origin.y+theBounds.size.height*.5-anImageSize.height*.5);
 		CGContextDrawImage(theContext, CGRectMake(anImagePoint.x,anImagePoint.y, anImageSize.width, anImageSize.height), mBackgroundImageRef);	
 	}
-//		CFRelease(aCGImageSourceRef);
-//		CGImageRelease(aCGBackgroundImage);	
+//	CFRelease(aCGImageSourceRef);
+//	CGImageRelease(aCGBackgroundImage);	
 }
 
 static void _KTStyleManagerAddPathFromPoint(CGContextRef theContext, CGPoint theStartPoint, CGPoint theEndPoint) {
@@ -277,94 +277,6 @@ static BOOL _KTStyleManagerShouldDrawBorder(NSColor *theColor, CGFloat theBorder
 		}
 	}
 	CGContextRestoreGState(theContext);
-	
-//	NSRect aViewBounds = [(NSView*)theView bounds];
-//	
-//	CGContextSetLineWidth(theContext, 1);
-//	NSPoint	aStrokePoint = aViewBounds.origin;
-//	
-//	// move the point to the top left corner to begin
-//	aStrokePoint.y = NSMaxY(aViewBounds) - 0.5;
-//	
-//	// Top
-//	if(aStrokePoint.y <= NSMaxY(theRect))
-//	{
-//		if(		mBorderWidthTop > 0 
-//		   &&	mBorderColorTop != [NSColor clearColor])
-//		{
-//			CGPoint aStartPoint = CGPointMake(aStrokePoint.x,  aStrokePoint.y);
-//			aStrokePoint.x += NSWidth(aViewBounds) - 0.5;
-//			CGPoint anEndPoint = CGPointMake(aStrokePoint.x,  aStrokePoint.y);
-//			_KTStyleManagerAddPathFromPoint(theContext, aStartPoint, anEndPoint);
-//			_KTStyleManagerStrokePathWithColor(theContext, mBorderColorTop, mBorderWidthTop);
-//		}
-//		else
-//		{
-//			aStrokePoint.x += NSWidth(aViewBounds) - 0.5;
-//		}
-//	}
-//	else // i know this is a dumb structure, will refactor after I'm certain everything is drawing OK.
-//	{
-//		aStrokePoint.x += NSWidth(aViewBounds) - 0.5;
-//	}
-//	
-//	// Right
-//	if(aStrokePoint.x <= NSMaxX(theRect))
-//	{
-//		if(		mBorderWidthRight > 0 
-//		   &&	mBorderColorRight != [NSColor clearColor])
-//		{
-//			CGPoint aStartPoint = CGPointMake(aStrokePoint.x,  aStrokePoint.y);
-//			aStrokePoint.y -= NSHeight(aViewBounds) - 1.0;
-//			CGPoint anEndPoint = CGPointMake(aStrokePoint.x,  aStrokePoint.y);
-//			_KTStyleManagerAddPathFromPoint(theContext, aStartPoint, anEndPoint);
-//			_KTStyleManagerStrokePathWithColor(theContext, mBorderColorRight, mBorderWidthRight);
-//		}
-//		else
-//		{
-//			aStrokePoint.y -= NSHeight(aViewBounds) - 1.0;
-//		}
-//	}
-//	else
-//	{
-//		aStrokePoint.y -= NSHeight(aViewBounds) - 1.0;
-//	}
-//	
-//	// Bottom
-//	if(aStrokePoint.y>=NSMinY(theRect))
-//	{
-//		if(		mBorderWidthBottom > 0 
-//		   &&	mBorderColorBottom != [NSColor clearColor])
-//		{
-//			CGPoint aStartPoint = CGPointMake(aStrokePoint.x,  aStrokePoint.y);
-//			aStrokePoint.x -= NSWidth(aViewBounds) - 1.0;
-//			CGPoint anEndPoint = CGPointMake(aStrokePoint.x,  aStrokePoint.y);
-//			_KTStyleManagerAddPathFromPoint(theContext, aStartPoint, anEndPoint);
-//			_KTStyleManagerStrokePathWithColor(theContext, mBorderColorBottom, mBorderWidthBottom);
-//		}
-//		else
-//		{
-//			aStrokePoint.x -= NSWidth(aViewBounds) - 1.0;
-//		}
-//	}
-//	else
-//	{
-//		aStrokePoint.x -= NSWidth(aViewBounds) - 1.0;	
-//	}
-//	
-//	// Left
-//	if(aStrokePoint.x >= NSMinX(theRect))
-//	{
-//		if(		mBorderWidthLeft > 0 
-//		   &&	mBorderColorLeft != [NSColor clearColor])
-//		{
-//			CGPoint aStartPoint = CGPointMake(aStrokePoint.x,  aStrokePoint.y);
-//			aStrokePoint.y += NSHeight(aViewBounds);
-//			CGPoint anEndPoint = CGPointMake(aStrokePoint.x,  aStrokePoint.y);
-//			_KTStyleManagerAddPathFromPoint(theContext, aStartPoint, anEndPoint);
-//			_KTStyleManagerStrokePathWithColor(theContext, mBorderColorLeft, mBorderWidthLeft);
-//		}
-//	}	
 }
 
 - (void)drawStylesInRect:(NSRect)theRect context:(CGContextRef)theContext view:(KTView <KTStyle> *)theView;
