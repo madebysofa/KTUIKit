@@ -40,21 +40,20 @@ KT_EXPORT NSString *const KTViewViewLayoutManagerKey;
 KT_EXPORT NSString *const KTViewStyleManagerKey;
 KT_EXPORT NSString *const KTViewLabelKey;
 
-
-@interface KTView : NSView <KTView>
-{
-	KTLayoutManager *			mLayoutManager;
-	KTStyleManager *			mStyleManager;
-	NSString *					mLabel;
-	BOOL						mOpaque;
-	BOOL						mMouseDownCanMoveWindow;
-	BOOL						mAcceptsFirstMouse;
-	BOOL						mCanBecomeKeyView;
-	BOOL						mCanBecomeFirstResponder;
-	BOOL						mDrawAsImage;
-	NSImage *					mCachedImage;
+@interface KTView : NSView <KTView, KTViewLayout> {
+	@private
+	KTLayoutManager *mLayoutManager;
+	KTStyleManager	*mStyleManager;
+	NSString		*mLabel;
+	BOOL			mOpaque;
+	BOOL			mMouseDownCanMoveWindow;
+	BOOL			mAcceptsFirstMouse;
+	BOOL			mCanBecomeKeyView;
+	BOOL			mCanBecomeFirstResponder;
+	BOOL			mDrawAsImage;
+	NSImage			*mCachedImage;
 	
-	BOOL						mDrawDebuggingRect;
+	BOOL			mDrawDebuggingRect;
 }
 
 @property (nonatomic, readwrite, assign) BOOL opaque;
