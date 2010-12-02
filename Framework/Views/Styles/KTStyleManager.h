@@ -36,24 +36,24 @@
 
 @interface KTStyleManager : NSObject {
 	@private
-	NSColor *			mBackgroundColor;
-	NSColor *			mBorderColorTop;
-	NSColor *			mBorderColorRight;
-	NSColor *			mBorderColorBottom;
-	NSColor *			mBorderColorLeft;
+	NSColor *mBackgroundColor;
+	NSColor *mBorderColorTop;
+	NSColor *mBorderColorRight;
+	NSColor *mBorderColorBottom;
+	NSColor *mBorderColorLeft;
 	
-	CGFloat				mBorderWidthTop;
-	CGFloat				mBorderWidthRight;
-	CGFloat				mBorderWidthBottom;
-	CGFloat				mBorderWidthLeft;
+	CGFloat	mBorderWidthTop;
+	CGFloat	mBorderWidthRight;
+	CGFloat	mBorderWidthBottom;
+	CGFloat	mBorderWidthLeft;
 	
-	NSGradient *		mBackgroundGradient;
-	CGFloat				mGradientAngle;
-	NSImage *			mBackgroundImage;
-	CGImageRef			mBackgroundImageRef;
-	BOOL				mTileImage;
+	NSGradient *mBackgroundGradient;
+	CGFloat	mGradientAngle;
+	NSImage *mBackgroundImage;
+	CGImageRef mBackgroundImageRef;
+	BOOL mTileImage;
 	
-	id<KTStyle>			wView;
+	id <KTStyle> wView;
 }
 
 @property (readwrite, nonatomic, retain) NSColor *backgroundColor;
@@ -70,9 +70,8 @@
 
 @property (readwrite, nonatomic, assign) id <KTStyle> view;
 
-- (id)initWithView:(id<KTStyle>)theView;
+- (id)initWithView:(id <KTStyle>)theView;
 
-// Extra configuration API
 - (void)setBackgroundImage:(NSImage *)theBackgroundImage tile:(BOOL)theBool;
 - (void)setBackgroundGradient:(NSGradient *)theGradient angle:(CGFloat)theAngle;
 - (void)setBorderColor:(NSColor *)theColor;

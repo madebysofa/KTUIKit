@@ -32,47 +32,53 @@
 
 #import "KTLayoutManager.h"
 
-#define kKTLayoutManagerShouldDoLayoutKey @"shouldDoLayout"
-#define kKTLayoutManagerWidthTypeKey @"widthType"
-#define kKTLayoutManagerHeightTypeKey @"heightType"
-#define kKTLayoutManagerHorizontalPositionTypeKey @"horizontalPositionType"
-#define kKTLayoutManagerVerticalPositionTypeKey @"verticalPositionType"
-#define kKTLayoutManagerMarginTopKey @"marginTop"
-#define kKTLayoutManagerMarginRightKey @"marginRight"
-#define kKTLayoutManagerMarginBottomKey @"marginBottom"
-#define kKTLayoutManagerMarginLeftKey @"marginLeft"
-#define kKTLayoutManagerWidthPercentageKey @"widthPercentage"
-#define kKTLayoutManagerHeightPercentageKey @"heightPercentage"
-#define kKTLayoutManagerHorizontalPercentageKey @"horizontalPositionPercentage"
-#define kKTLayoutManagerVerticalPercentageKey @"verticalPositionPercentage"
-#define kKTLayoutManagerMinWidthKey @"minWidth"
-#define kKTLayoutManagerMaxWidthKey @"maxWidth"
-#define kKTLayoutManagerMinHeightKey @"minHeight"
-#define kKTLayoutManagerMaxHeightKey @"maxHeight"
+NSString *const KTLayoutManagerShouldDoLayoutKey = @"shouldDoLayout";
+NSString *const KTLayoutManagerWidthTypeKey = @"widthType";
+NSString *const KTLayoutManagerHeightTypeKey = @"heightType";
+NSString *const KTLayoutManagerHorizontalPositionTypeKey = @"horizontalPositionType";
+NSString *const KTLayoutManagerVerticalPositionTypeKey = @"verticalPositionType";
+NSString *const KTLayoutManagerMarginTopKey = @"marginTop";
+NSString *const KTLayoutManagerMarginRightKey = @"marginRight";
+NSString *const KTLayoutManagerMarginBottomKey = @"marginBottom";
+NSString *const KTLayoutManagerMarginLeftKey = @"marginLeft";
+NSString *const KTLayoutManagerWidthPercentageKey = @"widthPercentage";
+NSString *const KTLayoutManagerHeightPercentageKey = @"heightPercentage";
+NSString *const KTLayoutManagerHorizontalPercentageKey = @"horizontalPositionPercentage";
+NSString *const KTLayoutManagerVerticalPercentageKey = @"verticalPositionPercentage";
+NSString *const KTLayoutManagerMinWidthKey = @"minWidth";
+NSString *const KTLayoutManagerMaxWidthKey = @"maxWidth";
+NSString *const KTLayoutManagerMinHeightKey = @"minHeight";
+NSString *const KTLayoutManagerMaxHeightKey = @"maxHeight";
 
-@interface KTLayoutManager (Private)
+@interface KTLayoutManager ()
 - (NSArray *)keysForCoding;
 @end
 
 @implementation KTLayoutManager
+
+@synthesize view = wView;
+
 @synthesize shouldDoLayout = mShouldDoLayout;
+
 @synthesize widthType = mWidthType;
 @synthesize heightType = mHeightType;
 @synthesize horizontalPositionType = mHorizontalPositionType;
 @synthesize verticalPositionType = mVerticalPositionType;
+
 @synthesize marginTop = mMarginTop;
 @synthesize marginRight = mMarginRight;
 @synthesize marginBottom = mMarginBottom;
 @synthesize marginLeft = mMarginLeft;
+
 @synthesize widthPercentage = mWidthPercentage;
 @synthesize heightPercentage = mHeightPercentage;
 @synthesize horizontalPositionPercentage = mHorizontalPositionPercentage;
 @synthesize verticalPositionPercentage = mVerticalPositionPercentage;
+
 @synthesize minWidth = mMinWidth;
 @synthesize maxWidth = mMaxWidth;
 @synthesize minHeight = mMinHeight;
 @synthesize maxHeight = mMaxHeight;
-@synthesize view = wView;
 
 - (id)init;
 {
@@ -110,73 +116,66 @@
 
 - (NSArray *)keysForCoding;
 {
-	return [NSArray arrayWithObjects:kKTLayoutManagerWidthTypeKey,
-									 kKTLayoutManagerHeightTypeKey,
-									 kKTLayoutManagerHorizontalPositionTypeKey,
-									 kKTLayoutManagerVerticalPositionTypeKey,
-									 kKTLayoutManagerMarginTopKey,
-									 kKTLayoutManagerMarginRightKey,
-									 kKTLayoutManagerMarginBottomKey,
-									 kKTLayoutManagerMarginLeftKey,
-									 kKTLayoutManagerWidthPercentageKey,
-									 kKTLayoutManagerHeightPercentageKey,
-									 kKTLayoutManagerHorizontalPercentageKey, 
-									 kKTLayoutManagerVerticalPercentageKey, 
-									 kKTLayoutManagerMinWidthKey,
-									 kKTLayoutManagerMaxWidthKey,
-									 kKTLayoutManagerMinHeightKey,
-									 kKTLayoutManagerMaxHeightKey,
-									 nil];
+	return [NSArray arrayWithObjects:KTLayoutManagerWidthTypeKey,
+									 KTLayoutManagerHeightTypeKey,
+									 KTLayoutManagerHorizontalPositionTypeKey,
+									 KTLayoutManagerVerticalPositionTypeKey,
+									 KTLayoutManagerMarginTopKey,
+									 KTLayoutManagerMarginRightKey,
+									 KTLayoutManagerMarginBottomKey,
+									 KTLayoutManagerMarginLeftKey,
+									 KTLayoutManagerWidthPercentageKey,
+									 KTLayoutManagerHeightPercentageKey,
+									 KTLayoutManagerHorizontalPercentageKey, 
+									 KTLayoutManagerVerticalPercentageKey, 
+									 KTLayoutManagerMinWidthKey,
+									 KTLayoutManagerMaxWidthKey,
+									 KTLayoutManagerMinHeightKey,
+									 KTLayoutManagerMaxHeightKey, nil];
 }
 
 - (void)setNilValueForKey:(NSString *)theKey;
 {
-	if ([theKey isEqualToString:kKTLayoutManagerWidthTypeKey])
+	if ([theKey isEqualToString:KTLayoutManagerWidthTypeKey])
 		[self setWidthType:KTSizeAbsolute];
-	else if ([theKey isEqualToString:kKTLayoutManagerHeightTypeKey])
+	else if ([theKey isEqualToString:KTLayoutManagerHeightTypeKey])
 		[self setHeightType:KTSizeAbsolute];
-	else if ([theKey isEqualToString:kKTLayoutManagerHorizontalPositionTypeKey])
+	else if ([theKey isEqualToString:KTLayoutManagerHorizontalPositionTypeKey])
 		[self setHorizontalPositionType:KTHorizontalPositionAbsolute];
-	else if ([theKey isEqualToString:kKTLayoutManagerVerticalPositionTypeKey])
+	else if ([theKey isEqualToString:KTLayoutManagerVerticalPositionTypeKey])
 		[self setVerticalPositionType:KTVerticalPositionAbsolute];
-	else if ([theKey isEqualToString:kKTLayoutManagerMarginTopKey])
+	else if ([theKey isEqualToString:KTLayoutManagerMarginTopKey])
 		[self setMarginTop:0.0];
-	else if ([theKey isEqualToString:kKTLayoutManagerMarginRightKey])
+	else if ([theKey isEqualToString:KTLayoutManagerMarginRightKey])
 		[self setMarginRight:0.0];
-	else if ([theKey isEqualToString:kKTLayoutManagerMarginBottomKey])
+	else if ([theKey isEqualToString:KTLayoutManagerMarginBottomKey])
 		[self setMarginBottom:0.0];
-	else if ([theKey isEqualToString:kKTLayoutManagerMarginLeftKey])
+	else if ([theKey isEqualToString:KTLayoutManagerMarginLeftKey])
 		[self setMarginLeft:0.0];
-	else if ([theKey isEqualToString:kKTLayoutManagerWidthPercentageKey])
+	else if ([theKey isEqualToString:KTLayoutManagerWidthPercentageKey])
 		[self setWidthPercentage:1.0];
-	else if ([theKey isEqualToString:kKTLayoutManagerHeightPercentageKey])
+	else if ([theKey isEqualToString:KTLayoutManagerHeightPercentageKey])
 		[self setHeightPercentage:1.0];
-	else if([theKey isEqualToString:kKTLayoutManagerHorizontalPercentageKey])
+	else if([theKey isEqualToString:KTLayoutManagerHorizontalPercentageKey])
 		[self setHorizontalPositionPercentage:0.0];
-	else if([theKey isEqualToString:kKTLayoutManagerVerticalPercentageKey])
+	else if([theKey isEqualToString:KTLayoutManagerVerticalPercentageKey])
 		[self setVerticalPositionPercentage:0.0];
-	else if ([theKey isEqualToString:kKTLayoutManagerMinWidthKey])
+	else if ([theKey isEqualToString:KTLayoutManagerMinWidthKey])
 		[self setMinWidth:0.0];
-	else if ([theKey isEqualToString:kKTLayoutManagerMaxWidthKey])
+	else if ([theKey isEqualToString:KTLayoutManagerMaxWidthKey])
 		[self setMaxWidth:0.0];
-	else if ([theKey isEqualToString:kKTLayoutManagerMinHeightKey])
+	else if ([theKey isEqualToString:KTLayoutManagerMinHeightKey])
 		[self setMinHeight:0.0];
-	else if ([theKey isEqualToString:kKTLayoutManagerMaxHeightKey])
+	else if ([theKey isEqualToString:KTLayoutManagerMaxHeightKey])
 		[self setMaxHeight:0.0];
 	else
 		[super setNilValueForKey:theKey];
 }
 
-- (void)setView:(id<KTViewLayout>)theView
-{
-	wView = theView;
-}
-
 - (void)refreshLayout
 {
 	NSRect aCurrentViewFrame;
-	if([wView isKindOfClass:[NSWindow class]])
-	{
+	if([wView isKindOfClass:[NSWindow class]]) {
 		NSRect anOverlayFrame = [wView frame];
 		NSPoint aBasePoint = [[(NSView*)[wView parent] window] convertScreenToBase:anOverlayFrame.origin];
 		NSPoint aViewPoint = [(NSView*)[wView parent] convertPoint:aBasePoint fromView:nil];
@@ -212,6 +211,9 @@
 		case KTSizePercentage:
 			aCurrentViewFrame.size.width = NSWidth(aSuperviewFrame)*mWidthPercentage - (mMarginLeft + mMarginRight);
 		break;
+			
+		default:
+			break;
 	}
 	
 
@@ -228,6 +230,9 @@
 		case KTSizePercentage:
 			aCurrentViewFrame.size.height = aSuperviewFrame.size.height*mHeightPercentage - (mMarginTop + mMarginBottom);
 		break;
+			
+		default:
+			break;
 	}
 	
 
