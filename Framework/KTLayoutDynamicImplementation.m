@@ -11,14 +11,15 @@
 #import <objc/objc-runtime.h>
 
 NSString *const KTViewLayoutManagerKey = @"viewLayoutManager";
+const char *const _KTViewLayoutManagerIvarKey = "mLayoutManager";
 
 id layoutManagerDynamicMethodIMP(id self, SEL _cmd) {
-	Ivar mLayoutManagerAsIvar = class_getInstanceVariable([self class], "mLayoutManager");
+	Ivar mLayoutManagerAsIvar = class_getInstanceVariable([self class], _KTViewLayoutManagerIvarKey);
 	return object_getIvar(self, mLayoutManagerAsIvar);
 }
 
 void setLayoutManagerDynamicMethodIMP(id self, SEL _cmd, id layoutManager) {
-	Ivar mLayoutManagerAsIvar = class_getInstanceVariable([self class], "mLayoutManager");
+	Ivar mLayoutManagerAsIvar = class_getInstanceVariable([self class], _KTViewLayoutManagerIvarKey);
 	id mLayoutManager = object_getIvar(self, mLayoutManagerAsIvar);
 	
 	if (mLayoutManager == layoutManager)
