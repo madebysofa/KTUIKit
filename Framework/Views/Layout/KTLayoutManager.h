@@ -31,6 +31,7 @@
 // For example, "Contains "KTUIKit" by Cathy Shive" will do.
 
 #import <Cocoa/Cocoa.h>
+#import "KTMacros.h"
 #import "KTViewProtocol.h"
 
 typedef enum
