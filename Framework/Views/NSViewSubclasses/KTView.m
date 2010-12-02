@@ -32,7 +32,7 @@
 
 #import "KTView.h"
 
-@interface KTView (Private)
+@interface KTView ()
 - (void)_drawDebugginRect;
 @end
 
@@ -52,22 +52,21 @@
 //=========================================================== 
 - (id)initWithFrame:(NSRect)theFrame
 {
-	if(![super initWithFrame:theFrame])
-		return nil;
-	
-	// Layout
-	KTLayoutManager * aLayoutManger = [[[KTLayoutManager alloc] initWithView:self] autorelease];
-	[self setViewLayoutManager:aLayoutManger];
-	[self setAutoresizesSubviews:NO];
-	
-	// Styles
-	KTStyleManager * aStyleManager = [[[KTStyleManager alloc] initWithView:self] autorelease];
-	[self setStyleManager:aStyleManager];
-	
-	// For Debugging
-	[self setLabel:@"KTView"];
-	
-	[self setOpaque:NO];
+	if (([super initWithFrame:theFrame])) {
+		// Layout
+		KTLayoutManager * aLayoutManger = [[[KTLayoutManager alloc] initWithView:self] autorelease];
+		[self setViewLayoutManager:aLayoutManger];
+		[self setAutoresizesSubviews:NO];
+		
+		// Styles
+		KTStyleManager * aStyleManager = [[[KTStyleManager alloc] initWithView:self] autorelease];
+		[self setStyleManager:aStyleManager];
+		
+		// For Debugging
+		[self setLabel:@"KTView"];
+		
+		[self setOpaque:NO];		
+	}
 	return self;
 }
 
@@ -87,8 +86,7 @@
 //=========================================================== 
 - (id)initWithCoder:(NSCoder*)theCoder
 {
-	if (self = [super initWithCoder:theCoder])
-	{
+	if ((self = [super initWithCoder:theCoder])) {
 		KTLayoutManager * aLayoutManager = [theCoder decodeObjectForKey:@"layoutManager"];
 		if(aLayoutManager == nil)
 			aLayoutManager = [[[KTLayoutManager alloc] initWithView:self] autorelease];
