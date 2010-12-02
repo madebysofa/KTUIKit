@@ -30,17 +30,17 @@
 // If you use it, acknowledgement in an About Page or other appropriate place would be nice.
 // For example, "Contains "KTUIKit" by Cathy Shive" will do.
 
+#import <Cocoa/Cocoa.h>
+#import "KTMacros.h"
+
 @class KTLayoutManager;
 
-@protocol KTViewLayout<NSObject>
+@protocol KTViewLayout <NSObject>
 
-- (void)setViewLayoutManager:(KTLayoutManager*)theLayoutManager;
-- (KTLayoutManager*)viewLayoutManager;
+@property (readwrite, nonatomic, retain) KTLayoutManager *viewLayoutManager;
+@property (readwrite, nonatomic, assign) NSRect frame;
 
-- (void)setFrame:(NSRect)theFrame;
-- (NSRect)frame;
-
-- (id<KTViewLayout>)parent;
+- (id <KTViewLayout>)parent;
 - (NSArray*)children;
 
 @end
