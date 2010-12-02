@@ -73,26 +73,19 @@
 @synthesize borderWidthLeft = mBorderWidthLeft;
 @synthesize backgroundGradient = mBackgroundGradient;
 @synthesize gradientAngle = mGradientAngle;
-
-//=========================================================== 
-// - initWithCoder:
-//=========================================================== 
+ 
 - (id)initWithView:(id<KTStyle>)theView
 {
-	if(![super init])
-		return self;
-	
-	[self setView:theView];
-	[self setBackgroundColor:[NSColor clearColor]];
-	[self setBorderColorTop:[NSColor clearColor] right:[NSColor clearColor] bottom:[NSColor clearColor] left:[NSColor clearColor]];
-	[self setBackgroundGradient:nil angle:0];
-	[self setBorderWidth:0];
+	if ((self = [self init])) {
+		[self setView:theView];
+		[self setBackgroundColor:[NSColor clearColor]];
+		[self setBorderColorTop:[NSColor clearColor] right:[NSColor clearColor] bottom:[NSColor clearColor] left:[NSColor clearColor]];
+		[self setBackgroundGradient:nil angle:0];
+		[self setBorderWidth:0];		
+	}
 	return self;
 }
-
-//=========================================================== 
-// - dealloc:
-//=========================================================== 
+ 
 - (void)dealloc
 {
 	[mBackgroundColor release];
@@ -106,37 +99,24 @@
 	[super dealloc];
 }
 
-
-//=========================================================== 
-// - initWithCoder:
-//=========================================================== 
+ 
 - (id)initWithCoder:(NSCoder*)theCoder
 {
-	if ([[self superclass] instancesRespondToSelector:@selector(initWithCoder:)]) {
-		if (![(id)super initWithCoder:theCoder])
-			return nil;
+	if ((self = [self init])) {
+		for (NSString *key in [self keysForCoding]) {
+			[self setValue:[theCoder decodeObjectForKey:key] forKey:key];			
+		}
 	}
-	
-	for (NSString *key in [self keysForCoding])
-		[self setValue:[theCoder decodeObjectForKey:key] forKey:key];
-	
 	return self;
 }
-
-//=========================================================== 
-// - encodeWithCoder:
-//=========================================================== 
+ 
 - (void)encodeWithCoder:(NSCoder*)theCoder
 {
-	if ([[self superclass] instancesRespondToSelector:@selector(encodeWithCoder:)])
-		[(id)super encodeWithCoder:theCoder];
-	for (NSString *key in [self keysForCoding])
-		[theCoder encodeObject:[self valueForKey:key] forKey:key];
+	for (NSString *key in [self keysForCoding]) {
+		[theCoder encodeObject:[self valueForKey:key] forKey:key];		
+	}
 }
-
-//=========================================================== 
-// - keysForCoding
-//=========================================================== 
+ 
 - (NSArray *)keysForCoding
 {
 	return [NSArray arrayWithObjects:kKTStyleManagerBackgroundColorKey,
@@ -151,10 +131,7 @@
 									 kKTStyleManagerBorderColorBottomKey, 
 									 kKTStyleManagerBorderColorLeftKey, nil];
 }
-
-//=========================================================== 
-// - setNilValueForKey:
-//=========================================================== 
+ 
 - (void)setNilValueForKey:(NSString *)key;
 {
 	if([key isEqualToString:kKTStyleManagerBackgroundGradientAngleKey])
@@ -299,19 +276,12 @@ static BOOL _KTStyleManagerShouldDrawBorder(NSColor *theColor, CGFloat theBorder
 	
 	[self _drawBordersInRect:theRect context:theContext controlView:theView];
 }
-
-
-//=========================================================== 
-// - setBorderWidth:
-//=========================================================== 
+ 
 - (void)setBorderWidth:(CGFloat)theWidth
 {
 	[self setBorderWidthTop:theWidth right:theWidth bottom:theWidth left:theWidth];
 }
-
-//=========================================================== 
-// - setBorderWidthTop:right:bottom:left
-//=========================================================== 
+ 
 - (void)setBorderWidthTop:(CGFloat)theTopWidth right:(CGFloat)theRightWidth bottom:(CGFloat)theBottomWidth left:(CGFloat)theLeftWidth
 {
 	[self setBorderWidthTop:theTopWidth];
@@ -319,11 +289,7 @@ static BOOL _KTStyleManagerShouldDrawBorder(NSColor *theColor, CGFloat theBorder
 	[self setBorderWidthBottom:theBottomWidth];
 	[self setBorderWidthLeft:theLeftWidth];
 }
-
-
-//=========================================================== 
-// - setBackgroundImage:
-//=========================================================== 
+ 
 - (void)setBackgroundImage:(NSImage*)theBackgroundImage tile:(BOOL)theBool
 {
 	if(mBackgroundImage != theBackgroundImage)
@@ -349,11 +315,7 @@ static BOOL _KTStyleManagerShouldDrawBorder(NSColor *theColor, CGFloat theBorder
 	}
 }
 
-
-// either save a gradient or a fill color
-//=========================================================== 
-// - setBackgroundColor:
-//=========================================================== 
+// either save a gradient or a fill color 
 - (void)setBackgroundColor:(NSColor*)theColor
 {
 	if(mBackgroundColor!=theColor)
@@ -367,10 +329,7 @@ static BOOL _KTStyleManagerShouldDrawBorder(NSColor *theColor, CGFloat theBorder
 			[(KTView*)wView setOpaque:YES];
 	}
 }
-
-//=========================================================== 
-// - setBackgroundGradient:
-//=========================================================== 
+ 
 - (void)setBackgroundGradient:(NSGradient*)theGradient
 {
 	if(mBackgroundGradient!=theGradient)
@@ -382,27 +341,18 @@ static BOOL _KTStyleManagerShouldDrawBorder(NSColor *theColor, CGFloat theBorder
 		[(KTView*)wView setOpaque:YES];
 	}
 }
-
-//=========================================================== 
-// - setBackgroundGradient:angle
-//=========================================================== 
+ 
 - (void)setBackgroundGradient:(NSGradient*)theGradient angle:(CGFloat)theAngle
 {
 	[self setBackgroundGradient:theGradient];
 	[self setGradientAngle:theAngle];
 }
-
-//=========================================================== 
-// - setBorderColor:
-//=========================================================== 
+ 
 - (void)setBorderColor:(NSColor*)theColor
 {
 	[self setBorderColorTop:theColor right:theColor bottom:theColor left:theColor];
 }
-
-//=========================================================== 
-// - setBorderColor:
-//=========================================================== 
+ 
 - (void)setBorderColorTop:(NSColor*)theTopColor right:(NSColor*)theRightColor bottom:(NSColor*)theBottomColor left:(NSColor*)theLeftColor
 {
 	[self setBorderColorTop:theTopColor];
