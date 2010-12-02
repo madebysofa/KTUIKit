@@ -51,9 +51,11 @@ NSString *const KTViewLabelKey = @"label";
 @synthesize cachedImage = mCachedImage;
 @synthesize drawDebuggingRect = mDrawDebuggingRect;
 
-//=========================================================== 
-// - initWithFrame:
-//=========================================================== 
+@synthesize viewLayoutManager = mLayoutManager;
+@synthesize styleManager = mStyleManager;
+@synthesize label = mLabel;
+@dynamic frame;
+
 - (id)initWithFrame:(NSRect)theFrame
 {
 	if (([super initWithFrame:theFrame])) {
@@ -73,10 +75,7 @@ NSString *const KTViewLabelKey = @"label";
 	}
 	return self;
 }
-
-//=========================================================== 
-// - encodeWithCoder:
-//=========================================================== 
+ 
 - (void)encodeWithCoder:(NSCoder*)theCoder
 {	
 	[super encodeWithCoder:theCoder];
@@ -84,10 +83,7 @@ NSString *const KTViewLabelKey = @"label";
 	[theCoder encodeObject:[self styleManager] forKey:@"styleManager"];
 	[theCoder encodeObject:[self label] forKey:@"label"];
 }
-
-//=========================================================== 
-// - initWithCoder:
-//=========================================================== 
+ 
 - (id)initWithCoder:(NSCoder*)theCoder
 {
 	if ((self = [super initWithCoder:theCoder])) {
@@ -115,10 +111,7 @@ NSString *const KTViewLabelKey = @"label";
 	}
 	return self;
 }
-
-//=========================================================== 
-// - dealloc
-//=========================================================== 
+ 
 - (void)dealloc
 {	
 	[mLayoutManager release];
@@ -132,18 +125,12 @@ NSString *const KTViewLabelKey = @"label";
 {
 	return [NSString stringWithFormat:@"%@ %@ frame:%@ numberOfSubviews:%i", [super description], [self label], NSStringFromRect([self frame]), [[self subviews] count]];
 }
-
-//=========================================================== 
-// - isOpaque
-//=========================================================== 
+ 
 - (BOOL)isOpaque
 {
 	return mOpaque;
 }
-
-//=========================================================== 
-// - canBecomeKeyView
-//=========================================================== 
+ 
 - (BOOL)canBecomeKeyView
 {
 	if(mCanBecomeKeyView == NO)
@@ -151,27 +138,17 @@ NSString *const KTViewLabelKey = @"label";
 		
 	return [super canBecomeKeyView];
 }
-
-//=========================================================== 
-// - canBecomeFirstResponder
-//=========================================================== 
+ 
 - (BOOL)canBecomeFirstResponder
 {
 	return mCanBecomeFirstResponder;
 }
 
-
-//=========================================================== 
-// - mouseDownCanMoveWindow
-//=========================================================== 
 - (BOOL)mouseDownCanMoveWindow
 {
 	return mMouseDownCanMoveWindow;
 }
-
-//=========================================================== 
-// - setMouseDownCanMoveWindow:
-//=========================================================== 
+ 
 - (void)setMouseDownCanMoveWindow:(BOOL)theBool
 {
 	mMouseDownCanMoveWindow = theBool;
@@ -181,18 +158,12 @@ NSString *const KTViewLabelKey = @"label";
 			[(KTView*)[self superview] setMouseDownCanMoveWindow:YES];
 	}
 }
-
-//=========================================================== 
-// - acceptsFirstMouse
-//=========================================================== 
+ 
 - (BOOL)acceptsFirstMouse
 {
 	return mAcceptsFirstMouse;
 }
-
-//=========================================================== 
-// - drawAsImage
-//=========================================================== 
+ 
 - (void)drawAsImage:(BOOL)theBool
 {
 //	mDrawAsImage = theBool;
@@ -216,13 +187,11 @@ NSString *const KTViewLabelKey = @"label";
 
 #pragma mark -
 #pragma mark Drawing
-//=========================================================== 
-// - drawRect:
-//=========================================================== 
+ 
 - (void)drawRect:(NSRect)theRect
 {	
 	CGContextRef aContext = [[NSGraphicsContext currentContext] graphicsPort];
-	if([self drawDebuggingRect])
+	if ([self drawDebuggingRect])
 		[self _drawDebugginRect];
 		
 //	if(mDrawAsImage)
@@ -236,19 +205,12 @@ NSString *const KTViewLabelKey = @"label";
 		[self drawInContext:aContext];
 //	}
 }
-
-//=========================================================== 
-// - drawInContext:
-//=========================================================== 
+ 
 - (void)drawInContext:(CGContextRef)theContext
 {
 	// subclasses can override this to do custom drawing over the styles
 }
-
-
-//=========================================================== 
-// - _drawDebugginRect:
-//=========================================================== 
+ 
 - (void)_drawDebugginRect
 {
 	[[NSColor colorWithCalibratedRed:0 green:1 blue:0 alpha:.5] set];
@@ -263,69 +225,21 @@ NSString *const KTViewLabelKey = @"label";
 
 #pragma mark -
 #pragma mark Layout protocol
-//=========================================================== 
-// - setViewLayoutManager:
-//===========================================================
-- (void)setViewLayoutManager:(KTLayoutManager*)theLayoutManager
-{
-	if(mLayoutManager != theLayoutManager)
-	{
-		[mLayoutManager release];
-		mLayoutManager = [theLayoutManager retain];
-	}
-}
 
-//=========================================================== 
-// - viewLayoutManager
-//===========================================================
-- (KTLayoutManager*)viewLayoutManager
-{
-	return mLayoutManager;
-}
-
-//=========================================================== 
-// - setFrame:
-//===========================================================
-- (void)setFrame:(NSRect)theFrame
-{
-	[super setFrame:theFrame];
-}
-
-
-//=========================================================== 
-// - setFrameSize:
-//===========================================================
 - (void)setFrameSize:(NSSize)theSize
 {
 	[super setFrameSize:theSize];
 	NSArray * aSubviewList = [self children];
-	int aSubviewCount = [aSubviewList count];
-	int i;
-	for(i = 0; i < aSubviewCount; i++)
-	{
+	NSUInteger aSubviewCount = [aSubviewList count];
+	for(NSUInteger i = 0; i < aSubviewCount; ++i) {
 		NSView * aSubview = [aSubviewList objectAtIndex:i];
-		
-		// if the subview conforms to the layout protocol, tell its layout
-		// manager to refresh its layout
-		if( [aSubview conformsToProtocol:@protocol(KTViewLayout)] )
-		{
-			[[(KTView*)aSubview viewLayoutManager] refreshLayout];
+		if ([aSubview conformsToProtocol:@protocol(KTViewLayout)]) {
+			[[(KTView *)aSubview viewLayoutManager] refreshLayout];
 		}
-	}	
+	}
 }
 
-//=========================================================== 
-// - frame
-//===========================================================
-- (NSRect)frame
-{
-	return [super frame];
-}
-
-//=========================================================== 
-// - parent
-//===========================================================
-- (id<KTViewLayout>)parent
+- (id <KTViewLayout>)parent
 {
 	if([[self superview] conformsToProtocol:@protocol(KTViewLayout)])
 		return (id<KTViewLayout>)[self superview];
@@ -333,84 +247,26 @@ NSString *const KTViewLabelKey = @"label";
 		return nil;
 }
 
-//=========================================================== 
-// - children
-//===========================================================
 - (NSArray*)children
 {
 	return [super subviews];
 }
 
-//=========================================================== 
-// - addSubview:
-//===========================================================
-- (void)addSubview:(NSView*)theView
+- (void)addSubview:(NSView *)theView
 {
 	[super addSubview:theView];
 	if(		[theView conformsToProtocol:@protocol(KTViewLayout)] == NO
 		&&	[theView autoresizingMask] != NSViewNotSizable)
 		[self setAutoresizesSubviews:YES];
-	if([theView isKindOfClass:[KTView class]])
-	{
+	if([theView isKindOfClass:[KTView class]]) {
 		if([theView mouseDownCanMoveWindow])
 			[self setMouseDownCanMoveWindow:YES];
 	}
 }
 
-
-
-#pragma mark -
-#pragma mark KTStyle protocol
-//=========================================================== 
-// - setStyleManager:
-//===========================================================
-- (void)setStyleManager:(KTStyleManager*)theStyleManager
-{
-	if(mStyleManager != theStyleManager)
-	{
-		[mStyleManager release];
-		mStyleManager = [theStyleManager retain];
-	}
-}
-
-//=========================================================== 
-// - styleManager
-//===========================================================
-- (KTStyleManager*)styleManager
-{
-	return mStyleManager;
-}
-
-//=========================================================== 
-// - window
-//===========================================================
 - (NSWindow *)window
 {
 	return [super window];
 }
-
-#pragma mark -
-#pragma mark KTView protocol
-//=========================================================== 
-// - setLabel:
-//===========================================================
-- (void)setLabel:(NSString*)theLabel
-{
-	if(mLabel != theLabel)
-	{
-		[mLabel release];
-		mLabel = [[NSString alloc] initWithString:theLabel];
-	}
-}
-
-//=========================================================== 
-// - label
-//===========================================================
-- (NSString*)label
-{
-	return mLabel;
-}
-
-
 
 @end
