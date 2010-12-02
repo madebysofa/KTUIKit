@@ -55,8 +55,8 @@ NSString *const KTStyleManagerBorderColorRightKey = @"borderColorRight";
 NSString *const KTStyleManagerBorderColorBottomKey = @"borderColorBottom";
 NSString *const KTStyleManagerBorderColorLeftKey = @"borderColorLeft";
 
-@interface KTStyleManager (Private)
-- (NSArray*)keysForCoding;
+@interface KTStyleManager ()
+- (NSArray *)keysForCoding;
 @end
 
 
