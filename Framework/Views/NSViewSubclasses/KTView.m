@@ -59,19 +59,12 @@ NSString *const KTViewLabelKey = @"label";
 - (id)initWithFrame:(NSRect)theFrame
 {
 	if (([super initWithFrame:theFrame])) {
-		// Layout
-		KTLayoutManager * aLayoutManger = [[[KTLayoutManager alloc] initWithView:self] autorelease];
+		KTLayoutManager *aLayoutManger = [[[KTLayoutManager alloc] initWithView:self] autorelease];
 		[self setViewLayoutManager:aLayoutManger];
 		[self setAutoresizesSubviews:NO];
-		
-		// Styles
-		KTStyleManager * aStyleManager = [[[KTStyleManager alloc] initWithView:self] autorelease];
-		[self setStyleManager:aStyleManager];
-		
-		// For Debugging
-		[self setLabel:@"KTView"];
-		
-		[self setOpaque:NO];		
+		mStyleManager = [[KTStyleManager alloc] initWithView:self];		
+		mLabel = [@"KTView" copy];
+		[self setOpaque:NO];
 	}
 	return self;
 }
