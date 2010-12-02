@@ -80,11 +80,6 @@
 {
 	if ((self = [self init])) {
 		wView = theView;
-
-		[self setBackgroundColor:[NSColor clearColor]];
-		[self setBorderColorTop:[NSColor clearColor] right:[NSColor clearColor] bottom:[NSColor clearColor] left:[NSColor clearColor]];
-		[self setBackgroundGradient:nil angle:0];
-		[self setBorderWidth:0];		
 	}
 	return self;
 }
@@ -211,6 +206,7 @@ static void _KTStyleManagerStrokePathWithColor(CGContextRef theContext, NSColor 
 }
 
 static BOOL _KTStyleManagerShouldDrawBorder(NSColor *theColor, CGFloat theBorderWidth) {
+	if (theColor == nil) return NO;
 	return (theBorderWidth > 0 && ![theColor isEqual:[NSColor clearColor]]);
 }
 
@@ -267,9 +263,7 @@ static BOOL _KTStyleManagerShouldDrawBorder(NSColor *theColor, CGFloat theBorder
 	}
 	
 	// also need to figure out a way to optimize image drawing so it only draws in the dirty rect of the view
-	if(		mBackgroundImage != nil
-		&&	mBackgroundImageRef != nil)
-	{
+	if (mBackgroundImage != nil && mBackgroundImageRef != nil) {
 		[self _drawBackgroundImageInRect:aViewBounds context:theContext controlView:theView];
 	}
 	
@@ -317,8 +311,7 @@ static BOOL _KTStyleManagerShouldDrawBorder(NSColor *theColor, CGFloat theBorder
 // either save a gradient or a fill color 
 - (void)setBackgroundColor:(NSColor*)theColor
 {
-	if(mBackgroundColor!=theColor)
-	{
+	if(mBackgroundColor!=theColor) {
 		[mBackgroundColor release];
 		mBackgroundColor = [theColor retain];
 		if(mBackgroundColor!=nil)
@@ -331,8 +324,7 @@ static BOOL _KTStyleManagerShouldDrawBorder(NSColor *theColor, CGFloat theBorder
  
 - (void)setBackgroundGradient:(NSGradient*)theGradient
 {
-	if(mBackgroundGradient!=theGradient)
-	{
+	if(mBackgroundGradient!=theGradient) {
 		[mBackgroundGradient release];
 		mBackgroundGradient = [theGradient retain];
 		if(mBackgroundGradient!=nil)
