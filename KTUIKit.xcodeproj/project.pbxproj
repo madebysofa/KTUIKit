@@ -633,9 +633,9 @@
 		4C9A817F0EBDDA6C00F8AA48 /* Styles */ = {
 			isa = PBXGroup;
 			children = (
+				4C9A81AA0EBDDD8400F8AA48 /* KTStyle.h */,
 				4C9A81800EBDDA9300F8AA48 /* KTStyleManager.h */,
 				4C9A81810EBDDA9300F8AA48 /* KTStyleManager.m */,
-				4C9A81AA0EBDDD8400F8AA48 /* KTStyle.h */,
 			);
 			name = Styles;
 			sourceTree = "<group>";
@@ -823,12 +823,12 @@
 		54D33B2C06778E4400C9C163 /* Framework */ = {
 			isa = PBXGroup;
 			children = (
+				4C9C5E120DE9FA4400AE6913 /* KTUIKit.h */,
 				ABEADA91129C0D2E00A2C90C /* KTMacros.h */,
 				4CB5E6BA0FCC05B80077E788 /* KTAnimator.h */,
 				4CB5E6BB0FCC05B80077E788 /* KTAnimator.m */,
 				4CB5E6BC0FCC05B80077E788 /* KTLayoutDynamicImplementation.h */,
 				4CB5E6BD0FCC05B80077E788 /* KTLayoutDynamicImplementation.m */,
-				4C9C5E120DE9FA4400AE6913 /* KTUIKit.h */,
 				4C9C5D860DE9F41800AE6913 /* Views */,
 				4C9C5D8D0DE9F43400AE6913 /* Controllers */,
 				4C3EAA4F0ECF590E004492C4 /* Resources */,
@@ -1177,7 +1177,7 @@
 					KT_DEBUG,
 					NS_BUILD_32_LIKE_64,
 				);
-				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				GCC_VERSION = com.apple.compilers.llvmgcc42;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -1256,7 +1256,7 @@
 					KT_DEBUG,
 					NS_BUILD_32_LIKE_64,
 				);
-				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				GCC_VERSION = com.apple.compilers.llvmgcc42;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -1335,7 +1335,7 @@
 					KT_DEBUG,
 					NS_BUILD_32_LIKE_64,
 				);
-				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				GCC_VERSION = com.apple.compilers.llvmgcc42;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				MACOSX_DEPLOYMENT_TARGET = 10.5;
@@ -1416,7 +1416,7 @@
 					NS_BLOCK_ASSERTIONS,
 					NS_BUILD_32_LIKE_64,
 				);
-				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				GCC_VERSION = com.apple.compilers.llvmgcc42;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				PREBINDING = NO;
@@ -1491,7 +1491,7 @@
 					NS_BLOCK_ASSERTIONS,
 					NS_BUILD_32_LIKE_64,
 				);
-				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				GCC_VERSION = com.apple.compilers.llvmgcc42;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				PREBINDING = NO;
@@ -1566,7 +1566,7 @@
 					NS_BLOCK_ASSERTIONS,
 					NS_BUILD_32_LIKE_64,
 				);
-				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				GCC_VERSION = com.apple.compilers.llvmgcc42;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				MACOSX_DEPLOYMENT_TARGET = 10.5;
@@ -1641,7 +1641,7 @@
 					KT_DEBUG,
 					NS_BUILD_32_LIKE_64,
 				);
-				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				GCC_VERSION = com.apple.compilers.llvmgcc42;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				MACOSX_DEPLOYMENT_TARGET = 10.5;
@@ -1722,7 +1722,7 @@
 					NS_BLOCK_ASSERTIONS,
 					NS_BUILD_32_LIKE_64,
 				);
-				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				GCC_VERSION = com.apple.compilers.llvmgcc42;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				MACOSX_DEPLOYMENT_TARGET = 10.5;
