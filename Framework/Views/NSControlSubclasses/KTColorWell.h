@@ -7,9 +7,10 @@
 //
 
 #import <Cocoa/Cocoa.h>
+#import "KTMacros.h"
 #import "KTViewLayout.h"
 
-extern NSString *const KTColorWellDidActivateNotification;
+KT_EXPORT NSString *const KTColorWellDidActivateNotification;
 
 @class KTLayoutManager;
 

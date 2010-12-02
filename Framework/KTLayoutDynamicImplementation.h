@@ -7,22 +7,23 @@
 //
 
 #import <Cocoa/Cocoa.h>
+#import "KTMacros.h"
 
 //const char *const KTViewLayoutManagerIvarName = "mLayoutManager";
-extern NSString *const KTViewLayoutManagerKey;
+KT_EXPORT NSString *const KTViewLayoutManagerKey;
 
-extern id layoutManagerDynamicMethodIMP(id self, SEL _cmd);
+KT_EXPORT id layoutManagerDynamicMethodIMP(id self, SEL _cmd);
 
-extern void setLayoutManagerDynamicMethodIMP(id self, SEL _cmd, id layoutManager);
+KT_EXPORT void setLayoutManagerDynamicMethodIMP(id self, SEL _cmd, id layoutManager);
 
-extern id parentDynamicMethodIMP(id self, SEL _cmd);
+KT_EXPORT id parentDynamicMethodIMP(id self, SEL _cmd);
 
-extern id childrenDynamicMethodIMP(id self, SEL _cmd);
+KT_EXPORT id childrenDynamicMethodIMP(id self, SEL _cmd);
 
-extern id initWithFrameDynamicIMP(id self, SEL _cmd, NSRect frame);
+KT_EXPORT id initWithFrameDynamicIMP(id self, SEL _cmd, NSRect frame);
 
-extern id initWithCoderDynamicIMP(id self, SEL _cmd, NSCoder *coder);
+KT_EXPORT id initWithCoderDynamicIMP(id self, SEL _cmd, NSCoder *coder);
 
-extern void encodeWithCoderDynamicIMP(id self, SEL _cmd, NSCoder *coder);
+KT_EXPORT void encodeWithCoderDynamicIMP(id self, SEL _cmd, NSCoder *coder);
 
-extern void deallocDynamicIMP(id self, SEL _cmd);
+KT_EXPORT void deallocDynamicIMP(id self, SEL _cmd);

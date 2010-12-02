@@ -7,6 +7,8 @@
 //
 
 #import <Cocoa/Cocoa.h>
+#import "KTMacros.h"
+
 @class KTAnimator;
 @interface NSObject (KTANimatorDelegateMethods)
 - (void)animatorDidStartAnimating:(KTAnimator*)theAnimator;
@@ -16,19 +18,19 @@
 - (void)animatorDidEndAllAnimations:(KTAnimator*)theAnimator;
 @end
 
-extern NSString *const KTAnimatorAnimationNameKey;
-extern NSString *const KTAnimatorAnimationObjectKey;
-extern NSString *const KTAnimatorAnimationKeyPathKey;
-extern NSString *const KTAnimatorAnimationDurationKey;
-extern NSString *const KTAnimatorAnimationSpeedKey;
-extern NSString *const KTAnimatorAnimationStartValueKey;
-extern NSString *const KTAnimatorAnimationEndValueKey;
-extern NSString *const KTAnimatorAnimationLocationKey;
-extern NSString *const KTAnimatorAnimationTypeKey;
-extern NSString *const KTAnimatorFloatAnimation;
-extern NSString *const KTAnimatorRectAnimation;
-extern NSString *const KTAnimatorPointAnimation;
-extern NSString *const KTAnimatorAnimationCurveKey;
+KT_EXPORT NSString *const KTAnimatorAnimationNameKey;
+KT_EXPORT NSString *const KTAnimatorAnimationObjectKey;
+KT_EXPORT NSString *const KTAnimatorAnimationKeyPathKey;
+KT_EXPORT NSString *const KTAnimatorAnimationDurationKey;
+KT_EXPORT NSString *const KTAnimatorAnimationSpeedKey;
+KT_EXPORT NSString *const KTAnimatorAnimationStartValueKey;
+KT_EXPORT NSString *const KTAnimatorAnimationEndValueKey;
+KT_EXPORT NSString *const KTAnimatorAnimationLocationKey;
+KT_EXPORT NSString *const KTAnimatorAnimationTypeKey;
+KT_EXPORT NSString *const KTAnimatorFloatAnimation;
+KT_EXPORT NSString *const KTAnimatorRectAnimation;
+KT_EXPORT NSString *const KTAnimatorPointAnimation;
+KT_EXPORT NSString *const KTAnimatorAnimationCurveKey;
 
 typedef enum
 {
