@@ -73,11 +73,14 @@
 @synthesize borderWidthLeft = mBorderWidthLeft;
 @synthesize backgroundGradient = mBackgroundGradient;
 @synthesize gradientAngle = mGradientAngle;
- 
-- (id)initWithView:(id<KTStyle>)theView
+
+@synthesize view = wView;
+
+- (id)initWithView:(id <KTStyle>)theView;
 {
 	if ((self = [self init])) {
-		[self setView:theView];
+		wView = theView;
+
 		[self setBackgroundColor:[NSColor clearColor]];
 		[self setBorderColorTop:[NSColor clearColor] right:[NSColor clearColor] bottom:[NSColor clearColor] left:[NSColor clearColor]];
 		[self setBackgroundGradient:nil angle:0];
@@ -96,6 +99,7 @@
 	[mBackgroundGradient release];
 	[mBackgroundImage release];
 	CGImageRelease(mBackgroundImageRef);
+
 	[super dealloc];
 }
 
@@ -147,11 +151,6 @@
 
 	else
 		[super setNilValueForKey:key];
-}
-
-- (void)setView:(id<KTStyle>)theView
-{
-	wView = theView;
 }
 
 - (void)_drawBackgroundGradientInRect:(NSRect)theRect context:(CGContextRef)theContext controlView:(KTView <KTStyle> *)theView;
