@@ -141,7 +141,7 @@
 //	if([[self splitView] dividerOrientation] == KTSplitViewDividerOrientation_Vertical)
 //	{
 //		// clip min & max positions
-//		float aPositionToCheck = 0;//[self minPosition];
+//		CGFloat aPositionToCheck = 0;//[self minPosition];
 //		
 //		if(		aPositionToCheck > 0
 //			&&	theFrame.origin.x <= aPositionToCheck)
@@ -162,7 +162,7 @@
 //	}
 //	else if([[self splitView] dividerOrientation] == KTSplitViewDividerOrientation_Horizontal)
 //	{
-//		float aPositionToCheck = 0;//[self minPosition];
+//		CGFloat aPositionToCheck = 0;//[self minPosition];
 //		if(		aPositionToCheck > 0
 //			&&	theFrame.origin.y < aPositionToCheck)
 //		{

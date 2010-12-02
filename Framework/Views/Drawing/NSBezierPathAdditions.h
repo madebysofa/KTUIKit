@@ -11,17 +11,17 @@
 
 
 @interface NSBezierPath (RoundRect)
-+ (NSBezierPath *)bezierPathWithRoundedRect:(NSRect)rect cornerRadius:(float)radius;
-- (void)appendBezierPathWithRoundedRect:(NSRect)rect cornerRadius:(float)radius;
++ (NSBezierPath *)bezierPathWithRoundedRect:(NSRect)rect cornerRadius:(CGFloat)radius;
+- (void)appendBezierPathWithRoundedRect:(NSRect)rect cornerRadius:(CGFloat)radius;
 
-+ (NSBezierPath *)bezierPathWithLeftRoundedRect:(NSRect)theRect cornerRadius:(float)theCornerRadius;
-+ (NSBezierPath *)bezierPathWithRightRoundedRect:(NSRect)theRect cornerRadius:(float)theCornerRadius;
-+ (NSBezierPath *)bezierPathWithTopRoundedRect:(NSRect)theRect cornerRadius:(float)theCornerRadius;
-+ (NSBezierPath *)bezierPathWithBottomRoundedRect:(NSRect)theRect cornerRadius:(float)theCornerRadius;
-+ (NSBezierPath *)bezierPathWithTopRoundedRect:(NSRect)theRect cornerRadius:(float)theRadius;
-+ (NSBezierPath *)bezierPathWithBottomRoundedRect:(NSRect)theRect cornerRadius:(float)theRadius;
-- (void)appendBezierPathWithLeftRoundedRect:(NSRect)theRect cornerRadius:(float)theCornerRadius;
-- (void)appendBezierPathWithRightRoundedRect:(NSRect)theRect cornerRadius:(float)theCornerRadius;
-- (void)appendBezierPathWithTopRoundedRect:(NSRect)theRect cornerRadius:(float)theCornerRadius;
-- (void)appendBezierPathWithBottomRoundedRect:(NSRect)theRect cornerRadius:(float)theCornerRadius;
++ (NSBezierPath *)bezierPathWithLeftRoundedRect:(NSRect)theRect cornerRadius:(CGFloat)theCornerRadius;
++ (NSBezierPath *)bezierPathWithRightRoundedRect:(NSRect)theRect cornerRadius:(CGFloat)theCornerRadius;
++ (NSBezierPath *)bezierPathWithTopRoundedRect:(NSRect)theRect cornerRadius:(CGFloat)theCornerRadius;
++ (NSBezierPath *)bezierPathWithBottomRoundedRect:(NSRect)theRect cornerRadius:(CGFloat)theCornerRadius;
++ (NSBezierPath *)bezierPathWithTopRoundedRect:(NSRect)theRect cornerRadius:(CGFloat)theRadius;
++ (NSBezierPath *)bezierPathWithBottomRoundedRect:(NSRect)theRect cornerRadius:(CGFloat)theRadius;
+- (void)appendBezierPathWithLeftRoundedRect:(NSRect)theRect cornerRadius:(CGFloat)theCornerRadius;
+- (void)appendBezierPathWithRightRoundedRect:(NSRect)theRect cornerRadius:(CGFloat)theCornerRadius;
+- (void)appendBezierPathWithTopRoundedRect:(NSRect)theRect cornerRadius:(CGFloat)theCornerRadius;
+- (void)appendBezierPathWithBottomRoundedRect:(NSRect)theRect cornerRadius:(CGFloat)theCornerRadius;
 @end

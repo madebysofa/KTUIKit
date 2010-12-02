@@ -102,7 +102,7 @@ typedef enum
 - (void)disableMaxSizeConstraint;
 
 - (void)setDividerPosition:(CGFloat)thePosition relativeToView:(KTSplitViewFocusedViewFlag)theView;
-- (void)setDividerPosition:(CGFloat)thePosition relativeToView:(KTSplitViewFocusedViewFlag)theView animate:(BOOL)theBool animationDuration:(float)theTimeInSeconds;
+- (void)setDividerPosition:(CGFloat)thePosition relativeToView:(KTSplitViewFocusedViewFlag)theView animate:(BOOL)theBool animationDuration:(CGFloat)theTimeInSeconds;
 - (CGFloat)dividerPositionRelativeToView:(KTSplitViewFocusedViewFlag)theFocusedViewFlag;
 - (void)setDividerFillColor:(NSColor*)theColor;
 - (void)setDividerBackgroundGradient:(NSGradient*)theGradient;

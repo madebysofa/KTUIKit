@@ -99,7 +99,7 @@
 	NSInteger i;
 	for(i = 0; i < aNumberOfStops; i++)
 	{
-		float		anInset = 2;
+		CGFloat		anInset = 2;
 		NSRect		aStopRect;
 		NSColor *	aStopColor = nil;	
 		CGFloat		aLocation = 0;
@@ -178,7 +178,7 @@
 	if(NSPointInRect(aMousePoint, aGradientRect))
 	{
 		// gotta convert the point so that it's in the gradient rect
-		float aNewStopLocation = ((aMousePoint.x-.5-aGradientRect.origin.x)/aGradientRect.size.width);
+		CGFloat aNewStopLocation = ((aMousePoint.x-.5-aGradientRect.origin.x)/aGradientRect.size.width);
 		[self makeNewStopAtLocation:aNewStopLocation];
 		return;
 	}

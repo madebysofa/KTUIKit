@@ -542,7 +542,7 @@ NSString *const KTLayoutManagerMaxHeightKey = @"maxHeight";
 #pragma mark -
 #pragma mark EXTRA API FOR CONFIGURATION
 
-- (void)setMargin:(float)theMargin
+- (void)setMargin:(CGFloat)theMargin
 {
 	mMarginTop = theMargin;
 	mMarginRight = theMargin;
@@ -550,10 +550,10 @@ NSString *const KTLayoutManagerMaxHeightKey = @"maxHeight";
 	mMarginLeft = theMargin;
 }
 
-- (void)setMarginTop:(float)theTopMargin 
-			   right:(float)theRightMargin 
-			  bottom:(float)theBottomMargin 
-				left:(float)theLeftMargin
+- (void)setMarginTop:(CGFloat)theTopMargin 
+			   right:(CGFloat)theRightMargin 
+			  bottom:(CGFloat)theBottomMargin 
+				left:(CGFloat)theLeftMargin
 {
 	mMarginTop = theTopMargin;
 	mMarginRight = theRightMargin;

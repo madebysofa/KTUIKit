@@ -20,7 +20,7 @@
 @end
 
 @interface KTSplitView (Private)
-- (void)animateDividerToPosition:(float)thePosition time:(float)theTimeInSeconds;
+- (void)animateDividerToPosition:(CGFloat)thePosition time:(CGFloat)theTimeInSeconds;
 //- (KTView*)firstViewContainer;
 //- (KTView*)secondViewContainer;
 @end
@@ -574,7 +574,7 @@
 //=============================================================== 
 // - setDividerPosition:relativeToView:animate:animationDuration
 //===============================================================
-- (void)setDividerPosition:(CGFloat)thePosition relativeToView:(KTSplitViewFocusedViewFlag)theView animate:(BOOL)theBool animationDuration:(float)theTimeInSeconds;
+- (void)setDividerPosition:(CGFloat)thePosition relativeToView:(KTSplitViewFocusedViewFlag)theView animate:(BOOL)theBool animationDuration:(CGFloat)theTimeInSeconds;
 {
 	if(theBool == NO)
 		[self setDividerPosition:thePosition relativeToView:theView];
@@ -613,7 +613,7 @@
 //===============================================================
 - (CGFloat)dividerPositionRelativeToView:(KTSplitViewFocusedViewFlag)theFocusedViewFlag
 {
-	float aDividerPosition = 0;
+	CGFloat aDividerPosition = 0;
 	
 	if([self dividerOrientation] == KTSplitViewDividerOrientation_Horizontal)
 	{
@@ -636,7 +636,7 @@
 //=========================================================== 
 // - animateDividerToPosition:time
 //===========================================================
-- (void)animateDividerToPosition:(float)thePosition time:(float)theTimeInSeconds
+- (void)animateDividerToPosition:(CGFloat)thePosition time:(CGFloat)theTimeInSeconds
 {		
 	if([mAnimator isAnimating])
 	{

@@ -288,13 +288,13 @@
     glMatrixMode(GL_PROJECTION);
     glLoadIdentity();
 	glViewport(0, 0, aWidth, aHeight); 
-	gluPerspective( 60, ((float)aWidth)/((float)(aHeight)), 0.1, 100000.0);
+	gluPerspective( 60, ((CGFloat)aWidth)/((CGFloat)(aHeight)), 0.1, 100000.0);
 	
     // set modeling
     glMatrixMode(GL_MODELVIEW);
     glLoadIdentity();
 	
-	float aZPos = -1.0 * (aBounds.size.height*0.5) / tan( 3.14159 / 6.0 );
+	CGFloat aZPos = -1.0 * (aBounds.size.height*0.5) / tan( 3.14159 / 6.0 );
 	glTranslatef(-aBounds.size.width*0.5, -aBounds.size.height*0.5, aZPos );
 }
 

@@ -158,7 +158,7 @@ NSString *const KTAnimatorPointAnimation = @"KTAnimatorPointAnimation";
 		CS:  All of the animaitons get updated every time the timer fires.  We have different options for how we calculate the new value 
 		in the animation:
 			• based on the kind of animation (linear, eased)
-			• based on the type of *value* we're animating (frame or a float).  
+			• based on the type of *value* we're animating (frame or a CGFloat).  
 			• based on whether the animation is speed or duration based.
 		I plan to break this down into several methods to keep the logic more readable.
 	*/ 
@@ -283,14 +283,14 @@ NSString *const KTAnimatorPointAnimation = @"KTAnimatorPointAnimation";
 					// set the new value as an NSValue with a rect
 					aNewValue = [NSValue valueWithPoint:aPointToSet];					
 				}
-				else // this is animating just a float value
+				else // this is animating just a CGFloat value
 				{
 					CGFloat	anEndValue = [[anAnimationObject valueForKey:KTAnimatorAnimationEndValueKey] floatValue];
 					CGFloat	aStartValue = [[anAnimationObject valueForKey:KTAnimatorAnimationStartValueKey] floatValue];
 					CGFloat	aDistanceOfAnimation = (anEndValue - aStartValue);
 					CGFloat aFloatValueToSet = aStartValue + (aLocationInAnimation * aDistanceOfAnimation);
 					
-					// set the new value to an NSNumber from a float
+					// set the new value to an NSNumber from a CGFloat
 					aNewValue = [NSNumber numberWithFloat:aFloatValueToSet];
 				}
 			}

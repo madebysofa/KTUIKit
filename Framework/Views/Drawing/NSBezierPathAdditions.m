@@ -9,17 +9,17 @@
 
 @implementation NSBezierPath (RoundRect)
 
-+ (NSBezierPath *)bezierPathWithRoundedRect:(NSRect)rect cornerRadius:(float)radius {
++ (NSBezierPath *)bezierPathWithRoundedRect:(NSRect)rect cornerRadius:(CGFloat)radius {
     NSBezierPath *result = [NSBezierPath bezierPath];
     [result appendBezierPathWithRoundedRect:rect cornerRadius:radius];
     return result;
 }
 
-- (void)appendBezierPathWithRoundedRect:(NSRect)rect cornerRadius:(float)radius {
+- (void)appendBezierPathWithRoundedRect:(NSRect)rect cornerRadius:(CGFloat)radius {
     if (!NSIsEmptyRect(rect)) {
   if (radius > 0.0) {
       // Clamp radius to be no larger than half the rect's width or height.
-      float clampedRadius = MIN(radius, 0.5 * MIN(rect.size.width, rect.size.height));
+      CGFloat clampedRadius = MIN(radius, 0.5 * MIN(rect.size.width, rect.size.height));
 
       NSPoint topLeft = NSMakePoint(NSMinX(rect), NSMaxY(rect));
       NSPoint topRight = NSMakePoint(NSMaxX(rect), NSMaxY(rect));
@@ -39,20 +39,20 @@
 }
 
 
-+ (NSBezierPath *)bezierPathWithLeftRoundedRect:(NSRect)theRect cornerRadius:(float)theCornerRadius
++ (NSBezierPath *)bezierPathWithLeftRoundedRect:(NSRect)theRect cornerRadius:(CGFloat)theCornerRadius
 {
 	NSBezierPath * aBezierPathToReturn = [NSBezierPath bezierPath];
     [aBezierPathToReturn appendBezierPathWithLeftRoundedRect:theRect cornerRadius:theCornerRadius];
     return aBezierPathToReturn;
 }
 
-- (void)appendBezierPathWithLeftRoundedRect:(NSRect)theRect cornerRadius:(float)theCornerRadius
+- (void)appendBezierPathWithLeftRoundedRect:(NSRect)theRect cornerRadius:(CGFloat)theCornerRadius
 {
 	if (!NSIsEmptyRect(theRect)) 
 	{
 		if (theCornerRadius > 0.0) 
 		{
-			float	aClampedRadius = MIN(theCornerRadius, 0.5*MIN(theRect.size.width, theRect.size.height));
+			CGFloat	aClampedRadius = MIN(theCornerRadius, 0.5*MIN(theRect.size.width, theRect.size.height));
 			NSPoint	aTopLeftPoint = NSMakePoint(NSMinX(theRect), NSMaxY(theRect));
 			NSPoint aTopRightPoint = NSMakePoint(NSMaxX(theRect), NSMaxY(theRect));
 			NSPoint aBottomRightPoint = NSMakePoint(NSMaxX(theRect), NSMinY(theRect));
@@ -72,20 +72,20 @@
 	}
 }
 
-+ (NSBezierPath *)bezierPathWithRightRoundedRect:(NSRect)theRect cornerRadius:(float)theCornerRadius
++ (NSBezierPath *)bezierPathWithRightRoundedRect:(NSRect)theRect cornerRadius:(CGFloat)theCornerRadius
 {
 	NSBezierPath * aBezierPathToReturn = [NSBezierPath bezierPath];
     [aBezierPathToReturn appendBezierPathWithRightRoundedRect:theRect cornerRadius:theCornerRadius];
     return aBezierPathToReturn;
 
 }
-- (void)appendBezierPathWithRightRoundedRect:(NSRect)theRect cornerRadius:(float)theCornerRadius
+- (void)appendBezierPathWithRightRoundedRect:(NSRect)theRect cornerRadius:(CGFloat)theCornerRadius
 {
 	if (!NSIsEmptyRect(theRect)) 
 	{
 		if (theCornerRadius > 0.0) 
 		{
-			float	aClampedRadius = MIN(theCornerRadius, 0.5*MIN(theRect.size.width, theRect.size.height));
+			CGFloat	aClampedRadius = MIN(theCornerRadius, 0.5*MIN(theRect.size.width, theRect.size.height));
 			NSPoint	aTopLeftPoint = NSMakePoint(NSMinX(theRect), NSMaxY(theRect));
 			NSPoint aTopRightPoint = NSMakePoint(NSMaxX(theRect), NSMaxY(theRect));
 			NSPoint aBottomRightPoint = NSMakePoint(NSMaxX(theRect), NSMinY(theRect));
@@ -105,20 +105,20 @@
 	}
 }
 
-+ (NSBezierPath *)bezierPathWithTopRoundedRect:(NSRect)theRect cornerRadius:(float)theCornerRadius
++ (NSBezierPath *)bezierPathWithTopRoundedRect:(NSRect)theRect cornerRadius:(CGFloat)theCornerRadius
 {
 	NSBezierPath * aBezierPathToReturn = [NSBezierPath bezierPath];
-	[aBezierPathToReturn appendBezierPathWithTopRoundedRect:(NSRect)theRect cornerRadius:(float)theCornerRadius];
+	[aBezierPathToReturn appendBezierPathWithTopRoundedRect:(NSRect)theRect cornerRadius:(CGFloat)theCornerRadius];
 	return aBezierPathToReturn;
 }
 
-- (void)appendBezierPathWithTopRoundedRect:(NSRect)theRect cornerRadius:(float)theCornerRadius
+- (void)appendBezierPathWithTopRoundedRect:(NSRect)theRect cornerRadius:(CGFloat)theCornerRadius
 {
 	if (!NSIsEmptyRect(theRect)) 
 	{
 		if (theCornerRadius > 0.0) 
 		{
-			float	aClampedRadius = MIN(theCornerRadius, 0.5*MIN(theRect.size.width, theRect.size.height));
+			CGFloat	aClampedRadius = MIN(theCornerRadius, 0.5*MIN(theRect.size.width, theRect.size.height));
 			NSPoint	aTopLeftPoint = NSMakePoint(NSMinX(theRect), NSMaxY(theRect));
 			NSPoint aTopRightPoint = NSMakePoint(NSMaxX(theRect), NSMaxY(theRect));
 			NSPoint aBottomRightPoint = NSMakePoint(NSMaxX(theRect), NSMinY(theRect));
@@ -137,20 +137,20 @@
 	}
 }
 
-+ (NSBezierPath *)bezierPathWithBottomRoundedRect:(NSRect)theRect cornerRadius:(float)theCornerRadius
++ (NSBezierPath *)bezierPathWithBottomRoundedRect:(NSRect)theRect cornerRadius:(CGFloat)theCornerRadius
 {
 	NSBezierPath * aBezierPathToReturn = [NSBezierPath bezierPath];
-	[aBezierPathToReturn appendBezierPathWithBottomRoundedRect:(NSRect)theRect cornerRadius:(float)theCornerRadius];
+	[aBezierPathToReturn appendBezierPathWithBottomRoundedRect:(NSRect)theRect cornerRadius:(CGFloat)theCornerRadius];
 	return aBezierPathToReturn;
 }
 
-- (void)appendBezierPathWithBottomRoundedRect:(NSRect)theRect cornerRadius:(float)theCornerRadius
+- (void)appendBezierPathWithBottomRoundedRect:(NSRect)theRect cornerRadius:(CGFloat)theCornerRadius
 {
 	if (!NSIsEmptyRect(theRect)) 
 	{
 		if (theCornerRadius > 0.0) 
 		{
-			float	aClampedRadius = MIN(theCornerRadius, 0.5*MIN(theRect.size.width, theRect.size.height));
+			CGFloat	aClampedRadius = MIN(theCornerRadius, 0.5*MIN(theRect.size.width, theRect.size.height));
 			NSPoint	aTopLeftPoint = NSMakePoint(NSMinX(theRect), NSMaxY(theRect));
 			NSPoint aTopRightPoint = NSMakePoint(NSMaxX(theRect), NSMaxY(theRect));
 			NSPoint aBottomRightPoint = NSMakePoint(NSMaxX(theRect), NSMinY(theRect));

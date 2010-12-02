@@ -123,11 +123,11 @@ typedef enum
 
 - (id)initWithView:(id <KTViewLayout>)theView;
 
-- (void)setMargin:(float)theMargin;
-- (void)setMarginTop:(float)theTopMargin 
-			   right:(float)theRightMargin 
-			  bottom:(float)theBottomMargin 
-				left:(float)theLeftMargin;
+- (void)setMargin:(CGFloat)theMargin;
+- (void)setMarginTop:(CGFloat)theTopMargin 
+			   right:(CGFloat)theRightMargin 
+			  bottom:(CGFloat)theBottomMargin 
+				left:(CGFloat)theLeftMargin;
 				
 - (void)refreshLayout;
 
