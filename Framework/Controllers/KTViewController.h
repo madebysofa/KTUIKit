@@ -32,6 +32,7 @@
 
 #import <Cocoa/Cocoa.h>
 #import "KTMacros.h"
+
 #import "KTViewProtocol.h"
 #import "KTController.h"
 #import "KTWindowController.h"
@@ -59,23 +60,31 @@ KT_EXPORT NSString *const KTViewControllerLayerControllersKey;
 @property (readwrite, nonatomic, assign) BOOL hidden;
 
 + (id)viewControllerWithWindowController:(KTWindowController *)theWindowController;
-- (id)initWithNibName:(NSString *)name bundle:(NSBundle *)bundle windowController:(KTWindowController *)windowController;
+- (id)initWithNibName:(NSString *)theName bundle:(NSBundle *)theBundle windowController:(KTWindowController *)windowController;
 - (BOOL)loadNibNamed:(NSString *)theNibName bundle:(NSBundle *)theBundle;
 
-#pragma mark Subcontrollers
-@property (readonly, nonatomic, copy) NSArray *subcontrollers;
-- (void)setSubcontrollers:(NSArray *)theSubcontrollers DEPRECATED_ATTRIBUTE;
+#pragma mark View Controllers
 
-- (void)addSubcontroller:(KTViewController *)viewController;
-- (void)removeSubcontroller:(KTViewController *)viewController;
-
-- (void)removeAllSubcontrollers;
+@property (readonly, nonatomic, copy) NSArray *viewControllers;
+- (void)addViewController:(KTViewController *)theViewController;
+- (void)removeViewController:(KTViewController *)theViewController;
+- (void)removeAllViewControllers;
 
 #pragma mark Layer Controllers
-- (NSArray *)layerControllers;
 
+@property (readonly, nonatomic, copy) NSArray *layerControllers;
 - (void)addLayerController:(KTLayerController *)theLayerController;
 - (void)removeLayerController:(KTLayerController *)theLayerController;
+
+
+// This API will be deprecated in the near-future, use the "viewController"-based methods instead.
+#pragma mark Subcontrollers
+
+@property (readonly, nonatomic, copy) NSArray *subcontrollers;
+- (void)setSubcontrollers:(NSArray *)theSubcontrollers DEPRECATED_ATTRIBUTE;
+- (void)addSubcontroller:(KTViewController *)viewController;
+- (void)removeSubcontroller:(KTViewController *)viewController;
+- (void)removeAllSubcontrollers;
 
 @end
 
