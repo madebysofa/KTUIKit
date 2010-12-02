@@ -43,17 +43,17 @@
 #import "KTStyleManager.h"
 #import "KTView.h"
 
-#define kKTStyleManagerBackgroundColorKey @"backgroundColor"
-#define kKTStyleManagerBackgroundGradientKey @"backgroundGradient"
-#define kKTStyleManagerBackgroundGradientAngleKey @"gradientAngle"
-#define kKTStyleManagerBorderWidthTopKey @"borderWidthTop"
-#define kKTStyleManagerBorderWidthRightKey @"borderWidthRight"
-#define kKTStyleManagerBorderWidthBottomKey @"borderWidthBottom"
-#define kKTStyleManagerBorderWidthLeftKey @"borderWidthLeft"
-#define kKTStyleManagerBorderColorTopKey @"borderColorTop"
-#define kKTStyleManagerBorderColorRightKey @"borderColorRight"
-#define kKTStyleManagerBorderColorBottomKey @"borderColorBottom"
-#define kKTStyleManagerBorderColorLeftKey @"borderColorLeft"
+NSString *const KTStyleManagerBackgroundColorKey = @"backgroundColor";
+NSString *const KTStyleManagerBackgroundGradientKey = @"backgroundGradient";
+NSString *const KTStyleManagerBackgroundGradientAngleKey = @"gradientAngle";
+NSString *const KTStyleManagerBorderWidthTopKey = @"borderWidthTop";
+NSString *const KTStyleManagerBorderWidthRightKey = @"borderWidthRight";
+NSString *const KTStyleManagerBorderWidthBottomKey = @"borderWidthBottom";
+NSString *const KTStyleManagerBorderWidthLeftKey = @"borderWidthLeft";
+NSString *const KTStyleManagerBorderColorTopKey = @"borderColorTop";
+NSString *const KTStyleManagerBorderColorRightKey = @"borderColorRight";
+NSString *const KTStyleManagerBorderColorBottomKey = @"borderColorBottom";
+NSString *const KTStyleManagerBorderColorLeftKey = @"borderColorLeft";
 
 @interface KTStyleManager (Private)
 - (NSArray*)keysForCoding;
@@ -118,30 +118,30 @@
  
 - (NSArray *)keysForCoding
 {
-	return [NSArray arrayWithObjects:kKTStyleManagerBackgroundColorKey,
-									 kKTStyleManagerBackgroundGradientKey, 
-									 kKTStyleManagerBackgroundGradientAngleKey, 
-									 kKTStyleManagerBorderWidthTopKey, 
-									 kKTStyleManagerBorderWidthRightKey, 
-									 kKTStyleManagerBorderWidthBottomKey, 
-									 kKTStyleManagerBorderWidthLeftKey, 
-									 kKTStyleManagerBorderColorTopKey, 
-									 kKTStyleManagerBorderColorRightKey, 
-									 kKTStyleManagerBorderColorBottomKey, 
-									 kKTStyleManagerBorderColorLeftKey, nil];
+	return [NSArray arrayWithObjects:KTStyleManagerBackgroundColorKey,
+									 KTStyleManagerBackgroundGradientKey, 
+									 KTStyleManagerBackgroundGradientAngleKey, 
+									 KTStyleManagerBorderWidthTopKey, 
+									 KTStyleManagerBorderWidthRightKey, 
+									 KTStyleManagerBorderWidthBottomKey, 
+									 KTStyleManagerBorderWidthLeftKey, 
+									 KTStyleManagerBorderColorTopKey, 
+									 KTStyleManagerBorderColorRightKey, 
+									 KTStyleManagerBorderColorBottomKey, 
+									 KTStyleManagerBorderColorLeftKey, nil];
 }
- 
+
 - (void)setNilValueForKey:(NSString *)key;
 {
-	if([key isEqualToString:kKTStyleManagerBackgroundGradientAngleKey])
+	if([key isEqualToString:KTStyleManagerBackgroundGradientAngleKey])
 		[self setGradientAngle:0.0];
-	else if([key isEqualToString:kKTStyleManagerBorderWidthTopKey])
+	else if([key isEqualToString:KTStyleManagerBorderWidthTopKey])
 		[self setBorderWidthTop:0.0];
-	else if([key isEqualToString:kKTStyleManagerBorderWidthRightKey])
+	else if([key isEqualToString:KTStyleManagerBorderWidthRightKey])
 		[self setBorderWidthRight:0.0];
-	else if([key isEqualToString:kKTStyleManagerBorderWidthBottomKey])
+	else if([key isEqualToString:KTStyleManagerBorderWidthBottomKey])
 		[self setBorderWidthBottom:0.0];
-	else if([key isEqualToString:kKTStyleManagerBorderWidthLeftKey])
+	else if([key isEqualToString:KTStyleManagerBorderWidthLeftKey])
 		[self setBorderWidthLeft:0.0];
 
 	else
