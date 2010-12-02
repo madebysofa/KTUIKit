@@ -7,12 +7,13 @@
  *
  */
 
-@class KTStyleManager;
-@class NSWindow;
+#import <Cocoa/Cocoa.h>
+#import "KTMacros.h"
 
-@protocol KTStyle<NSObject>
-- (KTStyleManager*)styleManager;
-- (void)setStyleManager:(KTStyleManager*)theStyleManager;
+@class KTStyleManager;
+
+@protocol KTStyle <NSObject>
+@property (readwrite, nonatomic, retain) KTStyleManager *styleManager;
 - (void)setNeedsDisplay:(BOOL)theBool;
 - (NSWindow *)window;
 @end
