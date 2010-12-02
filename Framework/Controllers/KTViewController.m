@@ -309,8 +309,9 @@ NSString *const KTViewControllerLayerControllersKey = @"layerControllers";
 {
 	CFMutableArrayRef aMutableDescendants = CFArrayCreateMutable(kCFAllocatorDefault, 0, &kCFTypeArrayCallBacks);
 
+	NSArray *aViewControllers = [self viewControllers];
 	NSAutoreleasePool *aPool = [[NSAutoreleasePool alloc] init];
-	for (KTViewController *aSubViewController in [self viewControllers]) {
+	for (KTViewController *aSubViewController in aViewControllers) {
 		CFArrayAppendValue(aMutableDescendants, aSubViewController);
 		NSArray *aSubDescendants = [aSubViewController descendants];
 		if (aSubDescendants != nil) {
@@ -324,8 +325,9 @@ NSString *const KTViewControllerLayerControllersKey = @"layerControllers";
 	}
 	[aPool drain];
 	
+	NSArray *aLayerControllers = [self layerControllers];
 	aPool = [[NSAutoreleasePool alloc] init];	
-	for (KTLayerController *aLayerController in [self layerControllers]) {
+	for (KTLayerController *aLayerController in aLayerControllers) {
 		CFArrayAppendValue(aMutableDescendants, aLayerController);
 		NSArray *aSubDescendants = [aLayerController descendants];
 		if (aSubDescendants != nil) {
