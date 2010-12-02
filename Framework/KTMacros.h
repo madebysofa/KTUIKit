@@ -8,6 +8,10 @@
 
 #import <Cocoa/Cocoa.h>
 
+#ifndef KT_EXPORT
+#define KT_EXPORT extern
+#endif // KT_EXPORT
+
 // In the case that we're compiling against the 10.5 SDK, we need to define this as the 10.6 SDK does.
 #ifndef __has_feature
 #define __has_feature(x) 0     // Compatibility with non-clang compilers.
