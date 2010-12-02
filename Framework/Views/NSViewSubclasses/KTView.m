@@ -37,7 +37,7 @@ NSString *const KTViewStyleManagerKey = @"styleManager";
 NSString *const KTViewLabelKey = @"label";
 
 @interface KTView ()
-- (void)_drawDebugginRect;
+- (void)_drawDebuggingRect;
 @end
 
 @implementation KTView
@@ -79,15 +79,15 @@ NSString *const KTViewLabelKey = @"label";
 - (void)encodeWithCoder:(NSCoder*)theCoder
 {	
 	[super encodeWithCoder:theCoder];
-	[theCoder encodeObject:[self viewLayoutManager] forKey:@"layoutManager"];
-	[theCoder encodeObject:[self styleManager] forKey:@"styleManager"];
-	[theCoder encodeObject:[self label] forKey:@"label"];
+	[theCoder encodeObject:[self viewLayoutManager] forKey:KTViewViewLayoutManagerKey];
+	[theCoder encodeObject:[self styleManager] forKey:KTViewStyleManagerKey];
+	[theCoder encodeObject:[self label] forKey:KTViewLabelKey];
 }
  
 - (id)initWithCoder:(NSCoder*)theCoder
 {
 	if ((self = [super initWithCoder:theCoder])) {
-		KTLayoutManager * aLayoutManager = [theCoder decodeObjectForKey:@"layoutManager"];
+		KTLayoutManager * aLayoutManager = [theCoder decodeObjectForKey:KTViewViewLayoutManagerKey];
 		if(aLayoutManager == nil)
 			aLayoutManager = [[[KTLayoutManager alloc] initWithView:self] autorelease];
 		else
@@ -96,7 +96,7 @@ NSString *const KTViewLabelKey = @"label";
 		[self setAutoresizesSubviews:NO];
 		[self setAutoresizingMask:NSViewNotSizable];
 		
-		KTStyleManager * aStyleManager = [theCoder decodeObjectForKey:@"styleManager"];
+		KTStyleManager * aStyleManager = [theCoder decodeObjectForKey:KTViewStyleManagerKey];
 		if(aStyleManager == nil)
 			aStyleManager = [[[KTStyleManager alloc] initWithView:self] autorelease];
 		else
@@ -104,7 +104,7 @@ NSString *const KTViewLabelKey = @"label";
 		[self setStyleManager:aStyleManager];
 		[self setOpaque:NO];
 		
-		NSString * aLabel = [theCoder decodeObjectForKey:@"label"];
+		NSString * aLabel = [theCoder decodeObjectForKey:KTViewLabelKey];
 		if(aLabel == nil)
 			aLabel = [self description];
 		[self setLabel:aLabel];
@@ -191,19 +191,12 @@ NSString *const KTViewLabelKey = @"label";
 - (void)drawRect:(NSRect)theRect
 {	
 	CGContextRef aContext = [[NSGraphicsContext currentContext] graphicsPort];
+
 	if ([self drawDebuggingRect])
-		[self _drawDebugginRect];
+		[self _drawDebuggingRect];
 		
-//	if(mDrawAsImage)
-//	{
-//		[mCachedImage drawInRect:theRect fromRect:NSZeroRect operation:NSCompositeSourceOver fraction:1];
-////		NSLog(@"drawing cached image of view");
-//	}
-//	else
-//	{
-		[mStyleManager drawStylesInRect:theRect context:aContext view:self];
-		[self drawInContext:aContext];
-//	}
+	[[self styleManager] drawStylesInRect:theRect context:aContext view:self];
+	[self drawInContext:aContext];
 }
  
 - (void)drawInContext:(CGContextRef)theContext
@@ -211,7 +204,7 @@ NSString *const KTViewLabelKey = @"label";
 	// subclasses can override this to do custom drawing over the styles
 }
  
-- (void)_drawDebugginRect
+- (void)_drawDebuggingRect
 {
 	[[NSColor colorWithCalibratedRed:0 green:1 blue:0 alpha:.5] set];
 	NSRect anInsetBounds = NSInsetRect([self bounds], 10, 10);
