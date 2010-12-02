@@ -12,8 +12,7 @@
 @class KTOpenGLView;
 @class KTLayoutManager;
 
-@interface KTOpenGLLayer : NSResponder <KTViewLayout> 
-{
+@interface KTOpenGLLayer : NSResponder <KTViewLayout> {
 	@private
 		KTLayoutManager *		mLayoutManager;
 		NSRect					mFrame;
@@ -26,15 +25,14 @@
 		BOOL					mDrawDebuggingRects;
 }
 
-@property (readwrite, assign) NSRect frame;
-@property (readwrite, assign) CGFloat rotation;
-@property (readwrite, assign) NSPoint anchorPoint;
-@property (readwrite, assign) CGFloat alpha;
-@property (readwrite, retain) KTLayoutManager * viewLayoutManager;
-@property (readwrite, assign) KTOpenGLView * view;
-@property (readwrite, assign) KTOpenGLLayer * superlayer;
-@property (readwrite, retain) NSMutableArray * sublayers;
-@property (readwrite, assign) BOOL	drawDebuggingRects;
+@property (readwrite, nonatomic, assign) CGFloat rotation;
+@property (readwrite, nonatomic, assign) NSPoint anchorPoint;
+@property (readwrite, nonatomic, assign) CGFloat alpha;
+@property (readwrite, nonatomic, retain) KTLayoutManager *viewLayoutManager;
+@property (readwrite, nonatomic, assign) KTOpenGLView *view;
+@property (readwrite, nonatomic, assign) KTOpenGLLayer *superlayer;
+@property (readwrite, nonatomic, retain) NSMutableArray *sublayers;
+@property (readwrite, nonatomic, assign) BOOL drawDebuggingRects;
 
 
 - (id)initWithFrame:(NSRect)theFrame;
