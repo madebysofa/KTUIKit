@@ -31,19 +31,23 @@
 // For example, "Contains "View Controllers" by Jonathan Dann and Cathy Shive" will do.
 
 #import <Cocoa/Cocoa.h>
+#import "KTMacros.h"
+
+KT_EXPORT NSString *const KTWindowControllerViewControllersKey;
 
 @class KTViewController;
-@interface KTWindowController : NSWindowController 
-{
-	@private
-	NSMutableArray *		mViewControllers;
-} 
 
-- (NSArray*)viewControllers;
-- (void)setViewControllers:(NSArray*)theViewControllers;
+@interface KTWindowController : NSWindowController {
+	@private
+	NSMutableArray *mPrimitiveViewControllers;
+} 
+@property (readonly, nonatomic) NSArray *viewControllers;
+
+- (void)setViewControllers:(NSArray *)theViewControllers DEPRECATED_ATTRIBUTE;
 - (void)addViewController:(KTViewController *)theViewController;
 - (void)removeViewController:(KTViewController *)theViewController;
 - (void)removeAllViewControllers;
+
 - (void)patchResponderChain;
 
 @end

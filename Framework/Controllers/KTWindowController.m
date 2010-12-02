@@ -34,116 +34,108 @@
 #import "KTViewController.h"
 #import "KTLayerController.h"
 
+NSString *const KTWindowControllerViewControllersKey = @"viewControllers";
+
+@interface KTWindowController ()
+@property (readonly, nonatomic) NSMutableArray *primitiveViewControllers;
+@end
+
 @implementation KTWindowController
 
-//=========================================================== 
-// - initWithWindowNibName:
-//=========================================================== 
-- (id)initWithWindowNibName:(NSString *)theNibName;
+- (void)dealloc;
 {
-	if ((self = [super initWithWindowNibName:theNibName])) {
-		mViewControllers = [[NSMutableArray alloc] init];		
-	}
-	return self;
-}
-
-
-
-//=========================================================== 
-// - dealloc
-//=========================================================== 
-- (void)dealloc
-{
-	[mViewControllers release];
+	[mPrimitiveViewControllers release];
+	
 	[super dealloc];
 }
 
+#pragma mark -
+#pragma mark Accessors
 
-
-//=========================================================== 
-// - setViewControllers
-//=========================================================== 
-- (void)windowWillClose:(NSNotification *)theNotification
+- (NSMutableArray *)primitiveViewControllers;
 {
-	/*CS: I don't know if we want to actually do this in the framework
-	it only really truely works if the view controllers are actually released when the window closes
-	and they are re-initialized when the window is created.  You might have a window that you want
-	to open and close without releasing the controllers/views.  In this case, we would have the
-	controllers remove all their observations or bindings when the window closes and we don't have a way or hook to re-establish
-	the observations/bindings when the window opens again - needs to be balanced*/
-	//[[self viewControllers] makeObjectsPerformSelector:@selector(removeObservations)];
+	if (mPrimitiveViewControllers != nil) return mPrimitiveViewControllers;
+	mPrimitiveViewControllers = [[NSMutableArray alloc] init];
+	return mPrimitiveViewControllers;
 }
 
-
-//=========================================================== 
-// - setViewControllers
-//=========================================================== 
-- (void)setViewControllers:(NSArray *)theViewControllers
+- (NSArray *)viewControllers;
 {
-	if(mViewControllers != theViewControllers)
-	{
-		NSMutableArray * aNewViewControllers = [theViewControllers mutableCopy];
-		[mViewControllers makeObjectsPerformSelector:@selector(removeObservations)];
-		[mViewControllers release];
-		mViewControllers = aNewViewControllers;
-	}
+	return [[[self primitiveViewControllers] copy] autorelease];
 }
 
-
-
-//=========================================================== 
-// - viewControllers
-//=========================================================== 
-- (NSArray*)viewControllers
+- (NSUInteger)countOfViewControllers;
 {
-	return mViewControllers;
+	return [[self primitiveViewControllers] count];
 }
 
+- (id)objectInViewControllersAtIndex:(NSUInteger)theIndex;
+{
+	return [[self primitiveViewControllers] objectAtIndex:theIndex];
+}
 
+- (void)insertObject:(KTViewController *)theViewController inViewControllersAtIndex:(NSUInteger)theIndex;
+{
+	[[self primitiveViewControllers] insertObject:theViewController atIndex:theIndex];
+}
 
-//=========================================================== 
-// - addViewController:
-//=========================================================== 
+- (void)removeObjectFromViewControllersAtIndex:(NSUInteger)theIndex;
+{
+	[[self primitiveViewControllers] removeObjectAtIndex:theIndex];
+}
+
+#pragma mark Public View Controller API
+
 - (void)addViewController:(KTViewController *)theViewController
 {
-	if(theViewController)
-	{
-		[mViewControllers addObject:theViewController];
-		[self patchResponderChain];
-	}
-}
-
-
-
-//=========================================================== 
-// - removeViewController:
-//=========================================================== 
-- (void)removeViewController:(KTViewController *)theViewController
-{
-	if(theViewController)
-	{
-		[theViewController removeObservations];
-		[mViewControllers removeObject:theViewController];
-		[self patchResponderChain];
-	}
-}
-
-
-
-//=========================================================== 
-// - removeAllViewControllers
-//=========================================================== 
-- (void)removeAllViewControllers
-{
-	[mViewControllers makeObjectsPerformSelector:@selector(removeObservations)];
-	[mViewControllers removeAllObjects];
+	if (theViewController == nil) return;
+	NSParameterAssert(![[self primitiveViewControllers] containsObject:theViewController]);
+	[[self mutableArrayValueForKey:KTWindowControllerViewControllersKey] addObject:theViewController];
 	[self patchResponderChain];
 }
+
+- (void)removeViewController:(KTViewController *)theViewController
+{
+	if(theViewController == nil) return;
+	[theViewController retain];
+	{
+		[[self mutableArrayValueForKey:KTWindowControllerViewControllersKey] removeObject:theViewController];
+		[theViewController removeObservations];
+	}
+	[theViewController release];
+	[self patchResponderChain];
+}
+
+- (void)removeAllViewControllers
+{
+	NSArray *aViewControllers = [[self viewControllers] retain];
+	{
+		[[self mutableArrayValueForKey:KTWindowControllerViewControllersKey] removeAllObjects];
+		[aViewControllers makeObjectsPerformSelector:@selector(removeObservations)];
+	}
+	[aViewControllers release];
+	[self patchResponderChain];
+}
+
+#pragma mark Deprecated API
+
+- (void)setViewControllers:(NSArray *)theViewControllers
+{
+	[theViewControllers retain];
+	{
+		[self removeAllViewControllers];
+		[[self mutableArrayValueForKey:KTViewControllerViewControllersKey] addObjectsFromArray:theViewControllers];
+	}
+	[theViewControllers release];
+	[self patchResponderChain];
+}
+
+#pragma mark Descendants
 
 - (NSArray *)_descendants;
 {	
 	CFMutableArrayRef aMutableDescendants = CFArrayCreateMutable(kCFAllocatorDefault, 0, &kCFTypeArrayCallBacks);
-	for (KTViewController *aSubViewController in mViewControllers) {
+	for (KTViewController *aSubViewController in [self viewControllers]) {
 		CFArrayAppendValue(aMutableDescendants, aSubViewController);
 		NSArray *aSubDescendants = [aSubViewController descendants];
 		if (aSubDescendants != nil) {
@@ -158,17 +150,17 @@
 	return [NSMakeCollectable(aDescendants) autorelease];
 }
 
-//=========================================================== 
-// - removeObservations
-//=========================================================== 
+#pragma mark -
+#pragma mark KVO Teardown
+
 - (void)removeObservations
 {
-	[mViewControllers makeObjectsPerformSelector:@selector(removeObservations)];
+	[[self viewControllers] makeObjectsPerformSelector:@selector(removeObservations)];
 }
 
-//=========================================================== 
-// - patchResponderChain
-//=========================================================== 
+#pragma mark -
+#pragma mark Responder Chain
+
 - (void)patchResponderChain
 {
 	NSAutoreleasePool *aPool = [[NSAutoreleasePool alloc] init];
