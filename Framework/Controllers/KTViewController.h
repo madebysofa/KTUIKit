@@ -31,47 +31,51 @@
 // For example, "Contains "View Controllers" by Jonathan Dann and Cathy Shive" will do.
 
 #import <Cocoa/Cocoa.h>
+#import "KTMacros.h"
 #import "KTViewProtocol.h"
 #import "KTController.h"
 #import "KTWindowController.h"
 
+KT_EXPORT NSString *const KTViewControllerViewControllersKey;
+KT_EXPORT NSString *const KTViewControllerLayerControllersKey;
+
 @class KTLayerController;
 
-@interface KTViewController : NSViewController <KTController>
-{
+@interface KTViewController : NSViewController <KTController> {
 	@private
-	KTWindowController *		wWindowController;
-	KTViewController *			wParentViewController;
-	NSMutableArray *			mSubcontrollers;
-	NSMutableArray *			mTopLevelNibObjects;
-	NSMutableArray *			mLayerControllers;
-	BOOL						mHidden;
+	KTWindowController *wWindowController;
+	KTViewController *wParentViewController;
+	
+	NSMutableArray *mPrimitiveViewControllers;
+	NSMutableArray *mPrimitiveLayerControllers;
+
+	BOOL mHidden;
+
+	NSArray *mTopLevelNibObjects;
 }
 
-@property(nonatomic, assign) KTWindowController * windowController;
-@property (nonatomic, readonly, assign) KTViewController * parentViewController;
-@property(nonatomic, readwrite, assign) BOOL hidden;
+@property (readwrite, nonatomic, assign) KTWindowController *windowController;
+@property (readonly, nonatomic, assign) KTViewController *parentViewController;
+@property (readwrite, nonatomic, assign) BOOL hidden;
 
-+ (id)viewControllerWithWindowController:(KTWindowController*)theWindowController;
++ (id)viewControllerWithWindowController:(KTWindowController *)theWindowController;
 - (id)initWithNibName:(NSString *)name bundle:(NSBundle *)bundle windowController:(KTWindowController *)windowController;
-- (BOOL)loadNibNamed:(NSString*)theNibName bundle:(NSBundle*)theBundle;
-
-
-#pragma mark View
-//- (NSView<KTView>*)view;
-//- (void)setView:(NSView<KTView>*)theView;
+- (BOOL)loadNibNamed:(NSString *)theNibName bundle:(NSBundle *)theBundle;
 
 #pragma mark Subcontrollers
-- (void)setSubcontrollers:(NSArray*)theSubcontrollers;
-- (NSArray*)subcontrollers;
+@property (readonly, nonatomic, copy) NSArray *subcontrollers;
+- (void)setSubcontrollers:(NSArray *)theSubcontrollers DEPRECATED_ATTRIBUTE;
+
 - (void)addSubcontroller:(KTViewController *)viewController;
 - (void)removeSubcontroller:(KTViewController *)viewController;
+
 - (void)removeAllSubcontrollers;
 
 #pragma mark Layer Controllers
-- (void)addLayerController:(KTLayerController*)theLayerController;
-- (void)removeLayerController:(KTLayerController*)theLayerController;
-- (NSArray*)layerControllers;
+- (NSArray *)layerControllers;
+
+- (void)addLayerController:(KTLayerController *)theLayerController;
+- (void)removeLayerController:(KTLayerController *)theLayerController;
 
 @end
 

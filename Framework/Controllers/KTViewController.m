@@ -48,115 +48,82 @@
 #import "KTWindowController.h"
 #import "KTLayerController.h"
 
+NSString *const KTViewControllerViewControllersKey = @"viewControllers";
+NSString *const KTViewControllerLayerControllersKey = @"layerControllers";
+
 @interface KTViewController ()
-@property (nonatomic, readwrite, assign) KTViewController * parentViewController;
-@end
+@property (readwrite, nonatomic, assign, setter = _setParentViewController:) KTViewController *parentViewController;
 
+@property (readonly, nonatomic) NSMutableArray *primitiveViewControllers;
+@property (readonly, nonatomic) NSMutableArray *primitiveLayerControllers;
 
-@interface KTViewController (Private)
-- (void)releaseNibObjects;
+@property (readwrite, nonatomic, copy) NSArray *topLevelObjects;
+
 - (void)_setHidden:(BOOL)theHiddenFlag patchResponderChain:(BOOL)thePatchFlag;
 @end
 
 @implementation KTViewController
-//=========================================================== 
-// - @synthesize
-//=========================================================== 
+
 @synthesize windowController = wWindowController;
 @synthesize parentViewController = wParentViewController;
 @synthesize hidden = mHidden;
+@synthesize topLevelObjects = mTopLevelNibObjects;
 
-
-//=========================================================== 
-// - viewControllerWithWindowController
-//=========================================================== 
-+ (id)viewControllerWithWindowController:(KTWindowController*)theWindowController
++ (id)viewControllerWithWindowController:(KTWindowController *)theWindowController
 {
 	return [[[self alloc] initWithNibName:nil bundle:nil windowController:theWindowController] autorelease];
 }
 
-
-//=========================================================== 
-// - initWithNibName
-//=========================================================== 
 - (id)initWithNibName:(NSString *)theNibName bundle:(NSBundle *)theBundle windowController:(KTWindowController *)theWindowController;
 {
-	if (![super initWithNibName:theNibName bundle:theBundle])
-		return nil;
-	wWindowController = theWindowController;
-	mSubcontrollers = [[NSMutableArray alloc] init];
-	mTopLevelNibObjects = [[NSMutableArray alloc] init];
-	mLayerControllers = [[NSMutableArray alloc] init];
+	if ((self = [super initWithNibName:theNibName bundle:theBundle])) {
+		wWindowController = theWindowController;
+	}
 	return self;
 }
 
-//=========================================================== 
-// - initWithNibName
-//=========================================================== 
-- (id)initWithNibName:(NSString *)name bundle:(NSBundle *)bundle
+- (id)initWithNibName:(NSString *)theName bundle:(NSBundle *)theBundle;
 {
 	[NSException raise:@"KTViewControllerException" format:@"An instance of an KTViewController concrete subclass was initialized using the NSViewController method -initWithNibName:bundle: all view controllers in the enusing tree will have no reference to an KTWindowController object and cannot be automatically added to the responder chain"];
 	return nil;
 }
 
-//=========================================================== 
-// - awakeFromNib
-//=========================================================== 
-- (void)awakeFromNib
+// On 10.6 NSObject implements -awakeFromNib. It's a very common mistake to call super when compiling for 10.5+, we implement -awakeFromNib here so subclasses can safely call super.
+- (void)awakeFromNib;
 {}
 
-//=========================================================== 
-// - dealloc
-//=========================================================== 
-- (void)dealloc
+- (void)dealloc;
 {
-	//NSLog(@"%@ dealloc", self);
-	[self releaseNibObjects];
-//	[mSubcontrollers makeObjectsPerformSelector:@selector(removeObservations)];
-	for(KTViewController * aViewController in mSubcontrollers)
-		[aViewController setParentViewController:nil];
-	[mSubcontrollers release];
-//	[mLayerControllers makeObjectsPerformSelector:@selector(removeObservations)];
-	[mLayerControllers release];
+	if (mPrimitiveViewControllers != nil) {
+		[mPrimitiveViewControllers makeObjectsPerformSelector:@selector(_setParentViewController:) withObject:nil];
+	}
+	[mPrimitiveViewControllers release];
+	[mPrimitiveLayerControllers release];
+
+	[mTopLevelNibObjects release];
+	
 	[super dealloc];
 }
 
-//=========================================================== 
-// - releaseNibObjects
-//=========================================================== 
-- (void)releaseNibObjects
-{
-	for(NSInteger i = 0; i < [mTopLevelNibObjects count]; i++)
-	{
-		[[mTopLevelNibObjects objectAtIndex:i] release];
-	}
-	[mTopLevelNibObjects release];
-}
+#pragma mark -
+#pragma mark Accessors
 
 - (NSString *)description;
 {
 	return [NSString stringWithFormat:@"%@ hidden:%@", [super description], [self hidden] ? @"YES" : @"NO"];
 }
 
-// CS: I wonder about this situation
-// if the window controller changes, say a view controller is moved from one window to another
-// it is important that the view controller has been removed from the old window controller
-// and that that window controller has re-patched its responder chain
-// otherwise it is possible that actions from the other window will get handled by a view controller
-// that is no longer a part of that window
-//=========================================================== 
-// - setWindowController
-//=========================================================== 
-- (void)setWindowController:(KTWindowController*)theWindowController
+- (void)setWindowController:(KTWindowController *)theWindowController;
 {
+	if (wWindowController == theWindowController) return;
 	wWindowController = theWindowController;
 	[[self subcontrollers] makeObjectsPerformSelector:@selector(setWindowController:) withObject:theWindowController];
-	[[self windowController] patchResponderChain];
+	[theWindowController patchResponderChain];
 }
 
-- (void)setHidden:(BOOL)theBool
+- (void)setHidden:(BOOL)theHidden;
 {
-	[self _setHidden:theBool patchResponderChain:YES];
+	[self _setHidden:theHidden patchResponderChain:YES];
 }
 
 - (void)_setHidden:(BOOL)theHidden patchResponderChain:(BOOL)thePatch;
@@ -177,115 +144,175 @@
 	}
 }
 
-#pragma mark Subcontrollers
-//=========================================================== 
-// - setSubcontrollers
-//=========================================================== 
-- (void)setSubcontrollers:(NSArray *)theSubcontrollers;
+#pragma mark View Controllers
+
+- (NSMutableArray *)primitiveViewControllers;
 {
-	if(mSubcontrollers != theSubcontrollers)
-	{
-		NSMutableArray * aNewSubcontrollers = [theSubcontrollers mutableCopy];
-		[mSubcontrollers release];
-		mSubcontrollers = aNewSubcontrollers;
-		[[self windowController] patchResponderChain];
-		for(KTViewController*aSubcontroller in mSubcontrollers)
-			[aSubcontroller setParentViewController:self];
-	}
+	if (mPrimitiveViewControllers != nil) return mPrimitiveViewControllers;
+	mPrimitiveViewControllers = [[NSMutableArray alloc] init];
+	return mPrimitiveViewControllers;
 }
 
-//=========================================================== 
-// - subcontrollers
-//=========================================================== 
-- (NSArray *)subcontrollers
+- (NSArray *)viewControllers;
 {
-	return mSubcontrollers;
+	return [[[self primitiveViewControllers] copy] autorelease];
 }
 
-//=========================================================== 
-// - addSubcontroller
-//=========================================================== 
-- (void)addSubcontroller:(KTViewController *)theViewController;
+- (NSUInteger)countOfViewControllers;
 {
-	if(theViewController)
-	{
-		[mSubcontrollers addObject:theViewController];
-		[[self windowController] patchResponderChain];
-		[theViewController setParentViewController:self];
-	}
+	return [[self primitiveViewControllers] count];
 }
 
-
-
-//=========================================================== 
-// - removeSubcontroller
-//=========================================================== 
-- (void)removeSubcontroller:(KTViewController *)theViewController;
+- (id)objectInViewControllersAtIndex:(NSUInteger)theIndex;
 {
-	if(theViewController)
-	{
-		[theViewController setParentViewController:nil];	
-		[theViewController removeObservations];
-		[mSubcontrollers removeObject:theViewController];
-		[[self windowController] patchResponderChain];
-	}
+	return [[self primitiveViewControllers] objectAtIndex:theIndex];
 }
 
-
-
-//=========================================================== 
-// - removeAllSubcontrollers
-//=========================================================== 
-- (void)removeAllSubcontrollers
+- (void)insertObject:(KTViewController *)theViewController inViewControllersAtIndex:(NSUInteger)theIndex;
 {
-	for(KTViewController*aSubcontroller in mSubcontrollers)
-		[aSubcontroller setParentViewController:nil];
-	[self setSubcontrollers:[NSArray array]];
+	[[self primitiveViewControllers] insertObject:theViewController atIndex:theIndex];
+}
+
+- (void)removeObjectFromViewControllersAtIndex:(NSUInteger)theIndex;
+{
+	[[self primitiveViewControllers] removeObjectAtIndex:theIndex];
+}
+
+#pragma mark Public View Controller API
+
+- (void)addViewController:(KTViewController *)theViewController;
+{
+	if (theViewController == nil) return;
+	NSParameterAssert(![[self primitiveViewControllers] containsObject:theViewController]);
+	[[self mutableArrayValueForKey:KTViewControllerViewControllersKey] addObject:theViewController];
+	[theViewController _setParentViewController:self];
 	[[self windowController] patchResponderChain];
 }
 
+- (void)removeViewController:(KTViewController *)theViewController;
+{
+	if (theViewController == nil) return;
+	NSParameterAssert([[self primitiveViewControllers] containsObject:theViewController]);
+	[theViewController retain];
+	{
+		[[self mutableArrayValueForKey:KTViewControllerViewControllersKey] removeObject:theViewController];
+		[theViewController removeObservations];
+		[theViewController _setParentViewController:nil];		
+	}
+	[theViewController release];
+	[[self windowController] patchResponderChain];
+}
+
+- (void)removeAllViewControllers;
+{
+	NSArray *aViewControllers = [[self primitiveViewControllers] retain];
+	{
+		[[self mutableArrayValueForKey:KTViewControllerViewControllersKey] removeAllObjects];
+		[aViewControllers makeObjectsPerformSelector:@selector(removeObservations)];
+		[aViewControllers makeObjectsPerformSelector:@selector(_setParentViewController:) withObject:nil];		
+	}
+	[aViewControllers release];
+	[[self windowController] patchResponderChain];
+}
+
+#pragma mark Old Subcontroller API
+// TODO: These methods should be deprecated in favour of the "viewController" variants
+- (NSArray *)subcontrollers;
+{
+	return [self viewControllers];
+}
+
+- (void)setSubcontrollers:(NSArray *)theSubcontrollers;
+{
+	[theSubcontrollers retain];
+	{
+		[self removeAllViewControllers];
+		[[self mutableArrayValueForKey:KTViewControllerViewControllersKey] addObjectsFromArray:theSubcontrollers];
+		[theSubcontrollers makeObjectsPerformSelector:@selector(_setParentViewController:) withObject:self];		
+	}
+	[theSubcontrollers release];
+	[[self windowController] patchResponderChain];
+}
+
+- (void)addSubcontroller:(KTViewController *)theViewController;
+{
+	[self addViewController:theViewController];
+}
+
+- (void)removeSubcontroller:(KTViewController *)theViewController;
+{
+	[self removeViewController:theViewController];
+}
+
+- (void)removeAllSubcontrollers
+{
+	[self removeAllViewControllers];
+}
 
 #pragma mark Layer Controllers
-//=========================================================== 
-// - addLayerController
-//=========================================================== 
-- (void)addLayerController:(KTLayerController*)theLayerController
+
+- (NSMutableArray *)primitiveLayerControllers;
 {
-	if(theLayerController)
+	if (mPrimitiveLayerControllers != nil) return mPrimitiveLayerControllers;
+	mPrimitiveLayerControllers = [[NSMutableArray alloc] init];
+	return mPrimitiveLayerControllers;
+}
+
+- (NSArray *)layerControllers;
+{
+	return [[[self primitiveLayerControllers] copy] autorelease];
+}
+
+- (NSUInteger)countOfLayerControllers;
+{
+	return [[self primitiveLayerControllers] count];
+}
+
+- (id)objectInLayerControllersAtIndex:(NSUInteger)theIndex;
+{
+	return [[self primitiveLayerControllers] objectAtIndex:theIndex];
+}
+
+- (void)insertObject:(KTLayerController *)theLayerController inLayerControllersAtIndex:(NSUInteger)theIndex;
+{
+	[[self primitiveLayerControllers] insertObject:theLayerController atIndex:theIndex];
+}
+
+- (void)removeObjectFromLayerControllersAtIndex:(NSUInteger)theIndex;
+{
+	[[self primitiveLayerControllers] removeObjectAtIndex:theIndex];
+}
+
+- (void)addLayerController:(KTLayerController *)theLayerController;
+{
+	if (theLayerController == nil) return;
+	NSParameterAssert(![[self primitiveLayerControllers] containsObject:theLayerController]);
+	[[self mutableArrayValueForKey:KTViewControllerLayerControllersKey] addObject:theLayerController];
+	[[self windowController] patchResponderChain];
+}
+
+- (void)removeLayerController:(KTLayerController *)theLayerController;
+{
+	if (theLayerController == nil) return;
+	NSParameterAssert([[self primitiveLayerControllers] containsObject:theLayerController]);
+	[theLayerController retain];
 	{
-		[mLayerControllers addObject:theLayerController];
-		[[self windowController] patchResponderChain];
+		[[self mutableArrayValueForKey:KTViewControllerLayerControllersKey] addObject:theLayerController];
+		[theLayerController removeObservations];
 	}
+	[theLayerController release];
+	[[self windowController] patchResponderChain];
 }
 
-
-
-//=========================================================== 
-// - removeLayerController
-//=========================================================== 
-- (void)removeLayerController:(KTLayerController*)theLayerController
-{
-	if(theLayerController)
-	{
-		[mLayerControllers removeObject:theLayerController];
-		[[self windowController] patchResponderChain];
-	}
-}
-
-//=========================================================== 
-// - layerControllers
-//=========================================================== 
-- (NSArray*)layerControllers
-{
-	return mLayerControllers;
-}
+#pragma mark -
+#pragma mark Descedants
 
 - (NSArray *)descendants
 {
 	CFMutableArrayRef aMutableDescendants = CFArrayCreateMutable(kCFAllocatorDefault, 0, &kCFTypeArrayCallBacks);
 
 	NSAutoreleasePool *aPool = [[NSAutoreleasePool alloc] init];
-	for (KTViewController *aSubViewController in mSubcontrollers) {
+	for (KTViewController *aSubViewController in [self viewControllers]) {
 		CFArrayAppendValue(aMutableDescendants, aSubViewController);
 		NSArray *aSubDescendants = [aSubViewController descendants];
 		if (aSubDescendants != nil) {
@@ -300,7 +327,7 @@
 	[aPool drain];
 	
 	aPool = [[NSAutoreleasePool alloc] init];	
-	for (KTLayerController *aLayerController in mLayerControllers) {
+	for (KTLayerController *aLayerController in [self layerControllers]) {
 		CFArrayAppendValue(aMutableDescendants, aLayerController);
 		NSArray *aSubDescendants = [aLayerController descendants];
 		if (aSubDescendants != nil) {
@@ -319,34 +346,27 @@
 	return [NSMakeCollectable(aDescendants) autorelease];
 }
 
+#pragma mark -
+#pragma mark KVO Teardown
 
-//=========================================================== 
-// - removeAllViewControllers
-//=========================================================== 
 - (void)removeObservations
 {
-	// subcontrollers
-	[mSubcontrollers makeObjectsPerformSelector:@selector(removeObservations)];
-	// layer controllers
-	[mLayerControllers makeObjectsPerformSelector:@selector(removeObservations)];
+	[[self viewControllers] makeObjectsPerformSelector:@selector(removeObservations)];
+	[[self layerControllers] makeObjectsPerformSelector:@selector(removeObservations)];
 }
 
+#pragma mark -
+#pragma mark Nib Management
 
-//=========================================================== 
-// - loadNibNamed:
-//=========================================================== 
 - (BOOL)loadNibNamed:(NSString*)theNibName bundle:(NSBundle*)theBundle
 {
-	BOOL		aSuccess;
-	NSArray *	anObjectList = nil;
-	NSNib *		aNib = [[[NSNib alloc] initWithNibNamed:theNibName bundle:theBundle] autorelease];
-	aSuccess = [aNib instantiateNibWithOwner:self topLevelObjects:&anObjectList];
-	if(aSuccess)
-	{
-		int i;
-		for(i = 0; i < [anObjectList count]; i++)
-			[mTopLevelNibObjects addObject:[anObjectList objectAtIndex:i]];
+	NSNib *aNib = [[NSNib alloc] initWithNibNamed:theNibName bundle:theBundle];
+	NSArray *aTopLevelObjects = nil;
+	BOOL aSuccess = NO;
+	if ((aSuccess = [aNib instantiateNibWithOwner:self topLevelObjects:&aTopLevelObjects])) {
+		[self setTopLevelObjects:aTopLevelObjects];
 	}
+	[aNib release];
 	return aSuccess;
 }
 
