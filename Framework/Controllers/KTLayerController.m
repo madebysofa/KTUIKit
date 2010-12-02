@@ -10,32 +10,43 @@
 #import "KTViewController.h"
 #import "KTWindowController.h"
 
+NSString *const KTLayerControllerLayerControllersKey = @"layerControllers";
+
+@interface KTLayerController ()
+@property (readwrite, nonatomic, assign, setter = _setParentLayerController:) KTLayerController *parentLayerController;
+@property (readonly, nonatomic) NSMutableArray *primitiveLayerControllers;
+@property (readonly, nonatomic) KTWindowController *_windowController; 
+@end
+
 @implementation KTLayerController
 
 @synthesize viewController = wViewController;
-@synthesize subcontrollers = mSubcontrollers;
-@synthesize representedObject = wRepresentedObject;
+@synthesize parentLayerController = wParentLayerController;
+
+@synthesize representedObject = mRepresentedObject;
 @synthesize layer = mLayer;
 @synthesize hidden = mHidden;
 
-+ (id)layerControllerWithViewController:(KTViewController*)theViewController
++ (id)layerControllerWithViewController:(KTViewController *)theViewController;
 {
 	return [[[self alloc] initWithViewController:theViewController] autorelease];
 }
 
-- (id)initWithViewController:(KTViewController*)theViewController
+- (id)initWithViewController:(KTViewController *)theViewController;
 {
-	if ((self = [super init])) {
+	if ((self = [self init])) {
 		wViewController = theViewController;
-		mSubcontrollers = [[NSMutableArray alloc] init];
 	}
 	return self;
 }
 
-- (void)dealloc
+- (void)dealloc;
 {
-	[mSubcontrollers release];
+	[mPrimitiveLayerControllers release];
+
 	[mLayer release];
+	[mRepresentedObject release];
+	
 	[super dealloc];
 }
 
@@ -61,32 +72,113 @@
 	}
 }
 
-- (void)setRepresentedObject:(id)theRepresentedObject
+- (void)setRepresentedObject:(id)theRepresentedObject;
 {
-	wRepresentedObject = theRepresentedObject;
+	if (mRepresentedObject == theRepresentedObject)
+		return;
+	[mRepresentedObject release];
+	mRepresentedObject = [theRepresentedObject retain];
 }
+
+- (KTWindowController *)_windowController;
+{
+	return [[self viewController] windowController];
+}
+
+#pragma mark Layer Controllers
+
+- (NSMutableArray *)primitiveLayerControllers;
+{
+	if (mPrimitiveLayerControllers != nil) return mPrimitiveLayerControllers;
+	mPrimitiveLayerControllers = [[NSMutableArray alloc] init];
+	return mPrimitiveLayerControllers;
+}
+
+- (NSArray *)layerControllers;
+{
+	return [[[self primitiveLayerControllers] copy] autorelease];
+}
+
+- (NSUInteger)countOfLayerControllers;
+{
+	return [[self primitiveLayerControllers] count];
+}
+
+- (id)objectInLayerControllersAtIndex:(NSUInteger)theIndex;
+{
+	return [[self primitiveLayerControllers] objectAtIndex:theIndex];
+}
+
+- (void)insertObject:(KTLayerController *)theLayerController inLayerControllersAtIndex:(NSUInteger)theIndex;
+{
+	[[self primitiveLayerControllers] insertObject:theLayerController atIndex:theIndex];
+}
+
+- (void)removeObjectFromLayerControllersAtIndex:(NSUInteger)theIndex;
+{
+	[[self primitiveLayerControllers] removeObjectAtIndex:theIndex];
+}
+
+#pragma mark Public LayerController API
+
+- (void)addLayerController:(KTLayerController *)theLayerController;
+{
+	if (theLayerController == nil) return;
+	NSParameterAssert(![[self primitiveLayerControllers] containsObject:theLayerController]);
+	[[self mutableArrayValueForKey:KTLayerControllerLayerControllersKey] addObject:theLayerController];
+	[theLayerController _setParentLayerController:self];
+	[[self _windowController] patchResponderChain];
+}
+
+- (void)removeLayerController:(KTLayerController *)theLayerController;
+{
+	if (theLayerController == nil) return;
+	[theLayerController retain];
+	{
+		NSParameterAssert([[self primitiveLayerControllers] containsObject:theLayerController]);
+		[[self mutableArrayValueForKey:KTLayerControllerLayerControllersKey] removeObject:theLayerController];
+		[theLayerController removeObservations];
+		[theLayerController _setParentLayerController:nil];		
+	}
+	[theLayerController release];
+	[[self _windowController] patchResponderChain];
+}
+
+- (void)removeAllLayerControllers;
+{
+	NSArray *aLayerControllers = [[self primitiveLayerControllers] retain];
+	{
+		[[self mutableArrayValueForKey:KTLayerControllerLayerControllersKey] removeAllObjects];
+		[aLayerControllers makeObjectsPerformSelector:@selector(removeObservations)];
+		[aLayerControllers makeObjectsPerformSelector:@selector(_setParentLayerController:) withObject:nil];		
+	}
+	[aLayerControllers release];
+	[[self _windowController] patchResponderChain];
+}
+
+#pragma mark Old Subcontroller API
+
+- (NSArray *)subcontrollers;
+{
+	return [self layerControllers];
+}
+
+- (void)addSubcontroller:(KTLayerController*)theSubcontroller;
+{
+	[self addLayerController:theSubcontroller];
+}
+
+- (void)removeSubcontroller:(KTLayerController*)theSubcontroller;
+{
+	[self removeLayerController:theSubcontroller];
+}
+
+#pragma mark -
+#pragma mark KVO Teardown
 
 - (void)removeObservations
 {
-	[mSubcontrollers makeObjectsPerformSelector:@selector(removeObservations)];
-}
-
-- (void)addSubcontroller:(KTLayerController*)theSubcontroller
-{
-	if(theSubcontroller)
-	{
-		[mSubcontrollers addObject:theSubcontroller];
-		[[[self viewController] windowController] patchResponderChain];
-	}
-}
-
-- (void)removeSubcontroller:(KTLayerController*)theSubcontroller
-{
-	if(theSubcontroller)
-	{
-		[mSubcontrollers removeObject:theSubcontroller];
-		[[[self viewController] windowController] patchResponderChain];
-	}
+	[[self primitiveLayerControllers] makeObjectsPerformSelector:@selector(removeObservations)];
 }
 
 #pragma mark -
@@ -95,7 +187,7 @@
 - (NSArray *)descendants
 {
 	CFMutableArrayRef aMutableDescendants = CFArrayCreateMutable(kCFAllocatorDefault, 0, &kCFTypeArrayCallBacks);
-	for (KTLayerController *aLayerController in [self subcontrollers]) {
+	for (KTLayerController *aLayerController in [self layerControllers]) {
 		CFArrayAppendValue(aMutableDescendants, aLayerController);
 		NSArray *aDescendants = [aLayerController descendants];
 		if (aDescendants != nil) {

@@ -94,9 +94,6 @@ NSString *const KTViewControllerLayerControllersKey = @"layerControllers";
 
 - (void)dealloc;
 {
-	if (mPrimitiveViewControllers != nil) {
-		[mPrimitiveViewControllers makeObjectsPerformSelector:@selector(_setParentViewController:) withObject:nil];
-	}
 	[mPrimitiveViewControllers release];
 	[mPrimitiveLayerControllers release];
 

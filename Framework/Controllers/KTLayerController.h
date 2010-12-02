@@ -7,28 +7,46 @@
 //
 
 #import <Cocoa/Cocoa.h>
+#import "KTMacros.h"
 #import "KTController.h"
+
+KT_EXPORT NSString *const KTLayerControllerLayerControllersKey;
 
 @class KTViewController;
 
 @interface KTLayerController : NSResponder <KTController> {
 	@private
 	KTViewController	*wViewController;
-	NSMutableArray		*mSubcontrollers;
+	KTLayerController	*wParentLayerController;
+
+	NSMutableArray		*mPrimitiveLayerControllers;
+	
 	id					mLayer;
-	id					wRepresentedObject;
+	id					mRepresentedObject;
+	
 	BOOL				mHidden;
 }
 
-@property (nonatomic, readwrite, assign) KTViewController * viewController;
-@property (nonatomic, readwrite, retain) NSMutableArray * subcontrollers;
-@property (nonatomic, readwrite, retain) id layer;
-@property (nonatomic, readwrite, assign) id representedObject;
-@property (nonatomic, readwrite, assign) BOOL hidden;
+@property (readwrite, nonatomic, assign) KTViewController *viewController;
+@property (readonly, nonatomic, assign) KTLayerController *parentLayerController;
+
+@property (readwrite, nonatomic, retain) id layer;
+@property (readwrite, nonatomic, retain) id representedObject;
+
+@property (readwrite, nonatomic, assign) BOOL hidden;
 
 + (id)layerControllerWithViewController:(KTViewController*)theViewController;
 - (id)initWithViewController:(KTViewController*)theViewController;
 
+#pragma mark Layer Controllers
+@property (readonly, nonatomic, copy) NSArray *layerControllers;
+- (void)addLayerController:(KTLayerController *)theLayerController;
+- (void)removeLayerController:(KTLayerController *)theLayerController;
+- (void)removeAllLayerControllers;
+
+// This API will be deprecated in the near-future, use the "layerController" variants instead
+#pragma mark Subcontrollers
+@property (readonly, nonatomic, retain) NSArray *subcontrollers;
 - (void)addSubcontroller:(KTLayerController *)theSubcontroller;
 - (void)removeSubcontroller:(KTLayerController *)theSubcontroller;
 
