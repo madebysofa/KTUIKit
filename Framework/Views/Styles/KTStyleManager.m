@@ -80,6 +80,11 @@ NSString *const KTStyleManagerBorderColorLeftKey = @"borderColorLeft";
 {
 	if ((self = [self init])) {
 		wView = theView;
+		
+		[self setBackgroundColor:[NSColor clearColor]];
+		[self setBorderColor:[NSColor clearColor]];
+		[self setBackgroundGradient:nil angle:0.0];
+		[self setBorderWidth:0.0];
 	}
 	return self;
 }
