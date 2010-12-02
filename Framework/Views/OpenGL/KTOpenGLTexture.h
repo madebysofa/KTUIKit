@@ -3,7 +3,7 @@
 //  KTUIKit
 //
 //  Created by Cathy on 19/02/2009.
-//  Copyright 2009 __MyCompanyName__. All rights reserved.
+//  Copyright 2009 Cathy Shive. All rights reserved.
 //
 
 #import <Cocoa/Cocoa.h>

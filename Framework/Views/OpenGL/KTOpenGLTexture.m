@@ -3,7 +3,7 @@
 //  KTUIKit
 //
 //  Created by Cathy on 19/02/2009.
-//  Copyright 2009 __MyCompanyName__. All rights reserved.
+//  Copyright 2009 Cathy Shive. All rights reserved.
 //
 // Apple Docs: Techniques for working with texture data:
 //http://developer.apple.com/documentation/graphicsimaging/Conceptual/OpenGL-MacProgGuide/opengl_texturedata/chapter_10_section_5.html#//apple_ref/doc/uid/TP40001987-CH407-SW28

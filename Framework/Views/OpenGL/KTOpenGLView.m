@@ -3,7 +3,7 @@
 //  KTUIKit
 //
 //  Created by Cathy on 16/02/2009.
-//  Copyright 2009 __MyCompanyName__. All rights reserved.
+//  Copyright 2009 Cathy Shive. All rights reserved.
 //
 
 #import "KTOpenGLView.h"
@@ -224,10 +224,7 @@
 	NSOpenGLContext * aCurrentContext = [self openGLContext];
 	[aCurrentContext makeCurrentContext];
 
-//	if(mOpenGLViewType == kBW3DOpenGLView)
-//		[self setup3DCamera];
-//	else
-		[self setup2DCamera];
+	[self setup2DCamera];
 
 	CGFloat aRed, aGreen, aBlue, anAlpha;
 	[[[[self styleManager] backgroundColor] colorUsingColorSpaceName:NSCalibratedRGBColorSpace] getRed:&aRed green:&aGreen blue:&aBlue alpha:&anAlpha];
