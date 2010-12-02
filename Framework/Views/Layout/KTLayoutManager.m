@@ -51,7 +51,7 @@
 #define kKTLayoutManagerMaxHeightKey @"maxHeight"
 
 @interface KTLayoutManager (Private)
-- (NSArray*)keysForCoding;
+- (NSArray *)keysForCoding;
 @end
 
 @implementation KTLayoutManager
@@ -74,61 +74,41 @@
 @synthesize maxHeight = mMaxHeight;
 @synthesize view = wView;
 
-//=========================================================== 
-// - init
-//=========================================================== 
-- (id)init
+- (id)init;
 {
-	return [self initWithView:nil];
-}
-
-//=========================================================== 
-// - initWithView:
-//=========================================================== 
-- (id)initWithView:(id<KTViewLayout>)theView
-{
-	if(![super init])
-		return nil;
-	wView = theView;
-	mWidthPercentage = mHeightPercentage = 1.0;
-	mShouldDoLayout = YES;
-	return self;
-}
-
-//=========================================================== 
-// - initWithCoder:
-//=========================================================== 
-- (id)initWithCoder:(NSCoder*)theCoder
-{
-	if ([[self superclass] instancesRespondToSelector:@selector(initWithCoder:)]) 
-	{
-		if (![(id)super initWithCoder:theCoder])
-			return nil;
+	if ((self = [super init])) {
+		mWidthPercentage = mHeightPercentage = 1.0;
+		mShouldDoLayout = YES;
 	}
-	
-	for (NSString * aKey in [self keysForCoding])
-		[self setValue:[theCoder decodeObjectForKey:aKey] forKey:aKey];
-	mShouldDoLayout = YES;	
-	
 	return self;
 }
 
-//=========================================================== 
-// - encodeWithCoder:
-//=========================================================== 
-- (void)encodeWithCoder:(NSCoder*)theCoder
+- (id)initWithView:(id <KTViewLayout>)theView;
 {
-	if ([[self superclass] instancesRespondToSelector:@selector(encodeWithCoder:)])
-		[(id)super encodeWithCoder:theCoder];
-		
-	for (NSString * aKey in [self keysForCoding])
-		[theCoder encodeObject:[self valueForKey:aKey] forKey:aKey];
+	if ((self = [self init])) {
+		wView = theView;
+	}
+	return self;
 }
 
-//=========================================================== 
-// - keysForCoding
-//=========================================================== 
-- (NSArray *)keysForCoding
+- (id)initWithCoder:(NSCoder *)theCoder;
+{
+	if ((self = [self init])) {
+		for (NSString * aKey in [self keysForCoding])
+			[self setValue:[theCoder decodeObjectForKey:aKey] forKey:aKey];
+		mShouldDoLayout = YES;	
+	}
+	return self;
+}
+
+- (void)encodeWithCoder:(NSCoder *)theCoder;
+{
+	for (NSString * aKey in [self keysForCoding]) {
+		[theCoder encodeObject:[self valueForKey:aKey] forKey:aKey];		
+	}
+}
+
+- (NSArray *)keysForCoding;
 {
 	return [NSArray arrayWithObjects:kKTLayoutManagerWidthTypeKey,
 									 kKTLayoutManagerHeightTypeKey,
@@ -149,9 +129,6 @@
 									 nil];
 }
 
-//=========================================================== 
-// - setNilValueForKey:
-//=========================================================== 
 - (void)setNilValueForKey:(NSString *)theKey;
 {
 	if ([theKey isEqualToString:kKTLayoutManagerWidthTypeKey])
@@ -190,33 +167,21 @@
 		[super setNilValueForKey:theKey];
 }
 
-
-
-//=========================================================== 
-// - setView:
-//=========================================================== 
 - (void)setView:(id<KTViewLayout>)theView
 {
 	wView = theView;
 }
 
-//=========================================================== 
-// - refreshLayout
-//=========================================================== 
 - (void)refreshLayout
 {
-	
 	NSRect aCurrentViewFrame;
 	if([wView isKindOfClass:[NSWindow class]])
 	{
-//		NSLog(@"----------");
-//		NSLog(@"layout manager getting window frame: %@", NSStringFromRect([wView frame]));
 		NSRect anOverlayFrame = [wView frame];
 		NSPoint aBasePoint = [[(NSView*)[wView parent] window] convertScreenToBase:anOverlayFrame.origin];
 		NSPoint aViewPoint = [(NSView*)[wView parent] convertPoint:aBasePoint fromView:nil];
 		aCurrentViewFrame.origin = aViewPoint;
 		aCurrentViewFrame.size = anOverlayFrame.size;
-//		NSLog(@"layout manager convertd screen frame to parent view coords: %@", NSStringFromRect(aCurrentViewFrame));
 	}
 	else
 		aCurrentViewFrame = [wView frame];
@@ -571,9 +536,7 @@
 
 #pragma mark -
 #pragma mark EXTRA API FOR CONFIGURATION
-//=========================================================== 
-// - setMargin:
-//=========================================================== 
+
 - (void)setMargin:(float)theMargin
 {
 	mMarginTop = theMargin;
@@ -582,9 +545,6 @@
 	mMarginLeft = theMargin;
 }
 
-//=========================================================== 
-// - setMarginTop:right:bottom:left:
-//=========================================================== 
 - (void)setMarginTop:(float)theTopMargin 
 			   right:(float)theRightMargin 
 			  bottom:(float)theBottomMargin 
@@ -595,7 +555,5 @@
 	mMarginBottom = theBottomMargin;
 	mMarginLeft = theLeftMargin;
 }
-
-
 
 @end
