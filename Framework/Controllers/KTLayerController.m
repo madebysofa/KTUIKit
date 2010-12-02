@@ -109,6 +109,7 @@ NSString *const KTLayerControllerLayerControllersKey = @"layerControllers";
 	return [[self primitiveLayerControllers] objectAtIndex:theIndex];
 }
 
+// These methods are merely for mutating the |primitiveViewControllers| array. See the public |-add/removeViewController:| methods for places where connections to other view controllers are maintained and |removeObservations| is called.
 - (void)insertObject:(KTLayerController *)theLayerController inLayerControllersAtIndex:(NSUInteger)theIndex;
 {
 	[[self primitiveLayerControllers] insertObject:theLayerController atIndex:theIndex];
