@@ -12,11 +12,12 @@
 @class KTViewController;
 
 @interface KTLayerController : NSResponder <KTController> {
-	KTViewController *		wViewController;
-	NSMutableArray *		mSubcontrollers;
-	id						mLayer;
-	id						wRepresentedObject;
-	BOOL					mHidden;
+	@private
+	KTViewController	*wViewController;
+	NSMutableArray		*mSubcontrollers;
+	id					mLayer;
+	id					wRepresentedObject;
+	BOOL				mHidden;
 }
 
 @property (nonatomic, readwrite, assign) KTViewController * viewController;
@@ -27,8 +28,9 @@
 
 + (id)layerControllerWithViewController:(KTViewController*)theViewController;
 - (id)initWithViewController:(KTViewController*)theViewController;
-- (void)addSubcontroller:(KTLayerController*)theSubcontroller;
-- (void)removeSubcontroller:(KTLayerController*)theSubcontroller;
+
+- (void)addSubcontroller:(KTLayerController *)theSubcontroller;
+- (void)removeSubcontroller:(KTLayerController *)theSubcontroller;
 
 @end
 

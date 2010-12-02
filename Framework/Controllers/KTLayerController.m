@@ -12,27 +12,17 @@
 
 @implementation KTLayerController
 
-//=========================================================== 
-// synthesized properties
-//===========================================================
 @synthesize viewController = wViewController;
 @synthesize subcontrollers = mSubcontrollers;
 @synthesize representedObject = wRepresentedObject;
 @synthesize layer = mLayer;
 @synthesize hidden = mHidden;
 
-//=========================================================== 
-// - layerControllerWithViewController
-//===========================================================
 + (id)layerControllerWithViewController:(KTViewController*)theViewController
 {
 	return [[[self alloc] initWithViewController:theViewController] autorelease];
 }
 
-
-//=========================================================== 
-// - initWithViewController
-//===========================================================
 - (id)initWithViewController:(KTViewController*)theViewController
 {
 	if ((self = [super init])) {
@@ -42,9 +32,6 @@
 	return self;
 }
 
-//=========================================================== 
-// - dealloc
-//===========================================================
 - (void)dealloc
 {
 	[mSubcontrollers release];
@@ -74,27 +61,16 @@
 	}
 }
 
-//=========================================================== 
-// - setRepresentedObject
-//===========================================================
 - (void)setRepresentedObject:(id)theRepresentedObject
 {
 	wRepresentedObject = theRepresentedObject;
 }
 
-
-//=========================================================== 
-// - removeObservations
-//===========================================================
 - (void)removeObservations
 {
 	[mSubcontrollers makeObjectsPerformSelector:@selector(removeObservations)];
 }
 
-
-//=========================================================== 
-// - addSubcontroller
-//===========================================================
 - (void)addSubcontroller:(KTLayerController*)theSubcontroller
 {
 	if(theSubcontroller)
@@ -104,9 +80,6 @@
 	}
 }
 
-//=========================================================== 
-// - removeSubcontroller
-//===========================================================
 - (void)removeSubcontroller:(KTLayerController*)theSubcontroller
 {
 	if(theSubcontroller)
@@ -116,8 +89,8 @@
 	}
 }
 
-
-#pragma mark Controller Responder Chain Protocol
+#pragma mark -
+#pragma mark KTController Protocol
 
 - (NSArray *)descendants
 {
