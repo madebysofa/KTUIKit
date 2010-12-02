@@ -30,13 +30,11 @@
 // If you use it, acknowledgement in an About Page or other appropriate place would be nice.
 // For example, "Contains "KTUIKit" by Cathy Shive" will do.
 
+#import <Cocoa/Cocoa.h>
 #import "KTViewLayout.h"
 #import "KTStyle.h"
 
-@protocol KTView <KTViewLayout, KTStyle>
-
-- (void)setLabel:(NSString*)theLabel;
-- (NSString*)label;
-
+@protocol KTView <KTViewLayout, KTStyle, NSObject>
+@property (readwrite, nonatomic, copy) NSString *label;
 @end
 
