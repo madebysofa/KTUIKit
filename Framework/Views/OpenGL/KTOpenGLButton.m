@@ -38,9 +38,8 @@
 				[self performAction];
 			break;
 			
-//			case KTOpenGLToggleButton:
-//				
-//			break:
+			default:
+				break;
 		}
 	}
 }

@@ -202,6 +202,9 @@ NSString *const KTAnimatorPointAnimation = @"KTAnimatorPointAnimation";
 					// apply the ease curve
 					aLocationInAnimation = 1.0 - (.5 * sin((aNormalizedLocationInAnimation+.5) * ((3.14*2) / 2.0)) + .5);
 				break;
+					
+				default:
+					break;
 			}
 			
 			// set the location in the animation objct info
