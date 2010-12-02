@@ -32,6 +32,10 @@
 
 #import "KTView.h"
 
+NSString *const KTViewViewLayoutManagerKey = @"layoutManager";
+NSString *const KTViewStyleManagerKey = @"styleManager";
+NSString *const KTViewLabelKey = @"label";
+
 @interface KTView ()
 - (void)_drawDebugginRect;
 @end

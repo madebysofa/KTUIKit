@@ -36,6 +36,9 @@
 #import "KTLayoutManager.h"
 #import "KTStyleManager.h"
 
+KT_EXPORT NSString *const KTViewViewLayoutManagerKey;
+KT_EXPORT NSString *const KTViewStyleManagerKey;
+KT_EXPORT NSString *const KTViewLabelKey;
 
 
 @interface KTView : NSView <KTView>
