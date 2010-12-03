@@ -91,7 +91,7 @@ NSString *const KTWindowControllerViewControllersKey = @"viewControllers";
 	if (theViewController == nil) return;
 	NSParameterAssert(![[self primitiveViewControllers] containsObject:theViewController]);
 	[[self mutableArrayValueForKey:KTWindowControllerViewControllersKey] addObject:theViewController];
-	[self patchResponderChain];
+	[self _patchResponderChain];
 }
 
 - (void)removeViewController:(KTViewController *)theViewController
@@ -103,7 +103,7 @@ NSString *const KTWindowControllerViewControllersKey = @"viewControllers";
 		[theViewController removeObservations];
 	}
 	[theViewController release];
-	[self patchResponderChain];
+	[self _patchResponderChain];
 }
 
 - (void)removeAllViewControllers
@@ -114,7 +114,7 @@ NSString *const KTWindowControllerViewControllersKey = @"viewControllers";
 		[aViewControllers makeObjectsPerformSelector:@selector(removeObservations)];
 	}
 	[aViewControllers release];
-	[self patchResponderChain];
+	[self _patchResponderChain];
 }
 
 #pragma mark Deprecated API
@@ -127,7 +127,7 @@ NSString *const KTWindowControllerViewControllersKey = @"viewControllers";
 		[[self mutableArrayValueForKey:KTViewControllerViewControllersKey] addObjectsFromArray:theViewControllers];
 	}
 	[theViewControllers release];
-	[self patchResponderChain];
+	[self _patchResponderChain];
 }
 
 #pragma mark Descendants
@@ -150,6 +150,13 @@ NSString *const KTWindowControllerViewControllersKey = @"viewControllers";
 	return [NSMakeCollectable(aDescendants) autorelease];
 }
 
+- (void)_enumerateSubControllers:(_KTControllerEnumeratorCallBack)theCallBackFunction context:(void *)theContext;
+{
+	for (KTViewController *aViewController in [self viewControllers]) {
+		_KTViewControllerEnumerateSubControllers(aViewController, theCallBackFunction, theContext);
+	}
+}
+
 #pragma mark -
 #pragma mark KVO Teardown
 
@@ -161,23 +168,41 @@ NSString *const KTWindowControllerViewControllersKey = @"viewControllers";
 #pragma mark -
 #pragma mark Responder Chain
 
-- (void)patchResponderChain
-{
-	NSAutoreleasePool *aPool = [[NSAutoreleasePool alloc] init];
-	
-	NSArray *aControllersList = [self _descendants];
-		
-	if ([aControllersList count] > 0) {
-		[self setNextResponder:[aControllersList objectAtIndex:0]];
-		NSResponder <KTController> *aPreviousContoller = nil;
-		for (NSResponder <KTController> *aController in aControllersList) {
-			if ([aController hidden]) continue;
-			[aPreviousContoller setNextResponder:aController]; // This is a no-op on first pass.
-			aPreviousContoller = aController;
-		}
-		[aPreviousContoller setNextResponder:nil];
+// When patching the responder chain we don't include hidden controllers. These have their next responder set to nil. |_KTResponderChainContext| stores the first non-hidden view controller so the window controller can later set it's next responder to the first non-hidden view controller.
+struct __KTResponderChainContext {
+	NSResponder <KTController> *firstController;
+	NSResponder <KTController> *previousController;
+};
+typedef struct __KTResponderChainContext _KTResponderChainContext;
+
+NS_INLINE _KTResponderChainContext _KTResponderChainContextMake(void) {
+	return (_KTResponderChainContext){.firstController = nil, .previousController = nil};
+}
+
+void _KTPatchResponderChainEnumeratorCallBack(NSResponder <KTController> *theController, void *theContext) {
+
+	[theController setNextResponder:nil]; // All controllers have their next responder cleared out. Originally, the window controller manually set the last non-hidden controller's next responder to nil, now it doesn't have to.
+	if ([theController hidden]) { // Skip all hidden controllers, these should not respond to selectors passed up the chain.
+		return;	
 	}
 	
+	_KTResponderChainContext *aContext = (_KTResponderChainContext *)theContext;
+	if ((aContext->firstController) == nil) {
+		aContext->firstController = theController;
+	}
+
+	// The first time we reach here, aPreviousController will be nil, so this becomes a no-op.
+	NSResponder <KTController> *aPreviousController = (aContext->previousController);
+	[aPreviousController setNextResponder:theController];
+	aContext->previousController = theController;
+}
+
+- (void)_patchResponderChain
+{
+	NSAutoreleasePool *aPool = [[NSAutoreleasePool alloc] init];
+	_KTResponderChainContext aContext = _KTResponderChainContextMake();
+	[self _enumerateSubControllers:&_KTPatchResponderChainEnumeratorCallBack context:&aContext];	
+	[self setNextResponder:aContext.firstController]; // |firstController| is the first controller for which |hidden| returned NO.
 	[aPool drain];
 }
 

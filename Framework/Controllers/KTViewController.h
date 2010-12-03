@@ -35,11 +35,11 @@
 
 #import "KTViewProtocol.h"
 #import "KTController.h"
-#import "KTWindowController.h"
 
 KT_EXPORT NSString *const KTViewControllerViewControllersKey;
 KT_EXPORT NSString *const KTViewControllerLayerControllersKey;
 
+@class KTWindowController;
 @class KTLayerController;
 
 @interface KTViewController : NSViewController <KTController> {
@@ -90,4 +90,6 @@ KT_EXPORT NSString *const KTViewControllerLayerControllersKey;
 
 @interface KTViewController (KTPrivate)
 - (void)_setHidden:(BOOL)theHidden patchResponderChain:(BOOL)thePatch;
+KT_EXPORT void _KTViewControllerEnumerateSubControllers(KTViewController *theViewController, _KTControllerEnumeratorCallBack theCallBackFunction, void *theContext);
+- (void)_enumerateSubControllers:(_KTControllerEnumeratorCallBack)theCallBackFunction context:(void *)theContext;
 @end

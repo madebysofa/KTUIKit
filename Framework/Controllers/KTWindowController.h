@@ -32,6 +32,7 @@
 
 #import <Cocoa/Cocoa.h>
 #import "KTMacros.h"
+#import "KTController.h"
 
 KT_EXPORT NSString *const KTWindowControllerViewControllersKey;
 
@@ -48,6 +49,8 @@ KT_EXPORT NSString *const KTWindowControllerViewControllersKey;
 - (void)removeViewController:(KTViewController *)theViewController;
 - (void)removeAllViewControllers;
 
-- (void)patchResponderChain;
+@end
 
+@interface KTWindowController (KTPrivate)
+- (void)_patchResponderChain;
 @end

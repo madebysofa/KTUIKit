@@ -68,7 +68,7 @@ NSString *const KTLayerControllerLayerControllersKey = @"layerControllers";
 	}
 	
 	if (thePatch) {
-		[[[self viewController] windowController] patchResponderChain];			
+		[[[self viewController] windowController] _patchResponderChain];			
 	}
 }
 
@@ -128,7 +128,7 @@ NSString *const KTLayerControllerLayerControllersKey = @"layerControllers";
 	NSParameterAssert(![[self primitiveLayerControllers] containsObject:theLayerController]);
 	[[self mutableArrayValueForKey:KTLayerControllerLayerControllersKey] addObject:theLayerController];
 	[theLayerController _setParentLayerController:self];
-	[[self _windowController] patchResponderChain];
+	[[self _windowController] _patchResponderChain];
 }
 
 - (void)removeLayerController:(KTLayerController *)theLayerController;
@@ -142,7 +142,7 @@ NSString *const KTLayerControllerLayerControllersKey = @"layerControllers";
 		[theLayerController _setParentLayerController:nil];		
 	}
 	[theLayerController release];
-	[[self _windowController] patchResponderChain];
+	[[self _windowController] _patchResponderChain];
 }
 
 - (void)removeAllLayerControllers;
@@ -154,7 +154,7 @@ NSString *const KTLayerControllerLayerControllersKey = @"layerControllers";
 		[aLayerControllers makeObjectsPerformSelector:@selector(_setParentLayerController:) withObject:nil];		
 	}
 	[aLayerControllers release];
-	[[self _windowController] patchResponderChain];
+	[[self _windowController] _patchResponderChain];
 }
 
 #pragma mark Old Subcontroller API
@@ -201,6 +201,22 @@ NSString *const KTLayerControllerLayerControllersKey = @"layerControllers";
 	CFArrayRef aDescendants = CFArrayCreateCopy(kCFAllocatorDefault, aMutableDescendants);
 	CFRelease(aMutableDescendants);
 	return [NSMakeCollectable(aDescendants) autorelease];
+}
+
+void _KTLayerControllerEnumerateSubControllers(KTLayerController *theLayerController, _KTControllerEnumeratorCallBack theCallBackFunction, void *theContext)
+{
+	theCallBackFunction(theLayerController, theContext);
+	for (KTLayerController *aLayerController in [theLayerController layerControllers]) {
+		_KTLayerControllerEnumerateSubControllers(aLayerController, theCallBackFunction, theContext);
+	}	
+}
+
+- (void)_enumerateSubControllers:(_KTControllerEnumeratorCallBack)theCallBackFunction context:(void *)theContext;
+{
+	theCallBackFunction(self, theContext);
+	for (KTLayerController *aLayerController in [self layerControllers]) {
+		[aLayerController _enumerateSubControllers:theCallBackFunction context:theContext];
+	}
 }
 
 @end

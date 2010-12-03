@@ -115,7 +115,7 @@ NSString *const KTViewControllerLayerControllersKey = @"layerControllers";
 	if (wWindowController == theWindowController) return;
 	wWindowController = theWindowController;
 	[[self subcontrollers] makeObjectsPerformSelector:@selector(setWindowController:) withObject:theWindowController];
-	[theWindowController patchResponderChain];
+	[theWindowController _patchResponderChain];
 }
 
 - (void)setHidden:(BOOL)theHidden;
@@ -137,7 +137,7 @@ NSString *const KTViewControllerLayerControllersKey = @"layerControllers";
 	}
 	
 	if (thePatch) {
-		[[self windowController] patchResponderChain];			
+		[[self windowController] _patchResponderChain];			
 	}
 }
 
@@ -184,7 +184,7 @@ NSString *const KTViewControllerLayerControllersKey = @"layerControllers";
 	NSParameterAssert(![[self primitiveViewControllers] containsObject:theViewController]);
 	[[self mutableArrayValueForKey:KTViewControllerViewControllersKey] addObject:theViewController];
 	[theViewController _setParentViewController:self];
-	[[self windowController] patchResponderChain];
+	[[self windowController] _patchResponderChain];
 }
 
 - (void)removeViewController:(KTViewController *)theViewController;
@@ -198,7 +198,7 @@ NSString *const KTViewControllerLayerControllersKey = @"layerControllers";
 		[theViewController _setParentViewController:nil];		
 	}
 	[theViewController release];
-	[[self windowController] patchResponderChain];
+	[[self windowController] _patchResponderChain];
 }
 
 - (void)removeAllViewControllers;
@@ -210,7 +210,7 @@ NSString *const KTViewControllerLayerControllersKey = @"layerControllers";
 		[aViewControllers makeObjectsPerformSelector:@selector(_setParentViewController:) withObject:nil];		
 	}
 	[aViewControllers release];
-	[[self windowController] patchResponderChain];
+	[[self windowController] _patchResponderChain];
 }
 
 #pragma mark Old Subcontroller API
@@ -229,7 +229,7 @@ NSString *const KTViewControllerLayerControllersKey = @"layerControllers";
 		[theSubcontrollers makeObjectsPerformSelector:@selector(_setParentViewController:) withObject:self];		
 	}
 	[theSubcontrollers release];
-	[[self windowController] patchResponderChain];
+	[[self windowController] _patchResponderChain];
 }
 
 - (void)addSubcontroller:(KTViewController *)theViewController;
@@ -286,7 +286,7 @@ NSString *const KTViewControllerLayerControllersKey = @"layerControllers";
 	if (theLayerController == nil) return;
 	NSParameterAssert(![[self primitiveLayerControllers] containsObject:theLayerController]);
 	[[self mutableArrayValueForKey:KTViewControllerLayerControllersKey] addObject:theLayerController];
-	[[self windowController] patchResponderChain];
+	[[self windowController] _patchResponderChain];
 }
 
 - (void)removeLayerController:(KTLayerController *)theLayerController;
@@ -299,7 +299,7 @@ NSString *const KTViewControllerLayerControllersKey = @"layerControllers";
 		[theLayerController removeObservations];
 	}
 	[theLayerController release];
-	[[self windowController] patchResponderChain];
+	[[self windowController] _patchResponderChain];
 }
 
 #pragma mark -
@@ -344,6 +344,28 @@ NSString *const KTViewControllerLayerControllersKey = @"layerControllers";
 	CFArrayRef aDescendants = CFArrayCreateCopy(kCFAllocatorDefault, aMutableDescendants);
 	CFRelease(aMutableDescendants);
 	return [NSMakeCollectable(aDescendants) autorelease];
+}
+
+void _KTViewControllerEnumerateSubControllers(KTViewController *theViewController, _KTControllerEnumeratorCallBack theCallBackFunction, void *theContext)
+{
+	theCallBackFunction(theViewController, theContext);
+	for (KTViewController *aViewController in [theViewController viewControllers]) {
+		_KTViewControllerEnumerateSubControllers(aViewController, theCallBackFunction, theContext);
+	}	
+	for (KTLayerController *aLayerController in [theViewController layerControllers]) {
+		_KTLayerControllerEnumerateSubControllers(aLayerController, theCallBackFunction, theContext);
+	}
+}
+
+- (void)_enumerateSubControllers:(_KTControllerEnumeratorCallBack)theCallBackFunction context:(void *)theContext;
+{
+	theCallBackFunction(self, theContext);
+	for (KTViewController *aViewController in [self viewControllers]) {
+		[aViewController _enumerateSubControllers:theCallBackFunction context:theContext];
+	}
+	for (KTLayerController *aLayerController in [self layerControllers]) {
+		[aLayerController _enumerateSubControllers:theCallBackFunction context:theContext];
+	}
 }
 
 #pragma mark -

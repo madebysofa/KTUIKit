@@ -9,6 +9,7 @@
 #import "KTTabViewController.h"
 #import "KTTabItem.h"
 #import "KTView.h"
+#import "KTWindowController.h"
 
 @interface NSObject (KTTabViewControllerDelegate)
 - (void)tabViewController:(KTTabViewController*)theTabViewController willSelectTabItem:(KTTabItem*)theTabItem;
@@ -105,7 +106,7 @@ static void *_KTTVCTabItemArrayControllerSelectionIndexObservationContext = (voi
 		}
 		[aMutableTabItems release];
 		
-		[[self windowController] patchResponderChain];		
+		[[self windowController] _patchResponderChain];		
 	}
 }
 
