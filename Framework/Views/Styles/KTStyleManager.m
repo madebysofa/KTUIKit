@@ -56,6 +56,9 @@ NSString *const KTStyleManagerBorderColorBottomKey = @"borderColorBottom";
 NSString *const KTStyleManagerBorderColorLeftKey = @"borderColorLeft";
 
 @interface KTStyleManager ()
+@property (readwrite, nonatomic, retain) NSImage *backgroundImage;
+@property (readwrite, nonatomic, setter = _setTileImage:, getter = _tileImage) CGImageRef _tileImage;
+@property (readwrite, nonatomic, assign, getter = _shouldTileImage, setter = _setShouldTileImage:) BOOL _shouldTileImage;
 - (NSArray *)keysForCoding;
 @end
 
@@ -72,6 +75,9 @@ NSString *const KTStyleManagerBorderColorLeftKey = @"borderColorLeft";
 @synthesize borderWidthBottom = mBorderWidthBottom;
 @synthesize borderWidthLeft = mBorderWidthLeft;
 @synthesize backgroundGradient = mBackgroundGradient;
+@synthesize backgroundImage = mBackgroundImage;
+@synthesize _tileImage = mTileImage;
+@synthesize _shouldTileImage = mShouldTileImage;
 @synthesize gradientAngle = mGradientAngle;
 
 @synthesize view = wView;
@@ -98,7 +104,7 @@ NSString *const KTStyleManagerBorderColorLeftKey = @"borderColorLeft";
 	[mBorderColorLeft release];
 	[mBackgroundGradient release];
 	[mBackgroundImage release];
-	CGImageRelease(mBackgroundImageRef);
+	if (mTileImage != NULL) CGImageRelease(mTileImage);
 
 	[super dealloc];
 }
@@ -175,23 +181,18 @@ NSString *const KTStyleManagerBorderColorLeftKey = @"borderColorLeft";
 - (void)_drawBackgroundImageInRect:(NSRect)theBounds context:(CGContextRef)theContext controlView:(KTView <KTStyle> *)theView;
 {
 	NSPoint anImagePoint = theBounds.origin;
-	NSSize anImageSize = [mBackgroundImage size];
 	
-//	NSData * anImageData = [NSBitmapImageRep TIFFRepresentationOfImageRepsInArray: [mBackgroundImage representations]];
-//	CGImageSourceRef aCGImageSourceRef = CGImageSourceCreateWithData((CFDataRef)anImageData, NULL);
-//	CGImageRef aCGBackgroundImage = CGImageSourceCreateImageAtIndex(aCGImageSourceRef, 0, NULL);
-	
-	if(mTileImage)
-		CGContextDrawTiledImage(theContext, CGRectMake(anImagePoint.x,anImagePoint.y, anImageSize.width, anImageSize.height), mBackgroundImageRef);
-	else 
-	{
-		// draw from the center
-		anImagePoint.x = floor(theBounds.origin.x+theBounds.size.width*.5-anImageSize.width*.5);
-		anImagePoint.y = floor(theBounds.origin.y+theBounds.size.height*.5-anImageSize.height*.5);
-		CGContextDrawImage(theContext, CGRectMake(anImagePoint.x,anImagePoint.y, anImageSize.width, anImageSize.height), mBackgroundImageRef);	
+	if([self _shouldTileImage] && [self _tileImage]) {
+		CGSize aTileImageSize = CGSizeMake(CGImageGetWidth([self _tileImage]), CGImageGetHeight([self _tileImage]));
+		CGContextDrawTiledImage(theContext, CGRectMake(anImagePoint.x,anImagePoint.y, aTileImageSize.width, aTileImageSize.height), [self _tileImage]);
+	} else {
+		// draw from the center.
+		NSSize anImageSize = [mBackgroundImage size];
+		anImagePoint.x = floor(NSMidX(theBounds) - anImageSize.width * 0.5);
+		anImagePoint.y = floor(NSMidY(theBounds) - anImageSize.height * 0.5);
+		NSRect anImageFrame = NSMakeRect(anImagePoint.x, anImagePoint.y, anImageSize.width, anImageSize.height);
+		[[self backgroundImage] drawInRect:anImageFrame fromRect:NSZeroRect operation:NSCompositeSourceOver fraction:1.0];
 	}
-//	CFRelease(aCGImageSourceRef);
-//	CGImageRelease(aCGBackgroundImage);	
 }
 
 static void _KTStyleManagerAddPathFromPoint(CGContextRef theContext, CGPoint theStartPoint, CGPoint theEndPoint) {
@@ -268,7 +269,7 @@ static BOOL _KTStyleManagerShouldDrawBorder(NSColor *theColor, CGFloat theBorder
 	}
 	
 	// also need to figure out a way to optimize image drawing so it only draws in the dirty rect of the view
-	if (mBackgroundImage != nil && mBackgroundImageRef != nil) {
+	if (mBackgroundImage != nil) {
 		[self _drawBackgroundImageInRect:aViewBounds context:theContext controlView:theView];
 	}
 	
@@ -288,29 +289,40 @@ static BOOL _KTStyleManagerShouldDrawBorder(NSColor *theColor, CGFloat theBorder
 	[self setBorderWidthLeft:theLeftWidth];
 }
  
-- (void)setBackgroundImage:(NSImage*)theBackgroundImage tile:(BOOL)theBool
+- (void)setBackgroundImage:(NSImage*)theBackgroundImage tile:(BOOL)theTile
 {
-	if(mBackgroundImage != theBackgroundImage)
-	{
-		[theBackgroundImage retain];
-		[mBackgroundImage release];
-		CGImageRelease(mBackgroundImageRef);
-		mBackgroundImage = theBackgroundImage;
-
-		NSData * anImageData = [NSBitmapImageRep TIFFRepresentationOfImageRepsInArray: [mBackgroundImage representations]];
-		if(anImageData==nil)
-			anImageData = [mBackgroundImage TIFFRepresentation];
-
-		CGImageSourceRef aCGImageSourceRef = CGImageSourceCreateWithData((CFDataRef)anImageData, NULL);
-		mBackgroundImageRef = CGImageSourceCreateImageAtIndex(aCGImageSourceRef, 0, NULL);
-		CFRelease(aCGImageSourceRef);		
-	}
-	mTileImage = theBool;
-	if(mTileImage)
-	{
+	[self setBackgroundImage:theBackgroundImage];
+	[self _setShouldTileImage:theTile];
+	if(theTile) {
+		NSData *anImageData = [[self backgroundImage] TIFFRepresentation];
+		CGImageSourceRef anImageSource = CGImageSourceCreateWithData((CFDataRef)anImageData, NULL);
+		if (anImageSource != NULL) {
+			if (CGImageSourceGetCount(anImageSource) > 0) {
+				CGImageRef aTileImage = CGImageSourceCreateImageAtIndex(anImageSource, 0, NULL);
+				if (aTileImage != NULL) {
+					[self _setTileImage:aTileImage];
+					CGImageRelease(aTileImage);
+				}
+				CFRelease(anImageSource);
+			}
+		}
+		
 		if([wView isKindOfClass:[KTView class]])
 			[(KTView*)wView setOpaque:YES];	
 	}
+}
+
+- (void)_setTileImage:(CGImageRef)theTileImage;
+{
+	if (mTileImage == theTileImage) return;
+	if (mTileImage != NULL) CGImageRelease(mTileImage);
+	if (theTileImage != NULL) CGImageRetain(theTileImage);
+	mTileImage = theTileImage;
+}
+
+- (CGImageRef)_tileImage;
+{
+	return mTileImage;
 }
 
 // either save a gradient or a fill color 

@@ -31,6 +31,7 @@
 // For example, "Contains "KTUIKit" by Cathy Shive" will do.
 
 #import <Cocoa/Cocoa.h>
+#import <Quartz/Quartz.h>
 #import "KTMacros.h"
 #import "KTStyle.h"
 
@@ -50,8 +51,8 @@
 	NSGradient *mBackgroundGradient;
 	CGFloat	mGradientAngle;
 	NSImage *mBackgroundImage;
-	CGImageRef mBackgroundImageRef;
-	BOOL mTileImage;
+	CGImageRef mTileImage;
+	BOOL mShouldTileImage;
 	
 	id <KTStyle> wView;
 }
