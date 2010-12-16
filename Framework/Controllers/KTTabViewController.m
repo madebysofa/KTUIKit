@@ -34,8 +34,7 @@ static void *_KTTVCTabItemArrayControllerSelectionIndexObservationContext = (voi
 //===========================================================
 - (id)initWithNibName:(NSString*)theNibName bundle:(NSBundle*)theBundle windowController:(KTWindowController*)theWindowController
 {
-	if(self = [super initWithNibName:nil bundle:theBundle windowController:theWindowController])
-	{
+	if ((self = [super initWithNibName:nil bundle:theBundle windowController:theWindowController])) {
 		// create the 'content view' - when we switch controllers
 		// we'll be adding/removing their views to and from this 'content' view
 		KTView *aContentView = [[[KTView alloc] initWithFrame:NSZeroRect] autorelease];
@@ -59,7 +58,6 @@ static void *_KTTVCTabItemArrayControllerSelectionIndexObservationContext = (voi
 //===========================================================
 - (void)dealloc
 {
-	//NSLog(@"%@ dealloc", self);
 	[mTabItemArrayController release];
 	[super dealloc];
 }
