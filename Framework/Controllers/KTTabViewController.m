@@ -11,14 +11,6 @@
 #import "KTView.h"
 #import "KTWindowController.h"
 
-@interface NSObject (KTTabViewControllerDelegate)
-- (void)tabViewController:(KTTabViewController*)theTabViewController willSelectTabItem:(KTTabItem*)theTabItem;
-- (void)tabViewController:(KTTabViewController*)theTabViewController didSelectTabItem:(KTTabItem*)theTabItem;
-- (void)tabViewController:(KTTabViewController*)theTabViewController willRemoveTabItem:(KTTabItem*)theTabItem;
-- (void)tabViewControllerDidRemoveTabItem:(KTTabViewController*)theTabViewController;
-- (void)tabViewController:(KTTabViewController*)theTabViewController didAddTabItem:(KTTabItem*)theTabItem;
-@end
-
 @interface KTTabViewController ()
 - (KTView *)view;
 @end
@@ -37,7 +29,6 @@
 @synthesize delegate = wDelegate;
 
 static void *_KTTVCTabItemArrayControllerSelectionIndexObservationContext = (void *)@"_KTTVCTabItemArrayControllerSelectionIndexObservationContext";
-
 //=========================================================== 
 // - initWithNibName:bundle:windowController
 //===========================================================
@@ -58,7 +49,6 @@ static void *_KTTVCTabItemArrayControllerSelectionIndexObservationContext = (voi
 		mTabItemArrayController = [[NSArrayController alloc] init];
 		[mTabItemArrayController setSelectsInsertedObjects:YES];
 		[mTabItemArrayController addObserver:self forKeyPath:@"selectionIndex"options:0 context:&_KTTVCTabItemArrayControllerSelectionIndexObservationContext];
-		
 		[self setShouldResizeTabViews:YES];
 	}
 	return self;
@@ -125,9 +115,7 @@ static void *_KTTVCTabItemArrayControllerSelectionIndexObservationContext = (voi
 		if(aSelectedIndex!=NSNotFound)
 			aNewTabToSelect = [[mTabItemArrayController arrangedObjects] objectAtIndex:aSelectedIndex];
 		[self _selectTabItem:aNewTabToSelect];
-	} 
-	else 
-	{
+	} else {
 		[super observeValueForKeyPath:theKeyPath ofObject:theObject change:theChange context:theContext];
 	}
 }
@@ -169,6 +157,8 @@ static void *_KTTVCTabItemArrayControllerSelectionIndexObservationContext = (voi
 //===========================================================
 - (void)removeTabItem:(KTTabItem*)theTabItem
 {
+	[theTabItem retain];
+	
 	NSInteger	anIndexOfTabItemToRemove = [[mTabItemArrayController arrangedObjects] indexOfObject:theTabItem];
 	BOOL		aTabIsCurrentSelection = [theTabItem isEqualTo:wCurrentSelectedTab];
 	KTTabItem * aNewTabToSelect = nil;
@@ -199,18 +189,14 @@ static void *_KTTVCTabItemArrayControllerSelectionIndexObservationContext = (voi
 			[[[theTabItem viewController] view] removeFromSuperview];
 			[self removeSubcontroller:[theTabItem viewController]];
 		}
-//		else
-//			NSLog(@"removing tab item without a view controller");
 		
-			
-					
 		// clear out any reference to us and remove the tab item from our array controller
 		[theTabItem setTabViewController:nil];
 		[theTabItem setViewController:nil];
 		
 		[mTabItemArrayController removeObject:theTabItem];
-		if([[self delegate] respondsToSelector:@selector(tabViewControllerDidRemoveTabItem:)])
-			[[self delegate] tabViewControllerDidRemoveTabItem:self];
+		if([[self delegate] respondsToSelector:@selector(tabViewController:didRemoveTabItem:)])
+			[[self delegate] tabViewController:self didRemoveTabItem:theTabItem];
 		
 		
 		// adjust the selection if we need to 
@@ -219,6 +205,8 @@ static void *_KTTVCTabItemArrayControllerSelectionIndexObservationContext = (voi
 			[mTabItemArrayController setSelectionIndex:[[mTabItemArrayController arrangedObjects] indexOfObject:aNewTabToSelect]];
 		}
 	}
+	
+	[theTabItem release];
 }
 
 //=========================================================== 
