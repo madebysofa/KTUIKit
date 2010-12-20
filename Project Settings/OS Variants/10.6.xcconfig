@@ -1,0 +1,10 @@
+//
+//  10.6.xcconfig
+//  KTUIKit
+//
+//  Created by Jonathan on 17/12/2010.
+//  Copyright 2010 Sofa. All rights reserved.
+//
+
+SDKROOT = macosx10.6
+MACOSX_DEPLOYMENT_TARGET = 10.6 // Min OS Version

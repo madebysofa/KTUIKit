@@ -1,0 +1,10 @@
+//
+//  Debug (10.5-10.6).xcconfig
+//  KTUIKit
+//
+//  Created by Jonathan on 17/12/2010.
+//  Copyright 2010 Sofa. All rights reserved.
+//
+
+#include "../Base/Debug.xcconfig"
+#include "../OS Variants/10.5-10.6.xcconfig"

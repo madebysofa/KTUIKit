@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 45;
+	objectVersion = 46;
 	objects = {
 
 /* Begin PBXAggregateTarget section */
@@ -404,6 +404,21 @@
 		53DF68FE067E5B5A0090B5B0 /* KTUIKitFramework-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "KTUIKitFramework-Info.plist"; path = "../Framework/Resources/KTUIKitFramework-Info.plist"; sourceTree = "<group>"; };
 		8D1AC9730486D14A00FE50C9 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		8D1AC9740486D14A00FE50C9 /* KTUIKitIBPlugin.ibplugin */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = KTUIKitIBPlugin.ibplugin; sourceTree = BUILT_PRODUCTS_DIR; };
+		AB915DE912BF92AE00D94397 /* Project Base.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = "Project Base.xcconfig"; sourceTree = "<group>"; };
+		AB915DEA12BF92AE00D94397 /* Debug.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = Debug.xcconfig; sourceTree = "<group>"; };
+		AB915DEB12BF92AE00D94397 /* Release.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = Release.xcconfig; sourceTree = "<group>"; };
+		AB915DED12BF92AE00D94397 /* 10.5.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = 10.5.xcconfig; sourceTree = "<group>"; };
+		AB915DEE12BF92AE00D94397 /* 10.5-10.6.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = "10.5-10.6.xcconfig"; sourceTree = "<group>"; };
+		AB915DEF12BF92AE00D94397 /* 10.6.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = 10.6.xcconfig; sourceTree = "<group>"; };
+		AB915DF012BF92AE00D94397 /* AppStore.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = AppStore.xcconfig; sourceTree = "<group>"; };
+		AB915DF212BF92AE00D94397 /* Debug (10.5).xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = "Debug (10.5).xcconfig"; sourceTree = "<group>"; };
+		AB915DF312BF92AE00D94397 /* Release (10.5).xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = "Release (10.5).xcconfig"; sourceTree = "<group>"; };
+		AB915DF412BF92AE00D94397 /* Debug (10.5-10.6).xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = "Debug (10.5-10.6).xcconfig"; sourceTree = "<group>"; };
+		AB915DF512BF92AE00D94397 /* Release (10.5-10.6).xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = "Release (10.5-10.6).xcconfig"; sourceTree = "<group>"; };
+		AB915DF612BF92AE00D94397 /* Debug (10.6).xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = "Debug (10.6).xcconfig"; sourceTree = "<group>"; };
+		AB915DF712BF92AE00D94397 /* Release (10.6).xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = "Release (10.6).xcconfig"; sourceTree = "<group>"; };
+		AB915DF812BF92AE00D94397 /* Debug (AppStore).xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = "Debug (AppStore).xcconfig"; sourceTree = "<group>"; };
+		AB915DF912BF92AE00D94397 /* Release (AppStore).xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = "Release (AppStore).xcconfig"; sourceTree = "<group>"; };
 		ABEADA91129C0D2E00A2C90C /* KTMacros.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTMacros.h; sourceTree = "<group>"; };
 		C0D069550A49DF9100C95564 /* InterfaceBuilderKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = InterfaceBuilderKit.framework; path = /Developer/Library/Frameworks/InterfaceBuilderKit.framework; sourceTree = "<absolute>"; };
 		DD92D38A0106425D02CA0E72 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = /System/Library/Frameworks/Cocoa.framework; sourceTree = "<absolute>"; };
@@ -439,6 +454,7 @@
 		0259C574FE90428111CA0C5A /* KTUIKit */ = {
 			isa = PBXGroup;
 			children = (
+				AB915DE612BF92AE00D94397 /* Build Configurations */,
 				32DBCF9E0370C38000C91783 /* Plugin */,
 				54D33B2C06778E4400C9C163 /* Framework */,
 				0259C582FE90428111CA0C5A /* Resources */,
@@ -836,6 +852,68 @@
 			path = Framework;
 			sourceTree = "<group>";
 		};
+		AB915DE612BF92AE00D94397 /* Build Configurations */ = {
+			isa = PBXGroup;
+			children = (
+				AB915DE712BF92AE00D94397 /* Project Settings */,
+				AB915DFA12BF92AE00D94397 /* Targets */,
+			);
+			name = "Build Configurations";
+			sourceTree = "<group>";
+		};
+		AB915DE712BF92AE00D94397 /* Project Settings */ = {
+			isa = PBXGroup;
+			children = (
+				AB915DE812BF92AE00D94397 /* Base */,
+				AB915DEC12BF92AE00D94397 /* OS Variants */,
+				AB915DF112BF92AE00D94397 /* Configurations */,
+			);
+			path = "Project Settings";
+			sourceTree = "<group>";
+		};
+		AB915DE812BF92AE00D94397 /* Base */ = {
+			isa = PBXGroup;
+			children = (
+				AB915DE912BF92AE00D94397 /* Project Base.xcconfig */,
+				AB915DEA12BF92AE00D94397 /* Debug.xcconfig */,
+				AB915DEB12BF92AE00D94397 /* Release.xcconfig */,
+			);
+			path = Base;
+			sourceTree = "<group>";
+		};
+		AB915DEC12BF92AE00D94397 /* OS Variants */ = {
+			isa = PBXGroup;
+			children = (
+				AB915DED12BF92AE00D94397 /* 10.5.xcconfig */,
+				AB915DEE12BF92AE00D94397 /* 10.5-10.6.xcconfig */,
+				AB915DEF12BF92AE00D94397 /* 10.6.xcconfig */,
+				AB915DF012BF92AE00D94397 /* AppStore.xcconfig */,
+			);
+			path = "OS Variants";
+			sourceTree = "<group>";
+		};
+		AB915DF112BF92AE00D94397 /* Configurations */ = {
+			isa = PBXGroup;
+			children = (
+				AB915DF212BF92AE00D94397 /* Debug (10.5).xcconfig */,
+				AB915DF312BF92AE00D94397 /* Release (10.5).xcconfig */,
+				AB915DF412BF92AE00D94397 /* Debug (10.5-10.6).xcconfig */,
+				AB915DF512BF92AE00D94397 /* Release (10.5-10.6).xcconfig */,
+				AB915DF612BF92AE00D94397 /* Debug (10.6).xcconfig */,
+				AB915DF712BF92AE00D94397 /* Release (10.6).xcconfig */,
+				AB915DF812BF92AE00D94397 /* Debug (AppStore).xcconfig */,
+				AB915DF912BF92AE00D94397 /* Release (AppStore).xcconfig */,
+			);
+			path = Configurations;
+			sourceTree = "<group>";
+		};
+		AB915DFA12BF92AE00D94397 /* Targets */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Targets;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXHeadersBuildPhase section */
@@ -939,7 +1017,7 @@
 		0259C573FE90428111CA0C5A /* Project object */ = {
 			isa = PBXProject;
 			buildConfigurationList = C056398B08A954F8003078D8 /* Build configuration list for PBXProject "KTUIKit" */;
-			compatibilityVersion = "Xcode 3.1";
+			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = English;
 			hasScannedForEncodings = 1;
 			knownRegions = (
@@ -1167,23 +1245,8 @@
 /* Begin XCBuildConfiguration section */
 		4C1DE64110CD5CE300E34022 /* Debug (10.5) */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = AB915DF212BF92AE00D94397 /* Debug (10.5).xcconfig */;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
-				GCC_C_LANGUAGE_STANDARD = c99;
-				GCC_ENABLE_OBJC_GC = supported;
-				GCC_MODEL_TUNING = "";
-				GCC_OPTIMIZATION_LEVEL = 0;
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					KT_DEBUG,
-					NS_BUILD_32_LIKE_64,
-				);
-				GCC_VERSION = com.apple.compilers.llvmgcc42;
-				GCC_WARN_ABOUT_RETURN_TYPE = YES;
-				GCC_WARN_UNUSED_VARIABLE = YES;
-				ONLY_ACTIVE_ARCH = YES;
-				PREBINDING = NO;
-				SDKROOT = macosx10.5;
-				SKIP_INSTALL = NO;
 			};
 			name = "Debug (10.5)";
 		};
@@ -1246,23 +1309,8 @@
 		};
 		4C1DE64510CD5CE800E34022 /* Debug (10.6) */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = AB915DF612BF92AE00D94397 /* Debug (10.6).xcconfig */;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
-				GCC_C_LANGUAGE_STANDARD = c99;
-				GCC_ENABLE_OBJC_GC = supported;
-				GCC_MODEL_TUNING = "";
-				GCC_OPTIMIZATION_LEVEL = 0;
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					KT_DEBUG,
-					NS_BUILD_32_LIKE_64,
-				);
-				GCC_VERSION = com.apple.compilers.llvmgcc42;
-				GCC_WARN_ABOUT_RETURN_TYPE = YES;
-				GCC_WARN_UNUSED_VARIABLE = YES;
-				ONLY_ACTIVE_ARCH = YES;
-				PREBINDING = NO;
-				SDKROOT = macosx10.6;
-				SKIP_INSTALL = NO;
 			};
 			name = "Debug (10.6)";
 		};
@@ -1325,24 +1373,8 @@
 		};
 		4C1DE64910CD5CEE00E34022 /* Debug (10.5-10.6) */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = AB915DF412BF92AE00D94397 /* Debug (10.5-10.6).xcconfig */;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
-				GCC_C_LANGUAGE_STANDARD = c99;
-				GCC_ENABLE_OBJC_GC = supported;
-				GCC_MODEL_TUNING = "";
-				GCC_OPTIMIZATION_LEVEL = 0;
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					KT_DEBUG,
-					NS_BUILD_32_LIKE_64,
-				);
-				GCC_VERSION = com.apple.compilers.llvmgcc42;
-				GCC_WARN_ABOUT_RETURN_TYPE = YES;
-				GCC_WARN_UNUSED_VARIABLE = YES;
-				MACOSX_DEPLOYMENT_TARGET = 10.5;
-				ONLY_ACTIVE_ARCH = YES;
-				PREBINDING = NO;
-				SDKROOT = macosx10.6;
-				SKIP_INSTALL = NO;
 			};
 			name = "Debug (10.5-10.6)";
 		};
@@ -1405,22 +1437,8 @@
 		};
 		4C1DE64D10CD5CF600E34022 /* Release (10.5) */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = AB915DF312BF92AE00D94397 /* Release (10.5).xcconfig */;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
-				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				DEPLOYMENT_POSTPROCESSING = YES;
-				GCC_C_LANGUAGE_STANDARD = c99;
-				GCC_ENABLE_OBJC_GC = supported;
-				GCC_MODEL_TUNING = "";
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					NS_BLOCK_ASSERTIONS,
-					NS_BUILD_32_LIKE_64,
-				);
-				GCC_VERSION = com.apple.compilers.llvmgcc42;
-				GCC_WARN_ABOUT_RETURN_TYPE = YES;
-				GCC_WARN_UNUSED_VARIABLE = YES;
-				PREBINDING = NO;
-				SDKROOT = macosx10.5;
 			};
 			name = "Release (10.5)";
 		};
@@ -1480,22 +1498,8 @@
 		};
 		4C1DE65110CD5CFC00E34022 /* Release (10.6) */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = AB915DF712BF92AE00D94397 /* Release (10.6).xcconfig */;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
-				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				DEPLOYMENT_POSTPROCESSING = YES;
-				GCC_C_LANGUAGE_STANDARD = c99;
-				GCC_ENABLE_OBJC_GC = supported;
-				GCC_MODEL_TUNING = "";
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					NS_BLOCK_ASSERTIONS,
-					NS_BUILD_32_LIKE_64,
-				);
-				GCC_VERSION = com.apple.compilers.llvmgcc42;
-				GCC_WARN_ABOUT_RETURN_TYPE = YES;
-				GCC_WARN_UNUSED_VARIABLE = YES;
-				PREBINDING = NO;
-				SDKROOT = macosx10.6;
 			};
 			name = "Release (10.6)";
 		};
@@ -1555,23 +1559,8 @@
 		};
 		4C1DE65510CD5D0000E34022 /* Release (10.5-10.6) */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = AB915DF512BF92AE00D94397 /* Release (10.5-10.6).xcconfig */;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
-				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				DEPLOYMENT_POSTPROCESSING = YES;
-				GCC_C_LANGUAGE_STANDARD = c99;
-				GCC_ENABLE_OBJC_GC = supported;
-				GCC_MODEL_TUNING = "";
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					NS_BLOCK_ASSERTIONS,
-					NS_BUILD_32_LIKE_64,
-				);
-				GCC_VERSION = com.apple.compilers.llvmgcc42;
-				GCC_WARN_ABOUT_RETURN_TYPE = YES;
-				GCC_WARN_UNUSED_VARIABLE = YES;
-				MACOSX_DEPLOYMENT_TARGET = 10.5;
-				PREBINDING = NO;
-				SDKROOT = macosx10.6;
 			};
 			name = "Release (10.5-10.6)";
 		};
@@ -1629,30 +1618,14 @@
 			};
 			name = "Release (10.5-10.6)";
 		};
-		4C1DE66310CD5FF900E34022 /* Debug */ = {
+		4C1DE66310CD5FF900E34022 /* Debug (AppStore) */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = AB915DF812BF92AE00D94397 /* Debug (AppStore).xcconfig */;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
-				GCC_C_LANGUAGE_STANDARD = c99;
-				GCC_ENABLE_OBJC_GC = supported;
-				GCC_MODEL_TUNING = "";
-				GCC_OPTIMIZATION_LEVEL = 0;
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					KT_DEBUG,
-					NS_BUILD_32_LIKE_64,
-				);
-				GCC_VERSION = com.apple.compilers.llvmgcc42;
-				GCC_WARN_ABOUT_RETURN_TYPE = YES;
-				GCC_WARN_UNUSED_VARIABLE = YES;
-				MACOSX_DEPLOYMENT_TARGET = 10.5;
-				ONLY_ACTIVE_ARCH = YES;
-				PREBINDING = NO;
-				SDKROOT = macosx10.6;
-				SKIP_INSTALL = NO;
 			};
-			name = Debug;
+			name = "Debug (AppStore)";
 		};
-		4C1DE66410CD5FF900E34022 /* Debug */ = {
+		4C1DE66410CD5FF900E34022 /* Debug (AppStore) */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				COPY_PHASE_STRIP = NO;
@@ -1660,9 +1633,9 @@
 				GCC_OPTIMIZATION_LEVEL = 0;
 				PRODUCT_NAME = All;
 			};
-			name = Debug;
+			name = "Debug (AppStore)";
 		};
-		4C1DE66510CD5FF900E34022 /* Debug */ = {
+		4C1DE66510CD5FF900E34022 /* Debug (AppStore) */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				COPY_PHASE_STRIP = NO;
@@ -1687,9 +1660,9 @@
 				PRODUCT_NAME = KTUIKit;
 				SKIP_INSTALL = YES;
 			};
-			name = Debug;
+			name = "Debug (AppStore)";
 		};
-		4C1DE66610CD5FF900E34022 /* Debug */ = {
+		4C1DE66610CD5FF900E34022 /* Debug (AppStore) */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CONFIGURATION_BUILD_DIR = "$(BUILD_DIR)/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)";
@@ -1707,31 +1680,16 @@
 				SKIP_INSTALL = NO;
 				WRAPPER_EXTENSION = ibplugin;
 			};
-			name = Debug;
+			name = "Debug (AppStore)";
 		};
-		4C1DE66B10CD600600E34022 /* Release */ = {
+		4C1DE66B10CD600600E34022 /* Release (AppStore) */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = AB915DF912BF92AE00D94397 /* Release (AppStore).xcconfig */;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
-				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				DEPLOYMENT_POSTPROCESSING = YES;
-				GCC_C_LANGUAGE_STANDARD = c99;
-				GCC_ENABLE_OBJC_GC = supported;
-				GCC_MODEL_TUNING = "";
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					NS_BLOCK_ASSERTIONS,
-					NS_BUILD_32_LIKE_64,
-				);
-				GCC_VERSION = com.apple.compilers.llvmgcc42;
-				GCC_WARN_ABOUT_RETURN_TYPE = YES;
-				GCC_WARN_UNUSED_VARIABLE = YES;
-				MACOSX_DEPLOYMENT_TARGET = 10.5;
-				PREBINDING = NO;
-				SDKROOT = macosx10.6;
 			};
-			name = Release;
+			name = "Release (AppStore)";
 		};
-		4C1DE66C10CD600600E34022 /* Release */ = {
+		4C1DE66C10CD600600E34022 /* Release (AppStore) */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				COPY_PHASE_STRIP = YES;
@@ -1740,9 +1698,9 @@
 				PRODUCT_NAME = All;
 				ZERO_LINK = NO;
 			};
-			name = Release;
+			name = "Release (AppStore)";
 		};
-		4C1DE66D10CD600600E34022 /* Release */ = {
+		4C1DE66D10CD600600E34022 /* Release (AppStore) */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				DEPLOYMENT_LOCATION = YES;
@@ -1764,9 +1722,9 @@
 				PRODUCT_NAME = KTUIKit;
 				SKIP_INSTALL = YES;
 			};
-			name = Release;
+			name = "Release (AppStore)";
 		};
-		4C1DE66E10CD600600E34022 /* Release */ = {
+		4C1DE66E10CD600600E34022 /* Release (AppStore) */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CONFIGURATION_BUILD_DIR = "$(BUILD_DIR)/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)";
@@ -1783,7 +1741,7 @@
 				SKIP_INSTALL = NO;
 				WRAPPER_EXTENSION = ibplugin;
 			};
-			name = Release;
+			name = "Release (AppStore)";
 		};
 /* End XCBuildConfiguration section */
 
@@ -1792,13 +1750,13 @@
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				4C1DE64210CD5CE300E34022 /* Debug (10.5) */,
-				4C1DE64610CD5CE800E34022 /* Debug (10.6) */,
 				4C1DE64A10CD5CEE00E34022 /* Debug (10.5-10.6) */,
-				4C1DE66410CD5FF900E34022 /* Debug */,
+				4C1DE64610CD5CE800E34022 /* Debug (10.6) */,
+				4C1DE66410CD5FF900E34022 /* Debug (AppStore) */,
 				4C1DE64E10CD5CF600E34022 /* Release (10.5) */,
-				4C1DE65210CD5CFC00E34022 /* Release (10.6) */,
 				4C1DE65610CD5D0000E34022 /* Release (10.5-10.6) */,
-				4C1DE66C10CD600600E34022 /* Release */,
+				4C1DE65210CD5CFC00E34022 /* Release (10.6) */,
+				4C1DE66C10CD600600E34022 /* Release (AppStore) */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = "Debug (10.5)";
@@ -1807,13 +1765,13 @@
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				4C1DE64310CD5CE300E34022 /* Debug (10.5) */,
-				4C1DE64710CD5CE800E34022 /* Debug (10.6) */,
 				4C1DE64B10CD5CEE00E34022 /* Debug (10.5-10.6) */,
-				4C1DE66510CD5FF900E34022 /* Debug */,
+				4C1DE64710CD5CE800E34022 /* Debug (10.6) */,
+				4C1DE66510CD5FF900E34022 /* Debug (AppStore) */,
 				4C1DE64F10CD5CF600E34022 /* Release (10.5) */,
-				4C1DE65310CD5CFC00E34022 /* Release (10.6) */,
 				4C1DE65710CD5D0000E34022 /* Release (10.5-10.6) */,
-				4C1DE66D10CD600600E34022 /* Release */,
+				4C1DE65310CD5CFC00E34022 /* Release (10.6) */,
+				4C1DE66D10CD600600E34022 /* Release (AppStore) */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = "Debug (10.5)";
@@ -1822,13 +1780,13 @@
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				4C1DE64410CD5CE300E34022 /* Debug (10.5) */,
-				4C1DE64810CD5CE800E34022 /* Debug (10.6) */,
 				4C1DE64C10CD5CEE00E34022 /* Debug (10.5-10.6) */,
-				4C1DE66610CD5FF900E34022 /* Debug */,
+				4C1DE64810CD5CE800E34022 /* Debug (10.6) */,
+				4C1DE66610CD5FF900E34022 /* Debug (AppStore) */,
 				4C1DE65010CD5CF600E34022 /* Release (10.5) */,
-				4C1DE65410CD5CFC00E34022 /* Release (10.6) */,
 				4C1DE65810CD5D0000E34022 /* Release (10.5-10.6) */,
-				4C1DE66E10CD600600E34022 /* Release */,
+				4C1DE65410CD5CFC00E34022 /* Release (10.6) */,
+				4C1DE66E10CD600600E34022 /* Release (AppStore) */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = "Debug (10.5)";
@@ -1837,13 +1795,13 @@
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				4C1DE64110CD5CE300E34022 /* Debug (10.5) */,
-				4C1DE64510CD5CE800E34022 /* Debug (10.6) */,
 				4C1DE64910CD5CEE00E34022 /* Debug (10.5-10.6) */,
-				4C1DE66310CD5FF900E34022 /* Debug */,
+				4C1DE64510CD5CE800E34022 /* Debug (10.6) */,
+				4C1DE66310CD5FF900E34022 /* Debug (AppStore) */,
 				4C1DE64D10CD5CF600E34022 /* Release (10.5) */,
-				4C1DE65110CD5CFC00E34022 /* Release (10.6) */,
 				4C1DE65510CD5D0000E34022 /* Release (10.5-10.6) */,
-				4C1DE66B10CD600600E34022 /* Release */,
+				4C1DE65110CD5CFC00E34022 /* Release (10.6) */,
+				4C1DE66B10CD600600E34022 /* Release (AppStore) */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = "Debug (10.5)";

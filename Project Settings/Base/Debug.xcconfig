@@ -1,0 +1,12 @@
+//
+//  Debug.xcconfig
+//  KTUIKit
+//
+//  Created by Jonathan on 17/12/2010.
+//  Copyright 2010 Sofa. All rights reserved.
+//
+#include "Project Base.xcconfig"
+
+ONLY_ACTIVE_ARCH = YES
+GCC_OPTIMIZATION_LEVEL = 0
+GCC_PREPROCESSOR_DEFINITIONS = KT_DEBUG NS_BUILD_32_LIKE_64
