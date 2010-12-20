@@ -33,8 +33,7 @@
 //----------------------------------------------------------------------------------------
 - (id)init
 {
-	if(self = [super init])
-	{
+	if ((self = [super init])) {
 		mTextureName = 0;
 		mOriginalPixelsWide = 0;
 		mOriginalPixelsHigh = 0;

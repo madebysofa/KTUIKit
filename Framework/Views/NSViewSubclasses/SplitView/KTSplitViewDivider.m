@@ -35,8 +35,7 @@
 //===========================================================
 - (id)initWithSplitView:(KTSplitView*)theSplitView
 {
-	if(self = [self initWithFrame:NSZeroRect])
-	{
+	if ((self = [self initWithFrame:NSZeroRect])) {
 		wSplitView = theSplitView;
 		[self _resetTrackingArea];
 	}
@@ -49,8 +48,7 @@
 //===========================================================
 - (id)initWithFrame:(NSRect)theFrame
 {
-	if(self = [super initWithFrame:theFrame])
-	{
+	if ((self = [super initWithFrame:theFrame])) {
 		[self _resetTrackingArea];
 	}
 	return self;
@@ -61,8 +59,7 @@
 //===========================================================
 - (id)initWithCoder:(NSCoder*)theCoder
 {
-	if(self = [super initWithCoder:theCoder])
-	{
+	if ((self = [super initWithCoder:theCoder])) {
 		[self _resetTrackingArea];
 	}
 	return self;

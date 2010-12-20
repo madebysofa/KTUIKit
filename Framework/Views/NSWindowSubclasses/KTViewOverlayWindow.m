@@ -16,8 +16,7 @@
 //----------------------------------------------------------------------------------------
 - (id)initWithContentRect:(NSRect)theContentRect styleMask:(NSUInteger)theStyleMask backing:(NSBackingStoreType)theBacking defer:(BOOL)theDefer
 {
-	if(self = [super initWithContentRect:theContentRect styleMask:NSBorderlessWindowMask backing:NSBackingStoreBuffered defer:NO])
-	{
+	if ((self = [super initWithContentRect:theContentRect styleMask:NSBorderlessWindowMask backing:NSBackingStoreBuffered defer:NO])) {
 		[self setBackgroundColor:[NSColor clearColor]];
 		[self setMovableByWindowBackground:NO];
 		[self setExcludedFromWindowsMenu:YES];

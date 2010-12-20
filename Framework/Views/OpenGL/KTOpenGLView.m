@@ -94,8 +94,7 @@
 //=========================================================== 
 - (id)initWithCoder:(NSCoder*)theCoder
 {
-	if (self = [super initWithCoder:theCoder])
-	{
+	if ((self = [super initWithCoder:theCoder])) {
 		
 		NSOpenGLPixelFormat * aPixelFormat = [KTOpenGLView defaultPixelFormat];
 		[self setPixelFormat:aPixelFormat];

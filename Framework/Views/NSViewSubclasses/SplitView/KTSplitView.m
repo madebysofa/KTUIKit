@@ -45,8 +45,7 @@
 //===========================================================
 - (id)initWithFrame:(NSRect)theFrame dividerOrientation:(KTSplitViewDividerOrientation)theDividerOrientation
 {
-	if(self = [self initWithFrame:theFrame])
-	{
+	if ((self = [self initWithFrame:theFrame])) {
 		[self setDividerOrientation:theDividerOrientation];
 	}
 	return self;
@@ -59,8 +58,7 @@
 - (id)initWithFrame:(NSRect)theFrame
 {
 	//	NSLog(@"Split View initWithFrame:%@", NSStringFromRect(theFrame));
-	if(self = [super initWithFrame:theFrame])
-	{
+	if ((self = [super initWithFrame:theFrame])) {
 		mFirstView = [[KTView alloc] initWithFrame:NSZeroRect];
 		[self addSubview:mFirstView];
 		mSecondView = [[KTView alloc] initWithFrame:NSZeroRect];

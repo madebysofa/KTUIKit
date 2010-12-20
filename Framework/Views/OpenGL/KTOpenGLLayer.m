@@ -36,8 +36,7 @@
 //===========================================================
 - (id)initWithFrame:(NSRect)theFrame
 {
-	if(self = [super init])
-	{
+	if ((self = [super init])) {
 		mFrame = theFrame;
 		mSublayers = [[NSMutableArray alloc] init];
 		mLayoutManager = [[KTLayoutManager alloc] initWithView:self];

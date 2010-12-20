@@ -42,8 +42,7 @@ NSString *const KTAnimatorPointAnimation = @"KTAnimatorPointAnimation";
 @synthesize delegate = wDelegate;
 - (id)init
 {
-	if(self = [super init])
-	{
+	if ((self = [super init])) {
 		mAnimationTimer = nil;	
 		mAnimationQueue = [[NSMutableArray alloc] init];
 		mFramesPerSecond = 30.0;

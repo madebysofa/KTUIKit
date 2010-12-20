@@ -6,5 +6,5 @@
 //  Copyright 2010 Sofa. All rights reserved.
 //
 
-#include "../Base/Base/Debug.xcconfig"
+#include "../Base/Debug.xcconfig"
 #include "../OS Variants/10.6.xcconfig"
