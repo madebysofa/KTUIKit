@@ -385,12 +385,40 @@
 	}
 }
 
+- (NSString *)_autosaveKey;
+{
+	NSParameterAssert([self autosaveName] != nil);
+	return [NSString stringWithFormat:@"KTSplitView_Autosave_%@", [self autosaveName]];
+}
+
 - (void)_autosaveDividerPosition;
 {
 	NSNumber *aResizeInformation = ([self resizeBehavior] == KTSplitViewResizeBehavior_MaintainProportions) ? [NSNumber numberWithFloat:mProportionalResizeInformation] : [NSNumber numberWithFloat:mAbsoluteResizeInformation];
-	NSDictionary *anAutosaveInformation = [NSDictionary dictionaryWithObjectsAndKeys:aResizeInformation, @"KTSplitViewResizeInfo", [NSNumber numberWithInteger:[self resizeBehavior]], @"KTSplitViewResizeBehaviour", [NSNumber numberWithUnsignedInt:0], @"KTSplitViewAutosaveVersion", nil];
-	[[NSUserDefaults standardUserDefaults] setObject:anAutosaveInformation forKey:[NSString stringWithFormat:@"KTSplitView_Autosave_%@", [self autosaveName]]];
+	NSDictionary *anAutosaveInfo = [NSDictionary dictionaryWithObjectsAndKeys:aResizeInformation, @"KTSplitViewResizeInfo", [NSNumber numberWithInteger:[self resizeBehavior]], @"KTSplitViewResizeBehaviour", [NSNumber numberWithUnsignedInteger:0], @"KTSplitViewAutosaveVersion", nil];
+	[[NSUserDefaults standardUserDefaults] setObject:anAutosaveInfo forKey:[NSString stringWithFormat:@"KTSplitView_Autosave_%@", [self autosaveName]]];
 }
+
+- (void)_restoreDividerPositionUsingAutosaveName:(NSString *)theAutosaveName;
+{
+	NSDictionary *anAutosaveInfo = [[NSUserDefaults standardUserDefaults] objectForKey:[self _autosaveKey]];
+	if (anAutosaveInfo == nil) return;
+	NSNumber *aVersion = [anAutosaveInfo objectForKey:@"KTSplitViewAutosaveVersion"];
+	if (aVersion != nil) {
+		if ([aVersion unsignedIntegerValue] == 0) {
+			NSNumber *aResizeInfo = [anAutosaveInfo objectForKey:@"KTSplitViewResizeInfo"];
+			NSNumber *aResizeBehaviour = [anAutosaveInfo objectForKey:@"KTSplitViewResizeBehaviour"];
+			if (aResizeInfo != nil && aResizeBehaviour != nil) {
+				mResizeBehavior = [aResizeBehaviour integerValue];
+				if (mResizeBehavior == KTSplitViewResizeBehavior_MaintainProportions) {
+					mProportionalResizeInformation = [aResizeInfo floatValue];
+				} else {
+					mAbsoluteResizeInformation = [aResizeInfo floatValue];
+				}
+			}
+		}								   
+	}
+}
+
 
 #pragma mark -
 #pragma mark Constraints
