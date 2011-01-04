@@ -19,7 +19,7 @@
 
 @protocol KTSplitViewDelegate <NSObject>
 @optional
-- (void)splitViewDivderAnimationDidEnd:(KTSplitView*)theSplitView;
+- (void)splitViewDividerAnimationDidEnd:(KTSplitView*)theSplitView;
 - (void)dividerPositionDidChangeForSplitView:(KTSplitView*)theSplitView;
 @end
 //animationDidEndForSplitView
@@ -33,7 +33,7 @@ typedef enum
 
 typedef enum
 {	
-	KTSplitViewDividerOrientation_NoSet = 0,
+	KTSplitViewDividerOrientation_NotSet = 0,
 	KTSplitViewDividerOrientation_Horizontal,
 	KTSplitViewDividerOrientation_Vertical
 	

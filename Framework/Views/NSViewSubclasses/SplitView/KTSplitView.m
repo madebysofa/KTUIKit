@@ -681,8 +681,8 @@
 		[mAnimator release];
 		mAnimator = nil;	
 		[self resetResizeInformation];	
-		if([[self delegate] respondsToSelector:@selector(splitViewDivderAnimationDidEnd:)])
-			[[self delegate] splitViewDivderAnimationDidEnd:self];
+		if([[self delegate] respondsToSelector:@selector(splitViewDividerAnimationDidEnd:)])
+			[[self delegate] splitViewDividerAnimationDidEnd:self];
 	}
 }
 
@@ -691,8 +691,8 @@
 //===========================================================
 - (void)dividerAnimationDidEnd
 {
-	if([[self delegate] respondsToSelector:@selector(splitViewDivderAnimationDidEnd:)])
-		[[self delegate] splitViewDivderAnimationDidEnd:self];
+	if([[self delegate] respondsToSelector:@selector(splitViewDividerAnimationDidEnd:)])
+		[[self delegate] splitViewDividerAnimationDidEnd:self];
 }
 
 

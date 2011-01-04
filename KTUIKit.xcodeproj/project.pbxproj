@@ -594,14 +594,6 @@
 			path = Images;
 			sourceTree = "<group>";
 		};
-		4C3EAA4F0ECF590E004492C4 /* Resources */ = {
-			isa = PBXGroup;
-			children = (
-				4CB23EFB0ED989E800486F39 /* Sounds */,
-			);
-			path = Resources;
-			sourceTree = "<group>";
-		};
 		4C9314210FC9443300604546 /* Drawing */ = {
 			isa = PBXGroup;
 			children = (
@@ -731,13 +723,6 @@
 			path = Plugin/Integration;
 			sourceTree = "<group>";
 		};
-		4CB23EFB0ED989E800486F39 /* Sounds */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Sounds;
-			sourceTree = "<group>";
-		};
 		4CB5E6A10FCC05A50077E788 /* OpenGL */ = {
 			isa = PBXGroup;
 			children = (
@@ -847,7 +832,6 @@
 				4CB5E6BD0FCC05B80077E788 /* KTLayoutDynamicImplementation.m */,
 				4C9C5D860DE9F41800AE6913 /* Views */,
 				4C9C5D8D0DE9F43400AE6913 /* Controllers */,
-				4C3EAA4F0ECF590E004492C4 /* Resources */,
 			);
 			path = Framework;
 			sourceTree = "<group>";
