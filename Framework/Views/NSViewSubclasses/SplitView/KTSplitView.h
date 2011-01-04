@@ -80,6 +80,8 @@ typedef enum
 	CGFloat								mPreferredSecondViewMinSize;
 	CGFloat								mPreferredMaxSize;
 	KTSplitViewFocusedViewFlag			mPreferredMaxSizeRelativeView;
+	
+	NSString							*mAutosaveName;
 }
 
 @property (nonatomic, readwrite, assign) IBOutlet id <KTSplitViewDelegate> delegate;
@@ -88,6 +90,7 @@ typedef enum
 @property (nonatomic, readwrite, assign) BOOL userInteractionEnabled;
 @property (nonatomic, readwrite, assign) CGFloat dividerThickness;
 @property (nonatomic, readwrite, retain) KTSplitViewDivider * divider;
+@property (nonatomic, readwrite, copy) NSString *autosaveName;
 
 - (id)initWithFrame:(NSRect)theFrame dividerOrientation:(KTSplitViewDividerOrientation)theDividerOrientation;
 - (void)setFirstView:(NSView<KTView>*)theView;

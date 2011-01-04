@@ -17,12 +17,10 @@
 @property (readwrite, nonatomic, assign) CGFloat preferredMaxSize;
 @property (readwrite, nonatomic, assign) KTSplitViewFocusedViewFlag preferredMaxSizeRelativeView;
 
-@end
+- (void)_autosaveDividerPosition;
 
-@interface KTSplitView (Private)
 - (void)animateDividerToPosition:(CGFloat)thePosition time:(CGFloat)theTimeInSeconds;
-//- (KTView*)firstViewContainer;
-//- (KTView*)secondViewContainer;
+
 @end
 
 @implementation KTSplitView
@@ -39,6 +37,8 @@
 @synthesize	preferredSecondViewMinSize = mPreferredSecondViewMinSize;
 @synthesize	preferredMaxSize = mPreferredMaxSize;
 @synthesize	preferredMaxSizeRelativeView = mPreferredMaxSizeRelativeView;
+
+@synthesize autosaveName = mAutosaveName;
 
 //=========================================================== 
 // - initWithFrame:dividerOrientation
@@ -160,6 +160,8 @@
 	[mDivider release];
 	[mAnimator setDelegate:nil];
 	[mAnimator release];
+	[mAutosaveName release];
+	
 	[super dealloc];
 }
 
@@ -350,10 +352,6 @@
 		[[self secondViewContainer] setFrame:aSecondViewFrame];
 }
 
-
-//=========================================================== 
-// - resetResizeInformation
-//===========================================================
 - (void)resetResizeInformation
 {
 	NSRect aDividerFrame = [[self divider] frame];
@@ -381,8 +379,17 @@
 		}	
 	}
 	
-//	mResetResizeInformation = YES;
-//	mResizeInformation = 0;
+	NSString *anAutosaveName = [self autosaveName];
+	if (anAutosaveName != nil) {
+		[self _autosaveDividerPosition];
+	}
+}
+
+- (void)_autosaveDividerPosition;
+{
+	NSNumber *aResizeInformation = ([self resizeBehavior] == KTSplitViewResizeBehavior_MaintainProportions) ? [NSNumber numberWithFloat:mProportionalResizeInformation] : [NSNumber numberWithFloat:mAbsoluteResizeInformation];
+	NSDictionary *anAutosaveInformation = [NSDictionary dictionaryWithObjectsAndKeys:aResizeInformation, @"KTSplitViewResizeInfo", [NSNumber numberWithInteger:[self resizeBehavior]], @"KTSplitViewResizeBehaviour", [NSNumber numberWithUnsignedInt:0], @"KTSplitViewAutosaveVersion", nil];
+	[[NSUserDefaults standardUserDefaults] setObject:anAutosaveInformation forKey:[NSString stringWithFormat:@"KTSplitView_Autosave_%@", [self autosaveName]]];
 }
 
 #pragma mark -
