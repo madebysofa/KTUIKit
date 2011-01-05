@@ -402,7 +402,13 @@ static NSString const *_KTSplitViewAutosaveVersionKey = @"KTSplitViewAutosaveVer
 	[[NSUserDefaults standardUserDefaults] setObject:anAutosaveInfo forKey:[self _autosaveKey]];
 }
 
-- (void)_restoreDividerPositionUsingFromAutosaveInfo;
+- (BOOL)_canRestoreDividerPositionUsingAutosaveInfo;
+{
+	NSDictionary *anAutosaveInfo = [[NSUserDefaults standardUserDefaults] objectForKey:[self _autosaveKey]];
+	return (anAutosaveInfo != nil);	
+}
+
+- (void)_restoreDividerPositionFromAutosaveInfo;
 {
 	NSDictionary *anAutosaveInfo = [[NSUserDefaults standardUserDefaults] objectForKey:[self _autosaveKey]];
 	if (anAutosaveInfo == nil) return;
@@ -422,8 +428,6 @@ static NSString const *_KTSplitViewAutosaveVersionKey = @"KTSplitViewAutosaveVer
 					} else {
 						[self setDividerPosition:[aResizeInfo floatValue] relativeToView:KTSplitViewFocusedViewFlag_SecondView];						
 					}
-
-					
 				}
 			}
 		}								   
