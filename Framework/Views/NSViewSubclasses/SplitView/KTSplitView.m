@@ -402,7 +402,7 @@ static NSString const *_KTSplitViewAutosaveVersionKey = @"KTSplitViewAutosaveVer
 	[[NSUserDefaults standardUserDefaults] setObject:anAutosaveInfo forKey:[self _autosaveKey]];
 }
 
-- (void)_restoreDividerPositionUsingAutosaveName;
+- (void)_restoreDividerPositionUsingFromAutosaveInfo;
 {
 	NSDictionary *anAutosaveInfo = [[NSUserDefaults standardUserDefaults] objectForKey:[self _autosaveKey]];
 	if (anAutosaveInfo == nil) return;
@@ -414,9 +414,16 @@ static NSString const *_KTSplitViewAutosaveVersionKey = @"KTSplitViewAutosaveVer
 			if (aResizeInfo != nil && aResizeBehaviour != nil) {
 				mResizeBehavior = [aResizeBehaviour integerValue];
 				if (mResizeBehavior == KTSplitViewResizeBehavior_MaintainProportions) {
-					mProportionalResizeInformation = [aResizeInfo floatValue];
+					// FIXME: we don't hanlde restoring the divider position for proportional split views yet.
 				} else {
-					mAbsoluteResizeInformation = [aResizeInfo floatValue];
+					// FIXME: determining which flag to pass for the |relativeToView:| argument by looking at the |mResizeBehavior| doesn't seem right. It's symptomiatic of the larger nomenclature issue with this class.
+					if (mResizeBehavior == KTSplitViewResizeBehavior_MaintainFirstViewSize) {
+						[self setDividerPosition:[aResizeInfo floatValue] relativeToView:KTSplitViewFocusedViewFlag_FirstView];		
+					} else {
+						[self setDividerPosition:[aResizeInfo floatValue] relativeToView:KTSplitViewFocusedViewFlag_SecondView];						
+					}
+
+					
 				}
 			}
 		}								   
