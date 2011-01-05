@@ -402,7 +402,7 @@ static NSString const *_KTSplitViewAutosaveVersionKey = @"KTSplitViewAutosaveVer
 	[[NSUserDefaults standardUserDefaults] setObject:anAutosaveInfo forKey:[self _autosaveKey]];
 }
 
-- (void)_restoreDividerPositionUsingAutosaveName:(NSString *)theAutosaveName;
+- (void)_restoreDividerPositionUsingAutosaveName;
 {
 	NSDictionary *anAutosaveInfo = [[NSUserDefaults standardUserDefaults] objectForKey:[self _autosaveKey]];
 	if (anAutosaveInfo == nil) return;
