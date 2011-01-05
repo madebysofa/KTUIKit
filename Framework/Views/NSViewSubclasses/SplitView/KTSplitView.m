@@ -388,7 +388,7 @@
 - (NSString *)_autosaveKey;
 {
 	NSParameterAssert([self autosaveName] != nil);
-	return [NSString stringWithFormat:@"KTSplitView_Autosave_%@", [self autosaveName]];
+	return [NSString stringWithFormat:@"KTSplitView_%@", [self autosaveName]];
 }
 
 static NSString const *_KTSplitViewResizeInfoKey = @"KTSplitViewResizeInfo";
@@ -402,13 +402,14 @@ static NSString const *_KTSplitViewAutosaveVersionKey = @"KTSplitViewAutosaveVer
 	[[NSUserDefaults standardUserDefaults] setObject:anAutosaveInfo forKey:[self _autosaveKey]];
 }
 
-- (BOOL)_canRestoreDividerPositionUsingAutosaveInfo;
+// |-canRestoreDividerPositionUsingAutosaveInfo| and |-restoreDividerPositionFromAutosaveInfo| are currently called by clients when setting initial divider positions. At the moment, as setting the divider thickness and the like cause layout, there's no single coherent place for these to be called, therefore they have to be public.
+- (BOOL)canRestoreDividerPositionUsingAutosaveInfo;
 {
 	NSDictionary *anAutosaveInfo = [[NSUserDefaults standardUserDefaults] objectForKey:[self _autosaveKey]];
 	return (anAutosaveInfo != nil);	
 }
 
-- (void)_restoreDividerPositionFromAutosaveInfo;
+- (void)restoreDividerPositionFromAutosaveInfo;
 {
 	NSDictionary *anAutosaveInfo = [[NSUserDefaults standardUserDefaults] objectForKey:[self _autosaveKey]];
 	if (anAutosaveInfo == nil) return;

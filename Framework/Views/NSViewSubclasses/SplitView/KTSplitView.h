@@ -116,4 +116,8 @@ typedef enum
 // Called from the divider's mouse handling code
 - (CGFloat)dividerPositionForProposedPosition:(CGFloat)thePosition;
 - (BOOL)canResizeRelativeToView:(KTSplitViewFocusedViewFlag)theView;
+
+
+- (BOOL)canRestoreDividerPositionUsingAutosaveInfo;
+- (void)restoreDividerPositionFromAutosaveInfo;
 @end
