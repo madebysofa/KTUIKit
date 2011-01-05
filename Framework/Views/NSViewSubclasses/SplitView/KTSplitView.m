@@ -423,11 +423,7 @@ static NSString const *_KTSplitViewAutosaveVersionKey = @"KTSplitViewAutosaveVer
 					// FIXME: we don't hanlde restoring the divider position for proportional split views yet.
 				} else {
 					// FIXME: determining which flag to pass for the |relativeToView:| argument by looking at the |mResizeBehavior| doesn't seem right. It's symptomiatic of the larger nomenclature issue with this class.
-					if (mResizeBehavior == KTSplitViewResizeBehavior_MaintainFirstViewSize) {
-						[self setDividerPosition:[aResizeInfo floatValue] relativeToView:KTSplitViewFocusedViewFlag_FirstView];		
-					} else {
-						[self setDividerPosition:[aResizeInfo floatValue] relativeToView:KTSplitViewFocusedViewFlag_SecondView];						
-					}
+					[self setDividerPosition:[aResizeInfo floatValue] relativeToView:(mResizeBehavior == KTSplitViewResizeBehavior_MaintainFirstViewSize) ? KTSplitViewFocusedViewFlag_FirstView : KTSplitViewFocusedViewFlag_SecondView];	
 				}
 			}
 		}								   
