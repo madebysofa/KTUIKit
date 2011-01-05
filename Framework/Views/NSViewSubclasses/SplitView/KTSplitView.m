@@ -391,22 +391,26 @@
 	return [NSString stringWithFormat:@"KTSplitView_Autosave_%@", [self autosaveName]];
 }
 
+static NSString const *_KTSplitViewResizeInfoKey = @"KTSplitViewResizeInfo";
+static NSString const *_KTSplitViewResizeBehaviourKey = @"KTSplitViewResizeBehaviour";
+static NSString const *_KTSplitViewAutosaveVersionKey = @"KTSplitViewAutosaveVersion";
+
 - (void)_autosaveDividerPosition;
 {
 	NSNumber *aResizeInformation = ([self resizeBehavior] == KTSplitViewResizeBehavior_MaintainProportions) ? [NSNumber numberWithFloat:mProportionalResizeInformation] : [NSNumber numberWithFloat:mAbsoluteResizeInformation];
-	NSDictionary *anAutosaveInfo = [NSDictionary dictionaryWithObjectsAndKeys:aResizeInformation, @"KTSplitViewResizeInfo", [NSNumber numberWithInteger:[self resizeBehavior]], @"KTSplitViewResizeBehaviour", [NSNumber numberWithUnsignedInteger:0], @"KTSplitViewAutosaveVersion", nil];
-	[[NSUserDefaults standardUserDefaults] setObject:anAutosaveInfo forKey:[NSString stringWithFormat:@"KTSplitView_Autosave_%@", [self autosaveName]]];
+	NSDictionary *anAutosaveInfo = [NSDictionary dictionaryWithObjectsAndKeys:aResizeInformation, _KTSplitViewResizeInfoKey, [NSNumber numberWithInteger:[self resizeBehavior]], _KTSplitViewResizeBehaviourKey, [NSNumber numberWithUnsignedInteger:0], _KTSplitViewAutosaveVersionKey, nil];
+	[[NSUserDefaults standardUserDefaults] setObject:anAutosaveInfo forKey:[self _autosaveKey]];
 }
 
 - (void)_restoreDividerPositionUsingAutosaveName:(NSString *)theAutosaveName;
 {
 	NSDictionary *anAutosaveInfo = [[NSUserDefaults standardUserDefaults] objectForKey:[self _autosaveKey]];
 	if (anAutosaveInfo == nil) return;
-	NSNumber *aVersion = [anAutosaveInfo objectForKey:@"KTSplitViewAutosaveVersion"];
+	NSNumber *aVersion = [anAutosaveInfo objectForKey:_KTSplitViewAutosaveVersionKey];
 	if (aVersion != nil) {
 		if ([aVersion unsignedIntegerValue] == 0) {
-			NSNumber *aResizeInfo = [anAutosaveInfo objectForKey:@"KTSplitViewResizeInfo"];
-			NSNumber *aResizeBehaviour = [anAutosaveInfo objectForKey:@"KTSplitViewResizeBehaviour"];
+			NSNumber *aResizeInfo = [anAutosaveInfo objectForKey:_KTSplitViewResizeInfoKey];
+			NSNumber *aResizeBehaviour = [anAutosaveInfo objectForKey:_KTSplitViewResizeBehaviourKey];
 			if (aResizeInfo != nil && aResizeBehaviour != nil) {
 				mResizeBehavior = [aResizeBehaviour integerValue];
 				if (mResizeBehavior == KTSplitViewResizeBehavior_MaintainProportions) {
