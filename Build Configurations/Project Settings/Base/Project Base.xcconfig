@@ -36,6 +36,13 @@ GCC_WARN_UNUSED_VALUE = YES
 GCC_WARN_UNUSED_VARIABLE = YES
 GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = YES
 
+GCC_MODEL_TUNING = G5
+
+DEPLOYMENT_LOCATION = NO // We want all frameworks to be in their own build directories. When this, and |SKIP_INSTALL| are |YES|, the build product is placed in |(BUILD_DIR)/Uninstalled Products|. Therefore, without clean building, any existing build in that folder will be used, whether it is the correct configuration or not.
+SKIP_INSTALL = NO // This only has an effect when |DEPLOYMENT_LOCATION = YES|
+COPY_PHASE_STRIP = NO
+STRIP_INSTALLED_PRODUCT = NO
+
 COMPANY_REVERSE_DOMAIN_NAME_PREFIX = com.madebysofa
 DOXYGEN_PATH = ${DEVELOPER_DIR}/Applications/Doxygen.app/Contents/Resources/doxygen
 //SCRIPTS_DIRECTORY = $(SOURCE_ROOT)/Scripts

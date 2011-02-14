@@ -1,0 +1,19 @@
+//
+//  IBPlugin.xcconfig
+//  KTUIKit
+//
+//  Created by Jonathan on 14/02/2011.
+//  Copyright 2011 Sofa. All rights reserved.
+//
+
+LD_RUNPATH_SEARCH_PATHS = @loader_path/../Frameworks
+
+INFOPLIST_FILE = Resources/Info.plist
+PRODUCT_NAME = KTUIKitIBPlugin
+WRAPPER_EXTENSION = ibplugin
+
+FRAMEWORK_SEARCH_PATHS = $(inherited) $(DEVELOPER_FRAMEWORKS_DIR)
+
+GCC_PRECOMPILE_PREFIX_HEADER = YES
+GCC_PREFIX_HEADER = $(SRCROOT)/Other Sources/KTUIKit_Prefix.pch
+
