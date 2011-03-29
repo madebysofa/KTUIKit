@@ -77,7 +77,7 @@ NSString *const KTViewControllerLayerControllersKey = @"layerControllers";
 
 + (id)viewControllerWithWindowController:(KTWindowController *)theWindowController
 {
-	return [[[self alloc] initWithNibName:nil bundle:nil windowController:theWindowController] autorelease];
+	return [[[self alloc] initWithNibName:[self nibName] bundle:[self nibBundle] windowController:theWindowController] autorelease];
 }
 
 - (id)initWithNibName:(NSString *)theNibName bundle:(NSBundle *)theBundle windowController:(KTWindowController *)theWindowController;
@@ -145,6 +145,59 @@ NSString *const KTViewControllerLayerControllersKey = @"layerControllers";
 	if (thePatch) {
 		[[self windowController] _patchResponderChain];			
 	}
+}
+
+#pragma mark -
+#pragma mark View Loading
+
++ (Class)viewClass;
+{
+	return [NSView class]; // Note that out of the box, KTViewController should work correctly with NSViews, not KTViews.
+}
+
++ (NSString *)nibName;
+{
+	return nil;
+}
+
++ (NSBundle *)nibBundle;
+{
+	return [NSBundle bundleForClass:self];
+}
+
+- (BOOL)_shouldLoadDefaultView;
+{
+	return ([[self class] nibName] == nil && [self nibName] == nil);
+}
+
+- (void)loadView;
+{		
+	NSParameterAssert([self isViewLoaded] == NO);
+	[self viewWillLoad];
+	
+	if ([self _shouldLoadDefaultView]) {
+		Class aDefaultViewClass = [[self class] viewClass];
+		NSParameterAssert(aDefaultViewClass != Nil);
+		NSView *aView = [[[aDefaultViewClass alloc] initWithFrame:NSZeroRect] autorelease];
+		[self setView:aView];
+	} else {
+		[super loadView];
+	}
+	
+	[self setViewLoaded:YES];
+	NSAutoreleasePool *aPool = [[NSAutoreleasePool alloc] init];
+	[self viewDidLoad];
+	[aPool drain];
+}
+
+- (void)viewWillLoad;
+{
+	// Intetionally does nothing.
+}
+
+- (void)viewDidLoad;
+{
+	// Intetionally does nothing.
 }
 
 #pragma mark View Controllers
