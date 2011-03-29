@@ -59,6 +59,8 @@ NSString *const KTViewControllerLayerControllersKey = @"layerControllers";
 
 @property (readwrite, nonatomic, copy) NSArray *topLevelObjects;
 
+@property (nonatomic, getter = isViewLoaded) BOOL viewLoaded;
+
 - (void)_setHidden:(BOOL)theHiddenFlag patchResponderChain:(BOOL)thePatchFlag;
 @end
 
@@ -66,8 +68,12 @@ NSString *const KTViewControllerLayerControllersKey = @"layerControllers";
 
 @synthesize windowController = wWindowController;
 @synthesize parentViewController = wParentViewController;
+
 @synthesize hidden = mHidden;
+
 @synthesize topLevelObjects = mTopLevelNibObjects;
+
+@synthesize viewLoaded = mViewLoaded;
 
 + (id)viewControllerWithWindowController:(KTWindowController *)theWindowController
 {
@@ -107,7 +113,7 @@ NSString *const KTViewControllerLayerControllersKey = @"layerControllers";
 
 - (NSString *)description;
 {
-	return [NSString stringWithFormat:@"%@ hidden:%@", [super description], [self hidden] ? @"YES" : @"NO"];
+	return [NSString stringWithFormat:@"%@ hidden:%@ viewLoaded:%@", [super description], [self hidden] ? @"YES" : @"NO", [self isViewLoaded] ? @"YES" : @"NO"];
 }
 
 - (void)setWindowController:(KTWindowController *)theWindowController;
@@ -392,6 +398,7 @@ void _KTViewControllerEnumerateSubControllers(KTViewController *theViewControlle
 - (BOOL)viewHierarchyContainsView:(NSView *)theView;
 {
 	NSParameterAssert(theView != nil);
+	if (![self isViewLoaded]) return NO;
 	NSView *aView = [self view];
 	return [theView isDescendantOf:aView]; // Also returns YES if [theView isEqual:aView];
 }
