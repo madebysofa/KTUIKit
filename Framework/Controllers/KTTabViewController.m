@@ -20,18 +20,14 @@
 @end
 
 @implementation KTTabViewController
-//=========================================================== 
-// - synthesize
-//===========================================================
+
 @synthesize tabItemArrayController = mTabItemArrayController;
 @synthesize releaseViewControllersWhenNotSeletcted = mReleaseViewControllersWhenNotSeletcted;
 @synthesize shouldResizeTabViews = mShouldResizeTabViews;
 @synthesize delegate = wDelegate;
 
 static void *_KTTVCTabItemArrayControllerSelectionIndexObservationContext = (void *)@"_KTTVCTabItemArrayControllerSelectionIndexObservationContext";
-//=========================================================== 
-// - initWithNibName:bundle:windowController
-//===========================================================
+
 - (id)initWithNibName:(NSString*)theNibName bundle:(NSBundle*)theBundle windowController:(KTWindowController*)theWindowController
 {
 	if ((self = [super initWithNibName:nil bundle:theBundle windowController:theWindowController])) {
@@ -53,9 +49,6 @@ static void *_KTTVCTabItemArrayControllerSelectionIndexObservationContext = (voi
 	return self;
 }
 
-//=========================================================== 
-// - dealloc
-//===========================================================
 - (void)dealloc
 {
 	[mTabItemArrayController release];
@@ -101,9 +94,6 @@ static void *_KTTVCTabItemArrayControllerSelectionIndexObservationContext = (voi
 #pragma mark -
 #pragma mark KVO Callbacks
 
-//=========================================================== 
-// - observeValueForKeyPath
-//===========================================================
 - (void)observeValueForKeyPath:(NSString *)theKeyPath ofObject:(id)theObject change:(NSDictionary *)theChange context:(void *)theContext
 {
 	if(theContext == &_KTTVCTabItemArrayControllerSelectionIndexObservationContext)
@@ -128,17 +118,12 @@ static void *_KTTVCTabItemArrayControllerSelectionIndexObservationContext = (voi
 
 #pragma mark -
 #pragma mark Managing Tabs
-//=========================================================== 
-// - addTabItem
-//===========================================================
+
 - (void)addTabItem:(KTTabItem*)theTabItem
 {
 	[self insertTabItem:theTabItem atIndex:[[mTabItemArrayController arrangedObjects] count]];
 }
 
-//=========================================================== 
-// - addTabItem
-//===========================================================
 - (void)addTabItem:(KTTabItem *)theTabItem select:(BOOL)theBool
 {
 	KTTabItem * aCurrentSelection = [self selectedTabItem];
@@ -150,9 +135,6 @@ static void *_KTTVCTabItemArrayControllerSelectionIndexObservationContext = (voi
 	//[[self tabItemArrayController] setSelectsInsertedObjects:YES];
 }
 
-//=========================================================== 
-// - removeTabItem
-//===========================================================
 - (void)removeTabItem:(KTTabItem*)theTabItem
 {
 	[theTabItem retain];
@@ -207,9 +189,6 @@ static void *_KTTVCTabItemArrayControllerSelectionIndexObservationContext = (voi
 	[theTabItem release];
 }
 
-//=========================================================== 
-// - insertTabItem
-//===========================================================
 - (void)insertTabItem:(KTTabItem*)theTabItem atIndex:(NSInteger)theIndex
 {
 	if(theTabItem!=nil)
@@ -223,18 +202,11 @@ static void *_KTTVCTabItemArrayControllerSelectionIndexObservationContext = (voi
 	}
 }
 
-
-//=========================================================== 
-// - tabItems
-//===========================================================
 - (NSArray*)tabItems
 {
 	return [mTabItemArrayController arrangedObjects];
 }
 
-//=========================================================== 
-// - tabItemForIdentifier
-//===========================================================
 - (KTTabItem*)tabItemForIdentifier:(id)theIdentifier
 {
 	KTTabItem * aTabItemToReturn = nil;
@@ -249,9 +221,6 @@ static void *_KTTVCTabItemArrayControllerSelectionIndexObservationContext = (voi
 	return aTabItemToReturn;
 }
 
-//=========================================================== 
-// - tabItemForViewController
-//===========================================================
 - (KTTabItem*)tabItemForViewController:(KTViewController*)theViewController
 {
 	KTTabItem * aTabItemToReturn = nil;
@@ -266,9 +235,6 @@ static void *_KTTVCTabItemArrayControllerSelectionIndexObservationContext = (voi
 	return aTabItemToReturn;
 }
 
-//=========================================================== 
-// - tabItemForIndex
-//===========================================================
 - (KTTabItem*)tabItemForIndex:(NSInteger)theIndex
 {
 	KTTabItem * aTabItemToReturn = nil;
@@ -280,26 +246,18 @@ static void *_KTTVCTabItemArrayControllerSelectionIndexObservationContext = (voi
 
 #pragma mark -
 #pragma mark Selection
-//=========================================================== 
-// - selectedTabItem
-//===========================================================
+
 - (KTTabItem*)selectedTabItem
 {
 	return wCurrentSelectedTab;
 }
 
-//=========================================================== 
-// - selectedTabIndex
-//===========================================================
 - (NSInteger)selectedTabIndex
 {
 	 KTTabItem * aSelectedTab = [self selectedTabItem];
 	 return [[mTabItemArrayController arrangedObjects] indexOfObject:aSelectedTab];
 }
 
-//=========================================================== 
-// - selectTabAtIndex
-//===========================================================
 - (void)selectTabItem:(KTTabItem*)theTabItem
 {
 	if (!theTabItem)
@@ -308,9 +266,6 @@ static void *_KTTVCTabItemArrayControllerSelectionIndexObservationContext = (voi
 	[mTabItemArrayController setSelectedObjects:[NSArray arrayWithObject:theTabItem]];
 }
 
-//=========================================================== 
-// - selectTabAtIndex
-//===========================================================
 - (void)selectTabAtIndex:(NSInteger)theTabIndex
 {
 	KTTabItem * aTabForIndex = [[mTabItemArrayController arrangedObjects] objectAtIndex:theTabIndex];
