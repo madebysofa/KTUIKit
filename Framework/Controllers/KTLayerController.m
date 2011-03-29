@@ -185,38 +185,38 @@ NSString *const KTLayerControllerLayerControllersKey = @"layerControllers";
 #pragma mark -
 #pragma mark KTController Protocol
 
+static void _KTDescendantsAggregate(NSResponder <KTController> *theController, BOOL *theStopFlag, void *theContext) {
+	CFMutableArrayRef aContext = (CFMutableArrayRef)theContext;
+	CFArrayAppendValue(aContext, theController);
+}
+
 - (NSArray *)descendants
 {
 	CFMutableArrayRef aMutableDescendants = CFArrayCreateMutable(kCFAllocatorDefault, 0, &kCFTypeArrayCallBacks);
-	for (KTLayerController *aLayerController in [self layerControllers]) {
-		CFArrayAppendValue(aMutableDescendants, aLayerController);
-		NSArray *aDescendants = [aLayerController descendants];
-		if (aDescendants != nil) {
-			CFIndex aDescendantsCount = CFArrayGetCount((CFArrayRef)aDescendants);
-			if (aDescendantsCount > 0) {
-				CFArrayAppendArray(aMutableDescendants, (CFArrayRef)aDescendants, CFRangeMake(0, aDescendantsCount));
-			}
-		}
-	}
+	[self _enumerateSubControllers:&_KTDescendantsAggregate context:aMutableDescendants];
 	CFArrayRef aDescendants = CFArrayCreateCopy(kCFAllocatorDefault, aMutableDescendants);
 	CFRelease(aMutableDescendants);
 	return [NSMakeCollectable(aDescendants) autorelease];
 }
 
-void _KTLayerControllerEnumerateSubControllers(KTLayerController *theLayerController, _KTControllerEnumeratorCallBack theCallBackFunction, void *theContext)
+void _KTLayerControllerEnumerateSubControllers(KTLayerController *theLayerController, _KTControllerEnumerationOptions theOptions, BOOL *theStopFlag, _KTControllerEnumeratorCallBack theCallBackFunction, void *theContext)
 {
-	theCallBackFunction(theLayerController, theContext);
+	NSCParameterAssert(theStopFlag != NULL);
+	if (*theStopFlag == YES) return; // I'm not convinced this early return is necessary, but it's more defensive. The breaks in the loops should be taking care that we don't continue the recursion.
+	
+	theCallBackFunction(theLayerController, theStopFlag, theContext);
+	if (*theStopFlag == YES) return;
+	
 	for (KTLayerController *aLayerController in [theLayerController layerControllers]) {
-		_KTLayerControllerEnumerateSubControllers(aLayerController, theCallBackFunction, theContext);
-	}	
+		_KTLayerControllerEnumerateSubControllers(aLayerController, theOptions, theStopFlag, theCallBackFunction, theContext);
+		if (*theStopFlag == YES) break;
+	}
 }
 
 - (void)_enumerateSubControllers:(_KTControllerEnumeratorCallBack)theCallBackFunction context:(void *)theContext;
 {
-	theCallBackFunction(self, theContext);
-	for (KTLayerController *aLayerController in [self layerControllers]) {
-		[aLayerController _enumerateSubControllers:theCallBackFunction context:theContext];
-	}
+	BOOL aStopFlag = NO;
+	_KTLayerControllerEnumerateSubControllers(self, _KTControllerEnumerationOptionsNone, &aStopFlag, theCallBackFunction, theContext);
 }
 
 @end

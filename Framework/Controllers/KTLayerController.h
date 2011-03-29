@@ -54,6 +54,6 @@ KT_EXPORT NSString *const KTLayerControllerLayerControllersKey;
 
 @interface KTLayerController (KTPrivate)
 - (void)_setHidden:(BOOL)theHidden patchResponderChain:(BOOL)thePatch;
-KT_EXPORT void _KTLayerControllerEnumerateSubControllers(KTLayerController *theViewController, _KTControllerEnumeratorCallBack theCallBackFunction, void *theContext);
+KT_EXPORT void _KTLayerControllerEnumerateSubControllers(KTLayerController *theLayerController, _KTControllerEnumerationOptions theOptions, BOOL *theStopFlag, _KTControllerEnumeratorCallBack theCallBackFunction, void *theContext);
 - (void)_enumerateSubControllers:(_KTControllerEnumeratorCallBack)theCallBackFunction context:(void *)theContext;
 @end

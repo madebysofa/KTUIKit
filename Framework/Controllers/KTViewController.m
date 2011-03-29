@@ -305,67 +305,61 @@ NSString *const KTViewControllerLayerControllersKey = @"layerControllers";
 #pragma mark -
 #pragma mark Descedants
 
+static void _KTDescendantsAggregate(NSResponder <KTController> *theController, BOOL *theStopFlag, void *theContext) {
+	CFMutableArrayRef aContext = (CFMutableArrayRef)theContext;
+	CFArrayAppendValue(aContext, theController);
+}
+
 - (NSArray *)descendants
 {
 	CFMutableArrayRef aMutableDescendants = CFArrayCreateMutable(kCFAllocatorDefault, 0, &kCFTypeArrayCallBacks);
-
-	NSArray *aViewControllers = [self viewControllers];
-	NSAutoreleasePool *aPool = [[NSAutoreleasePool alloc] init];
-	for (KTViewController *aSubViewController in aViewControllers) {
-		CFArrayAppendValue(aMutableDescendants, aSubViewController);
-		NSArray *aSubDescendants = [aSubViewController descendants];
-		if (aSubDescendants != nil) {
-			CFIndex aDescendantsCount = CFArrayGetCount((CFArrayRef)aSubDescendants);
-			if (aDescendantsCount > 0) {
-				CFArrayAppendArray(aMutableDescendants, (CFArrayRef)aSubDescendants, CFRangeMake(0, aDescendantsCount));
-			}
-		}
-		[aPool drain];
-		aPool = [[NSAutoreleasePool alloc] init];
-	}
-	[aPool drain];
-	
-	NSArray *aLayerControllers = [self layerControllers];
-	aPool = [[NSAutoreleasePool alloc] init];	
-	for (KTLayerController *aLayerController in aLayerControllers) {
-		CFArrayAppendValue(aMutableDescendants, aLayerController);
-		NSArray *aSubDescendants = [aLayerController descendants];
-		if (aSubDescendants != nil) {
-			CFIndex aDescendantsCount = CFArrayGetCount((CFArrayRef)aSubDescendants);
-			if (aDescendantsCount > 0) {
-				CFArrayAppendArray(aMutableDescendants, (CFArrayRef)aSubDescendants, CFRangeMake(0, aDescendantsCount));
-			}
-		}
-		[aPool drain];
-		aPool = [[NSAutoreleasePool alloc] init];
-	}
-	[aPool drain];
-	
+	[self _enumerateSubControllers:&_KTDescendantsAggregate context:aMutableDescendants];	
 	CFArrayRef aDescendants = CFArrayCreateCopy(kCFAllocatorDefault, aMutableDescendants);
 	CFRelease(aMutableDescendants);
 	return [NSMakeCollectable(aDescendants) autorelease];
 }
 
-void _KTViewControllerEnumerateSubControllers(KTViewController *theViewController, _KTControllerEnumeratorCallBack theCallBackFunction, void *theContext)
+// As the view controllers are stored in a tree structure, if we want to stop the enumeration, we need to be able to pass the stop flag down through each invocation.
+void _KTViewControllerEnumerateSubControllers(KTViewController *theViewController, _KTControllerEnumerationOptions theOptions, BOOL *theStopFlag, _KTControllerEnumeratorCallBack theCallBackFunction, void *theContext)
 {
-	theCallBackFunction(theViewController, theContext);
+	NSCParameterAssert(theStopFlag != NULL);
+	if (*theStopFlag == YES) return; // I'm not convinced this early return is necessary, but it's more defensive. The breaks in the loops should be taking care that we don't continue the recursion.
+	
+	theCallBackFunction(theViewController, theStopFlag, theContext);
+	if (*theStopFlag == YES) return;
+	
+	/*
+	 1) Enumerate our child view controllers
+	 2) Enumerate our child layer controllers
+	 // FIXME: The problem we have here is that we can enumerate (depth-first) down the whole tree of view controllers before conceptually moving back to the start (with self as the root) and doing the same for layer controllers. I wonder if, for each level we should enumerate all the child controllers, before moving down to the next level. The enumeration order is incorrect here, making layer controllers second-class citizens.
+	 */
+	
+	NSAutoreleasePool *aPool = [[NSAutoreleasePool alloc] init];
 	for (KTViewController *aViewController in [theViewController viewControllers]) {
-		_KTViewControllerEnumerateSubControllers(aViewController, theCallBackFunction, theContext);
-	}	
-	for (KTLayerController *aLayerController in [theViewController layerControllers]) {
-		_KTLayerControllerEnumerateSubControllers(aLayerController, theCallBackFunction, theContext);
+		_KTViewControllerEnumerateSubControllers(aViewController, theOptions, theStopFlag, theCallBackFunction, theContext);
+		if (*theStopFlag == YES) break;
 	}
+	[aPool drain];
+	
+	if (*theStopFlag == YES) return;
+	
+	aPool = [[NSAutoreleasePool alloc] init];
+	for (KTLayerController *aLayerController in [theViewController layerControllers]) {
+		_KTLayerControllerEnumerateSubControllers(aLayerController, theOptions, theStopFlag, theCallBackFunction, theContext);
+		if (*theStopFlag == YES) break;
+	}
+	[aPool drain];
 }
 
 - (void)_enumerateSubControllers:(_KTControllerEnumeratorCallBack)theCallBackFunction context:(void *)theContext;
 {
-	theCallBackFunction(self, theContext);
-	for (KTViewController *aViewController in [self viewControllers]) {
-		[aViewController _enumerateSubControllers:theCallBackFunction context:theContext];
-	}
-	for (KTLayerController *aLayerController in [self layerControllers]) {
-		[aLayerController _enumerateSubControllers:theCallBackFunction context:theContext];
-	}
+	[self _enumerateSubControllersWithOptions:_KTControllerEnumerationOptionsNone callBack:theCallBackFunction context:theContext];
+}
+
+- (void)_enumerateSubControllersWithOptions:(_KTControllerEnumerationOptions)theOptions callBack:(_KTControllerEnumeratorCallBack)theCallBackFunction context:(void *)theContext;
+{
+	BOOL aStopFlag = NO;
+	_KTViewControllerEnumerateSubControllers(self, theOptions, &aStopFlag, theCallBackFunction, theContext);
 }
 
 #pragma mark -
