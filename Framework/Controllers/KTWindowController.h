@@ -54,3 +54,7 @@ KT_EXPORT NSString *const KTWindowControllerViewControllersKey;
 @interface KTWindowController (KTPrivate)
 - (void)_patchResponderChain;
 @end
+
+@interface KTWindowController (KTExperimental)
+- (NSViewController <KTController> *)owningViewControllerForView:(NSView *)theView;
+@end

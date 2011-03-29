@@ -95,3 +95,7 @@ KT_EXPORT void _KTViewControllerEnumerateSubControllers(KTViewController *theVie
 - (void)_enumerateSubControllersWithOptions:(_KTControllerEnumerationOptions)theOptions callBack:(_KTControllerEnumeratorCallBack)theCallBackFunction context:(void *)theContext;
 @end
 
+@interface KTViewController (KTExperimental)
+- (BOOL)viewHierarchyContainsView:(NSView *)theView;
+- (NSViewController <KTController> *)owningViewControllerForView:(NSView *)theView;
+@end

@@ -386,4 +386,40 @@ void _KTViewControllerEnumerateSubControllers(KTViewController *theViewControlle
 	return aSuccess;
 }
 
+#pragma mark -
+#pragma mark Experimental
+
+- (BOOL)viewHierarchyContainsView:(NSView *)theView;
+{
+	NSParameterAssert(theView != nil);
+	NSView *aView = [self view];
+	return [theView isDescendantOf:aView]; // Also returns YES if [theView isEqual:aView];
+}
+
+struct __KTOwningViewControllerContext {
+	NSView *view;
+	NSViewController <KTController> *owningController;
+};
+typedef struct __KTOwningViewControllerContext _KTOwningViewControllerContext;
+
+static void _KTOwningViewControllerCallBack(id <KTController> theController, BOOL *theStopFlag, void *theContext) {
+	_KTOwningViewControllerContext *aContext = (_KTOwningViewControllerContext *)theContext;
+	if ([theController isKindOfClass:[KTViewController class]]) {
+		BOOL anIsPartOfControllersViewHierarchy = [(KTViewController *)theController viewHierarchyContainsView:aContext->view];
+		if (anIsPartOfControllersViewHierarchy) {
+			aContext->owningController = theController;			
+		}
+		// The trick here is not to break by setting |theStopFlag| to YES. If we did that, we may return when testing the left-branch of the controller heirarchy when the view is a subview of the right branch. We enumerate the whole view controller tree for the window, therefore the final view controller that is assigned to |theContext->owningController| is the last one which reported that it had anything to do with the view in question.
+	}
+}
+
+- (NSViewController <KTController> *)owningViewControllerForView:(NSView *)theView;
+{
+	NSParameterAssert(theView != nil);
+	if (![self viewHierarchyContainsView:theView]) return nil;
+	_KTOwningViewControllerContext aContext = (_KTOwningViewControllerContext){.view = theView, .owningController = nil};
+	[self _enumerateSubControllersWithOptions:(_KTControllerEnumerationOptionsIgnoreLayerControllers) callBack:&_KTOwningViewControllerCallBack context:&aContext]; // On return aContext.owningController contains the deepest view controller in the view controller tree that reported the view as its view or one of its subviews.
+	return aContext.owningController;
+}
+
 @end

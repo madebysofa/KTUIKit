@@ -208,4 +208,21 @@ void _KTPatchResponderChainEnumeratorCallBack(NSResponder <KTController> *theCon
 	[aPool drain];
 }
 
+#pragma mark -
+#pragma mark Experimental
+
+- (NSViewController <KTController> *)owningViewControllerForView:(NSView *)theView;
+{
+	NSParameterAssert(theView != nil);
+	// Do a depth-first search of our view controllers and find the deepest root view controller who's view's heirarchy contains |theView|.
+	NSViewController *anOwningViewController = nil;
+	for (NSViewController <KTController> *aViewController in [self viewControllers]) {
+		if ([anOwningViewController isKindOfClass:[KTViewController class]]) {
+			anOwningViewController = [(KTViewController *)aViewController owningViewControllerForView:theView];			
+		}
+		if (anOwningViewController != nil) break;
+	}
+	return anOwningViewController;
+}
+
 @end
