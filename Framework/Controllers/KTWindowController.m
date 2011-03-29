@@ -132,28 +132,30 @@ NSString *const KTWindowControllerViewControllersKey = @"viewControllers";
 
 #pragma mark Descendants
 
-- (NSArray *)_descendants;
-{	
-	CFMutableArrayRef aMutableDescendants = CFArrayCreateMutable(kCFAllocatorDefault, 0, &kCFTypeArrayCallBacks);
-	for (KTViewController *aSubViewController in [self viewControllers]) {
-		CFArrayAppendValue(aMutableDescendants, aSubViewController);
-		NSArray *aSubDescendants = [aSubViewController descendants];
-		if (aSubDescendants != nil) {
-			CFIndex aDescendantsCount = CFArrayGetCount((CFArrayRef)aSubDescendants);
-			if (aDescendantsCount > 0) {
-				CFArrayAppendArray(aMutableDescendants, (CFArrayRef)aSubDescendants, CFRangeMake(0, aDescendantsCount));
-			}
-		}
-	}
-	CFArrayRef aDescendants = CFArrayCreateCopy(kCFAllocatorDefault, aMutableDescendants);
-	CFRelease(aMutableDescendants);
-	return [NSMakeCollectable(aDescendants) autorelease];
-}
+//- (NSArray *)_descendants;
+//{	
+//	CFMutableArrayRef aMutableDescendants = CFArrayCreateMutable(kCFAllocatorDefault, 0, &kCFTypeArrayCallBacks);
+//	for (KTViewController *aSubViewController in [self viewControllers]) {
+//		CFArrayAppendValue(aMutableDescendants, aSubViewController);
+//		NSArray *aSubDescendants = [aSubViewController descendants];
+//		if (aSubDescendants != nil) {
+//			CFIndex aDescendantsCount = CFArrayGetCount((CFArrayRef)aSubDescendants);
+//			if (aDescendantsCount > 0) {
+//				CFArrayAppendArray(aMutableDescendants, (CFArrayRef)aSubDescendants, CFRangeMake(0, aDescendantsCount));
+//			}
+//		}
+//	}
+//	CFArrayRef aDescendants = CFArrayCreateCopy(kCFAllocatorDefault, aMutableDescendants);
+//	CFRelease(aMutableDescendants);
+//	return [NSMakeCollectable(aDescendants) autorelease];
+//}
 
 - (void)_enumerateSubControllers:(_KTControllerEnumeratorCallBack)theCallBackFunction context:(void *)theContext;
 {
+	BOOL aStopFlag = NO;
 	for (KTViewController *aViewController in [self viewControllers]) {
-		_KTViewControllerEnumerateSubControllers(aViewController, theCallBackFunction, theContext);
+		_KTViewControllerEnumerateSubControllers(aViewController, _KTControllerEnumerationOptionsNone, &aStopFlag, theCallBackFunction, theContext);
+		if (aStopFlag == YES) break;
 	}
 }
 
@@ -179,7 +181,7 @@ NS_INLINE _KTResponderChainContext _KTResponderChainContextMake(void) {
 	return (_KTResponderChainContext){.firstController = nil, .previousController = nil};
 }
 
-void _KTPatchResponderChainEnumeratorCallBack(NSResponder <KTController> *theController, void *theContext) {
+void _KTPatchResponderChainEnumeratorCallBack(NSResponder <KTController> *theController, BOOL *theStopFlag, void *theContext) {
 
 	[theController setNextResponder:nil]; // All controllers have their next responder cleared out. Originally, the window controller manually set the last non-hidden controller's next responder to nil, now it doesn't have to.
 	if ([theController hidden]) { // Skip all hidden controllers, these should not respond to selectors passed up the chain.
