@@ -31,12 +31,12 @@ static void *_KTTVCTabItemArrayControllerSelectionIndexObservationContext = (voi
 - (id)initWithNibName:(NSString*)theNibName bundle:(NSBundle*)theBundle windowController:(KTWindowController*)theWindowController
 {
 	if ((self = [super initWithNibName:nil bundle:theBundle windowController:theWindowController])) {
-		// create the 'content view' - when we switch controllers
-		// we'll be adding/removing their views to and from this 'content' view
-		KTView *aContentView = [[[KTView alloc] initWithFrame:NSZeroRect] autorelease];
-		[[aContentView viewLayoutManager] setWidthType:KTSizeFill];
-		[[aContentView viewLayoutManager] setHeightType:KTSizeFill];
-		[self setView:aContentView];
+//		// create the 'content view' - when we switch controllers
+//		// we'll be adding/removing their views to and from this 'content' view
+//		KTView *aContentView = [[[KTView alloc] initWithFrame:NSZeroRect] autorelease];
+//		[[aContentView viewLayoutManager] setWidthType:KTSizeFill];
+//		[[aContentView viewLayoutManager] setHeightType:KTSizeFill];
+//		[self setView:aContentView];
 		
 		// create an array that will hold our list of KSTabItems - users can bind to the
 		// arranged objects and selectionIndex property to control the tab (to a pop up button or a custom tab view, for example)
@@ -53,15 +53,6 @@ static void *_KTTVCTabItemArrayControllerSelectionIndexObservationContext = (voi
 {
 	[mTabItemArrayController release];
 	[super dealloc];
-}
-
-//=========================================================== 
-// - removeObservations
-//===========================================================
-- (void)removeObservations
-{
-	[mTabItemArrayController removeObserver:self forKeyPath:@"selectionIndex"];
-	[super removeObservations];
 }
 
 #pragma mark -
@@ -89,6 +80,33 @@ static void *_KTTVCTabItemArrayControllerSelectionIndexObservationContext = (voi
 		
 		[[self windowController] _patchResponderChain];		
 	}
+}
+
+#pragma mark -
+#pragma mark View Loading
+
++ (Class)viewClass;
+{
+	return [KTView class];
+}
+
+- (void)viewDidLoad;
+{
+	[super viewDidLoad];
+	
+	KTView *aView = [self view];
+	KTLayoutManager *aLayoutManager = [aView viewLayoutManager];
+	[aLayoutManager setWidthType:KTSizeFill];
+	[aLayoutManager setHeightType:KTSizeFill];
+}
+
+#pragma mark -
+#pragma mark Observations
+
+- (void)removeObservations
+{
+	[mTabItemArrayController removeObserver:self forKeyPath:@"selectionIndex"];
+	[super removeObservations];
 }
 
 #pragma mark -
