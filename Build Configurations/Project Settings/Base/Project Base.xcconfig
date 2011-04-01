@@ -14,8 +14,8 @@ GCC_GENERATE_DEBUGGING_SYMBOLS = YES
 
 PREBINDING = NO
 
-GCC_VERSION = com.apple.compilers.llvm.clang.1_0
-//GCC_VERSION = com.apple.compilers.llvmgcc42
+//GCC_VERSION = com.apple.compilers.llvm.clang.1_0
+GCC_VERSION = com.apple.compilers.llvmgcc42
 
 GCC_ENABLE_OBJC_GC = supported
 GCC_C_LANGUAGE_STANDARD = c99
