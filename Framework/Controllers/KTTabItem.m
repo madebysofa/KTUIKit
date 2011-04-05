@@ -8,10 +8,19 @@
 
 #import "KTTabItem.h"
 
+NSString *const KTTabItemLabelKey = @"label";
+NSString *const KTTabItemIdentifierKey = @"identifier";
+
+NSString *const KTTabItemTabViewControllerKey = @"tabViewController";
+NSString *const KTTabItemViewControllerKey = @"viewController";
+
+NSString *const KTTabItemUserInfoKey = @"userInfo";
 
 @implementation KTTabItem
+
 @synthesize label = mLabel;
 @synthesize identifier = wIdentifier;
+
 @synthesize tabViewController = wTabViewController;
 @synthesize viewController = wViewController;
 
