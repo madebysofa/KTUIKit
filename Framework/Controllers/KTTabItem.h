@@ -7,12 +7,21 @@
 //
 
 #import <Cocoa/Cocoa.h>
+#import "KTMacros.h"
+
+KT_EXPORT NSString *const KTTabItemLabelKey;
+KT_EXPORT NSString *const KTTabItemIdentifierKey;
+
+KT_EXPORT NSString *const KTTabItemTabViewControllerKey;
+KT_EXPORT NSString *const KTTabItemViewControllerKey;
+
+KT_EXPORT NSString *const KTTabItemUserInfoKey;
 
 @class KTTabViewController;
 @class KTViewController;
 
-@interface KTTabItem : NSObject 
-{
+@interface KTTabItem : NSObject {
+	@private
 	NSString *				mLabel;
 	id						wIdentifier;
 	KTTabViewController *	wTabViewController;
@@ -22,9 +31,11 @@
 
 - (id)initWithViewController:(KTViewController*)theViewController;
 
-@property (nonatomic, readwrite, retain) NSString * label;
+@property (nonatomic, readwrite, copy) NSString * label;
 @property (nonatomic, readwrite, assign) id identifier;
+
 @property (nonatomic, readwrite, assign) KTTabViewController * tabViewController;
 @property (nonatomic, readwrite, assign) KTViewController * viewController;
+
 @property (nonatomic, readonly) NSMutableDictionary *userInfo;
 @end
