@@ -59,7 +59,8 @@ KT_EXPORT NSString *const KTViewControllerLayerControllersKey;
 
 @property (readwrite, nonatomic, assign) KTWindowController *windowController;
 @property (readonly, nonatomic, assign) KTViewController *parentViewController;
-@property (readwrite, nonatomic, assign) BOOL hidden;
+
+//@property (readwrite, nonatomic, assign) BOOL hidden;
 
 /**
 	Can be used to determine if the view for this view contorller is loaded or not. It is important to note the order of setup here. This is set to yet after the view itself is loaded (after [super loadView] returns), but directly before |-viewDidLoad| is called. This ordering ensures that calls to |viewLoaded| inside |-viewDidLoad| return YES.

@@ -111,9 +111,15 @@ NSString *const KTViewControllerLayerControllersKey = @"layerControllers";
 #pragma mark -
 #pragma mark Accessors
 
+// -hidden is deprecated in favour of -isHidden
+- (BOOL)hidden;
+{
+	return [self isHidden];
+}
+
 - (NSString *)description;
 {
-	return [NSString stringWithFormat:@"%@ hidden:%@ viewLoaded:%@", [super description], [self hidden] ? @"YES" : @"NO", [self isViewLoaded] ? @"YES" : @"NO"];
+	return [NSString stringWithFormat:@"%@ hidden:%@ viewLoaded:%@", [super description], [self isHidden] ? @"YES" : @"NO", [self isViewLoaded] ? @"YES" : @"NO"];
 }
 
 - (void)setWindowController:(KTWindowController *)theWindowController;
@@ -399,7 +405,7 @@ void _KTViewControllerEnumerateSubControllers(KTViewController *theViewControlle
 	if (!aShouldIgnoreViewControllers) {
 		NSAutoreleasePool *aPool = [[NSAutoreleasePool alloc] init];
 		for (KTViewController *aViewController in [theViewController viewControllers]) {
-			if (!aShouldIncludeHiddenControllers && [aViewController hidden]) continue;
+			if (!aShouldIncludeHiddenControllers && [aViewController isHidden]) continue;
 			_KTViewControllerEnumerateSubControllers(aViewController, theOptions, theStopFlag, theCallBackFunction, theContext);
 			if (*theStopFlag == YES) break;
 		}
@@ -412,7 +418,7 @@ void _KTViewControllerEnumerateSubControllers(KTViewController *theViewControlle
 	if (!aShouldIgnoreLayerControllers) {
 		NSAutoreleasePool *aPool = [[NSAutoreleasePool alloc] init];
 		for (KTLayerController *aLayerController in [theViewController layerControllers]) {
-			if (!aShouldIncludeHiddenControllers && [aLayerController hidden]) continue;
+			if (!aShouldIncludeHiddenControllers && [aLayerController isHidden]) continue;
 			_KTLayerControllerEnumerateSubControllers(aLayerController, theOptions, theStopFlag, theCallBackFunction, theContext);
 			if (*theStopFlag == YES) break;
 		}

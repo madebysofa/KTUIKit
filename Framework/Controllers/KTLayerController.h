@@ -33,7 +33,7 @@ KT_EXPORT NSString *const KTLayerControllerLayerControllersKey;
 @property (readwrite, nonatomic, retain) id layer;
 @property (readwrite, nonatomic, retain) id representedObject;
 
-@property (readwrite, nonatomic, assign) BOOL hidden;
+//@property (readwrite, nonatomic, assign) BOOL hidden;
 
 + (id)layerControllerWithViewController:(KTViewController*)theViewController;
 - (id)initWithViewController:(KTViewController*)theViewController;

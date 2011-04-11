@@ -53,6 +53,12 @@ NSString *const KTLayerControllerLayerControllersKey = @"layerControllers";
 #pragma mark -
 #pragma mark Accessors
 
+// -hidden is deprecated in favour of -isHidden
+- (BOOL)hidden;
+{
+	return [self isHidden];
+}
+
 - (void)setHidden:(BOOL)theHidden;
 {
 	[self _setHidden:theHidden patchResponderChain:YES];
