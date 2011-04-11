@@ -303,8 +303,8 @@ static BOOL _KTStyleManagerShouldDrawBorder(NSColor *theColor, CGFloat theBorder
 					[self _setTileImage:aTileImage];
 					CGImageRelease(aTileImage);
 				}
-				CFRelease(anImageSource);
 			}
+			CFRelease(anImageSource);
 		}
 		
 		if([wView isKindOfClass:[KTView class]])
