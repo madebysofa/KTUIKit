@@ -464,10 +464,13 @@ typedef struct __KTOwningViewControllerContext _KTOwningViewControllerContext;
 
 static void _KTOwningViewControllerCallBack(id <KTController> theController, BOOL *theStopFlag, void *theContext) {
 	_KTOwningViewControllerContext *aContext = (_KTOwningViewControllerContext *)theContext;
+	NSCParameterAssert([theController isKindOfClass:[KTViewController class]]);
+	NSCParameterAssert([theController conformsToProtocol:@protocol(KTController)]);
 	if ([theController isKindOfClass:[KTViewController class]]) {
-		BOOL anIsPartOfControllersViewHierarchy = [(KTViewController *)theController viewHierarchyContainsView:aContext->view];
+		KTViewController <KTController> *aController = (KTViewController <KTController> *)theController;
+		BOOL anIsPartOfControllersViewHierarchy = [aController viewHierarchyContainsView:(aContext->view)];
 		if (anIsPartOfControllersViewHierarchy) {
-			aContext->owningController = theController;			
+			aContext->owningController = aController;			
 		}
 		// The trick here is not to break by setting |theStopFlag| to YES. If we did that, we may return when testing the left-branch of the controller heirarchy when the view is a subview of the right branch. We enumerate the whole view controller tree for the window, therefore the final view controller that is assigned to |theContext->owningController| is the last one which reported that it had anything to do with the view in question.
 	}
