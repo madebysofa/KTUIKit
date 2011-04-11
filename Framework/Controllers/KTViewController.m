@@ -393,21 +393,31 @@ void _KTViewControllerEnumerateSubControllers(KTViewController *theViewControlle
 	 // FIXME: The problem we have here is that we can enumerate (depth-first) down the whole tree of view controllers before conceptually moving back to the start (with self as the root) and doing the same for layer controllers. I wonder if, for each level we should enumerate all the child controllers, before moving down to the next level. The enumeration order is incorrect here, making layer controllers second-class citizens.
 	 */
 	
-	NSAutoreleasePool *aPool = [[NSAutoreleasePool alloc] init];
-	for (KTViewController *aViewController in [theViewController viewControllers]) {
-		_KTViewControllerEnumerateSubControllers(aViewController, theOptions, theStopFlag, theCallBackFunction, theContext);
-		if (*theStopFlag == YES) break;
+	BOOL aShouldIncludeHiddenControllers = ((theOptions & _KTControllerEnumerationOptionsIncludeHiddenControllers) != 0);
+	
+	BOOL aShouldIgnoreViewControllers = ((theOptions & _KTControllerEnumerationOptionsIgnoreViewControllers) != 0);
+	if (!aShouldIgnoreViewControllers) {
+		NSAutoreleasePool *aPool = [[NSAutoreleasePool alloc] init];
+		for (KTViewController *aViewController in [theViewController viewControllers]) {
+			if (!aShouldIncludeHiddenControllers && [aViewController hidden]) continue;
+			_KTViewControllerEnumerateSubControllers(aViewController, theOptions, theStopFlag, theCallBackFunction, theContext);
+			if (*theStopFlag == YES) break;
+		}
+		[aPool drain];
 	}
-	[aPool drain];
 	
 	if (*theStopFlag == YES) return;
 	
-	aPool = [[NSAutoreleasePool alloc] init];
-	for (KTLayerController *aLayerController in [theViewController layerControllers]) {
-		_KTLayerControllerEnumerateSubControllers(aLayerController, theOptions, theStopFlag, theCallBackFunction, theContext);
-		if (*theStopFlag == YES) break;
+	BOOL aShouldIgnoreLayerControllers = ((theOptions & _KTControllerEnumerationOptionsIgnoreLayerControllers) != 0);
+	if (!aShouldIgnoreLayerControllers) {
+		NSAutoreleasePool *aPool = [[NSAutoreleasePool alloc] init];
+		for (KTLayerController *aLayerController in [theViewController layerControllers]) {
+			if (!aShouldIncludeHiddenControllers && [aLayerController hidden]) continue;
+			_KTLayerControllerEnumerateSubControllers(aLayerController, theOptions, theStopFlag, theCallBackFunction, theContext);
+			if (*theStopFlag == YES) break;
+		}
+		[aPool drain];
 	}
-	[aPool drain];
 }
 
 - (void)_enumerateSubControllers:(_KTControllerEnumeratorCallBack)theCallBackFunction context:(void *)theContext;

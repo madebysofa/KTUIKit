@@ -9,13 +9,13 @@ typedef void (*_KTControllerEnumeratorCallBack)(NSResponder <KTController> * /* 
 enum {
 	_KTControllerEnumerationOptionsNone = 0,
 
-	// TODO: These declarations are here to show where the API will be going in the future. The search style (breadth or depth-first) should be a mask so you can set both the style and ignore flags.
-
-	_KTControllerEnumerationOptionsIgnoreViewControllers = 1,
-	_KTControllerEnumerationOptionsIgnoreLayerControllers = 2,
+	_KTControllerEnumerationOptionsIgnoreViewControllers = 1 << 0,
+	_KTControllerEnumerationOptionsIgnoreLayerControllers = 1 << 1,
+	_KTControllerEnumerationOptionsIncludeHiddenControllers = 1 << 2,
 	
-	_KTControllerEnumerationOptionsDepthFirst = 3,
-	_KTControllerEnumerationOptionsBreadthFirst = 4
+	// Unused for now, depth first is currently the default (and will likely remain so if we don't want to break lots of assumed behaviour in client code).
+	_KTControllerEnumerationOptionsDepthFirst = 1 << 3,
+	_KTControllerEnumerationOptionsBreadthFirst = 1 << 4
 };
 typedef NSUInteger _KTControllerEnumerationOptions;
 
