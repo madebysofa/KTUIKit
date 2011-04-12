@@ -489,6 +489,7 @@ static void _KTOwningViewControllerCallBack(id <KTController> theController, BOO
 			aContext->owningController = aController;			
 		}
 		// The trick here is not to break by setting |theStopFlag| to YES. If we did that, we may return when testing the left-branch of the controller heirarchy when the view is a subview of the right branch. We enumerate the whole view controller tree for the window, therefore the final view controller that is assigned to |theContext->owningController| is the last one which reported that it had anything to do with the view in question.
+		// The above statement assumes a Depth-first search.
 	}
 }
 
