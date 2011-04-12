@@ -213,7 +213,9 @@ void _KTLayerControllerEnumerateSubControllers(KTLayerController *theLayerContro
 	theCallBackFunction(theLayerController, theStopFlag, theContext);
 	if (*theStopFlag == YES) return;
 	
+	BOOL aShouldIncludeHiddenControllers = ((theOptions & _KTControllerEnumerationOptionsIncludeHiddenControllers) != 0);
 	for (KTLayerController *aLayerController in [theLayerController layerControllers]) {
+		if (!aShouldIncludeHiddenControllers && [aLayerController isHidden]) continue;
 		_KTLayerControllerEnumerateSubControllers(aLayerController, theOptions, theStopFlag, theCallBackFunction, theContext);
 		if (*theStopFlag == YES) break;
 	}
