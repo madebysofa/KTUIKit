@@ -130,31 +130,19 @@ NSString *const KTWindowControllerViewControllersKey = @"viewControllers";
 	[self _patchResponderChain];
 }
 
-#pragma mark Descendants
-
-//- (NSArray *)_descendants;
-//{	
-//	CFMutableArrayRef aMutableDescendants = CFArrayCreateMutable(kCFAllocatorDefault, 0, &kCFTypeArrayCallBacks);
-//	for (KTViewController *aSubViewController in [self viewControllers]) {
-//		CFArrayAppendValue(aMutableDescendants, aSubViewController);
-//		NSArray *aSubDescendants = [aSubViewController descendants];
-//		if (aSubDescendants != nil) {
-//			CFIndex aDescendantsCount = CFArrayGetCount((CFArrayRef)aSubDescendants);
-//			if (aDescendantsCount > 0) {
-//				CFArrayAppendArray(aMutableDescendants, (CFArrayRef)aSubDescendants, CFRangeMake(0, aDescendantsCount));
-//			}
-//		}
-//	}
-//	CFArrayRef aDescendants = CFArrayCreateCopy(kCFAllocatorDefault, aMutableDescendants);
-//	CFRelease(aMutableDescendants);
-//	return [NSMakeCollectable(aDescendants) autorelease];
-//}
+#pragma mark -
+#pragma mark Enumeration
 
 - (void)_enumerateSubControllers:(_KTControllerEnumeratorCallBack)theCallBackFunction context:(void *)theContext;
 {
+	[self _enumerateSubControllersWithOptions:_KTControllerEnumerationOptionsNone callBack:theCallBackFunction context:theContext];
+}
+
+- (void)_enumerateSubControllersWithOptions:(_KTControllerEnumerationOptions)theOptions callBack:(_KTControllerEnumeratorCallBack)theCallBackFunction context:(void *)theContext;
+{
 	BOOL aStopFlag = NO;
 	for (KTViewController *aViewController in [self viewControllers]) {
-		_KTViewControllerEnumerateSubControllers(aViewController, _KTControllerEnumerationOptionsNone, &aStopFlag, theCallBackFunction, theContext);
+		_KTViewControllerEnumerateSubControllers(aViewController, theOptions, &aStopFlag, theCallBackFunction, theContext);
 		if (aStopFlag == YES) break;
 	}
 }

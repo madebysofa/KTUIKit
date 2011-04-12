@@ -57,4 +57,7 @@ KT_EXPORT NSString *const KTWindowControllerViewControllersKey;
 
 @interface KTWindowController (KTExperimental)
 - (NSViewController <KTController> *)owningViewControllerForView:(NSView *)theView;
+
+- (void)_enumerateSubControllers:(_KTControllerEnumeratorCallBack)theCallBackFunction context:(void *)theContext;
+- (void)_enumerateSubControllersWithOptions:(_KTControllerEnumerationOptions)theOptions callBack:(_KTControllerEnumeratorCallBack)theCallBackFunction context:(void *)theContext;
 @end
