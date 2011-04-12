@@ -137,7 +137,9 @@ KT_EXPORT NSString *const KTViewControllerLayerControllersKey;
 
 @interface KTViewController (KTPrivate)
 - (void)_setHidden:(BOOL)theHidden patchResponderChain:(BOOL)thePatch;
+
 KT_EXPORT void _KTViewControllerEnumerateSubControllers(KTViewController *theViewController, _KTControllerEnumerationOptions theOptions, BOOL *theStopFlag, _KTControllerEnumeratorCallBack theCallBackFunction, void *theContext);
+
 - (void)_enumerateSubControllers:(_KTControllerEnumeratorCallBack)theCallBackFunction context:(void *)theContext;
 - (void)_enumerateSubControllersWithOptions:(_KTControllerEnumerationOptions)theOptions callBack:(_KTControllerEnumeratorCallBack)theCallBackFunction context:(void *)theContext;
 @end
