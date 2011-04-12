@@ -279,7 +279,8 @@ NSString *const KTViewControllerLayerControllersKey = @"layerControllers";
 }
 
 #pragma mark Old Subcontroller API
-// TODO: These methods should be deprecated in favour of the "viewController" variants
+// TODO: These methods should be deprecated in favour of the "viewController" variants. Subcontroller implies the array includes the layer controllers, too. Which it doesn't.
+
 - (NSArray *)subcontrollers;
 {
 	return [self viewControllers];
@@ -449,7 +450,7 @@ void _KTViewControllerEnumerateSubControllers(KTViewController *theViewControlle
 #pragma mark -
 #pragma mark Nib Management
 
-- (BOOL)loadNibNamed:(NSString*)theNibName bundle:(NSBundle*)theBundle
+- (BOOL)loadNibNamed:(NSString *)theNibName bundle:(NSBundle *)theBundle;
 {
 	NSNib *aNib = [[NSNib alloc] initWithNibNamed:theNibName bundle:theBundle];
 	NSArray *aTopLevelObjects = nil;
