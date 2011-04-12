@@ -205,7 +205,7 @@ void _KTPatchResponderChainEnumeratorCallBack(NSResponder <KTController> *theCon
 	// Do a depth-first search of our view controllers and find the deepest root view controller who's view's heirarchy contains |theView|.
 	NSViewController *anOwningViewController = nil;
 	for (NSViewController <KTController> *aViewController in [self viewControllers]) {
-		if ([anOwningViewController isKindOfClass:[KTViewController class]]) {
+		if ([aViewController isKindOfClass:[KTViewController class]]) {
 			anOwningViewController = [(KTViewController *)aViewController owningViewControllerForView:theView];			
 		}
 		if (anOwningViewController != nil) break;
