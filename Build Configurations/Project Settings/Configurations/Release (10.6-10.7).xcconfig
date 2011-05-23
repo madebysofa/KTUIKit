@@ -1,0 +1,10 @@
+//
+//  Release (10.6-10.7).xcconfig
+//  KTUIKit
+//
+//  Created by Jonathan on 5/19/11.
+//  Copyright 2011 Sofa BV. All rights reserved.
+//
+
+#include "../Base/Release.xcconfig"
+#include "../OS Variants/10.6-10.7.xcconfig"

@@ -6,21 +6,6 @@
 	objectVersion = 46;
 	objects = {
 
-/* Begin PBXAggregateTarget section */
-		AB2AF5E70FEFA6C6000040A7 /* All */ = {
-			isa = PBXAggregateTarget;
-			buildConfigurationList = AB2AF5F60FEFA708000040A7 /* Build configuration list for PBXAggregateTarget "All" */;
-			buildPhases = (
-			);
-			dependencies = (
-				AB2AF5EB0FEFA6D8000040A7 /* PBXTargetDependency */,
-				AB2AF5ED0FEFA6D8000040A7 /* PBXTargetDependency */,
-			);
-			name = All;
-			productName = All;
-		};
-/* End PBXAggregateTarget section */
-
 /* Begin PBXBuildFile section */
 		13F8B89007B43554008AE28D /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DD92D38A0106425D02CA0E72 /* Cocoa.framework */; };
 		4C14A2B80EC856E200E94D88 /* KTLevelIndicator.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C14A2B60EC856E200E94D88 /* KTLevelIndicator.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -197,20 +182,6 @@
 			proxyType = 1;
 			remoteGlobalIDString = 53DF68FC067E5B5A0090B5B0;
 			remoteInfo = KTUIKitFramework;
-		};
-		AB2AF5EA0FEFA6D8000040A7 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 0259C573FE90428111CA0C5A /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 53DF68FC067E5B5A0090B5B0;
-			remoteInfo = KTUIKitFramework;
-		};
-		AB2AF5EC0FEFA6D8000040A7 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 0259C573FE90428111CA0C5A /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 8D1AC9600486D14A00FE50C9;
-			remoteInfo = KTUIKit;
 		};
 /* End PBXContainerItemProxy section */
 
@@ -424,6 +395,15 @@
 		ABEADA91129C0D2E00A2C90C /* KTMacros.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTMacros.h; sourceTree = "<group>"; };
 		C0D069550A49DF9100C95564 /* InterfaceBuilderKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = InterfaceBuilderKit.framework; path = /Developer/Library/Frameworks/InterfaceBuilderKit.framework; sourceTree = "<absolute>"; };
 		DD92D38A0106425D02CA0E72 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = /System/Library/Frameworks/Cocoa.framework; sourceTree = "<absolute>"; };
+		EFA64D5C13855B590091BAA8 /* 10.7.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = 10.7.xcconfig; sourceTree = "<group>"; };
+		EFA64D5E13855B860091BAA8 /* 10.6-10.7.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "10.6-10.7.xcconfig"; sourceTree = "<group>"; };
+		EFA64D5F13855B9C0091BAA8 /* 10.5-10.7.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "10.5-10.7.xcconfig"; sourceTree = "<group>"; };
+		EFA64D6013855C570091BAA8 /* Debug (10.5-10.7).xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "Debug (10.5-10.7).xcconfig"; sourceTree = "<group>"; };
+		EFA64D6113855C620091BAA8 /* Release (10.5-10.7).xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = "Release (10.5-10.7).xcconfig"; sourceTree = "<group>"; };
+		EFA64D6313855C7E0091BAA8 /* Debug (10.6-10.7).xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "Debug (10.6-10.7).xcconfig"; sourceTree = "<group>"; };
+		EFA64D6413855C8C0091BAA8 /* Release (10.6-10.7).xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "Release (10.6-10.7).xcconfig"; sourceTree = "<group>"; };
+		EFA64D6513855CA30091BAA8 /* Debug (10.7).xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "Debug (10.7).xcconfig"; sourceTree = "<group>"; };
+		EFA64D6613855CAE0091BAA8 /* Release (10.7).xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = "Release (10.7).xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -878,6 +858,9 @@
 				AB915DED12BF92AE00D94397 /* 10.5.xcconfig */,
 				AB915DEE12BF92AE00D94397 /* 10.5-10.6.xcconfig */,
 				AB915DEF12BF92AE00D94397 /* 10.6.xcconfig */,
+				EFA64D5C13855B590091BAA8 /* 10.7.xcconfig */,
+				EFA64D5E13855B860091BAA8 /* 10.6-10.7.xcconfig */,
+				EFA64D5F13855B9C0091BAA8 /* 10.5-10.7.xcconfig */,
 				AB915DF012BF92AE00D94397 /* AppStore.xcconfig */,
 			);
 			path = "OS Variants";
@@ -892,6 +875,12 @@
 				AB915DF512BF92AE00D94397 /* Release (10.5-10.6).xcconfig */,
 				AB915DF612BF92AE00D94397 /* Debug (10.6).xcconfig */,
 				AB915DF712BF92AE00D94397 /* Release (10.6).xcconfig */,
+				EFA64D6013855C570091BAA8 /* Debug (10.5-10.7).xcconfig */,
+				EFA64D6113855C620091BAA8 /* Release (10.5-10.7).xcconfig */,
+				EFA64D6313855C7E0091BAA8 /* Debug (10.6-10.7).xcconfig */,
+				EFA64D6413855C8C0091BAA8 /* Release (10.6-10.7).xcconfig */,
+				EFA64D6513855CA30091BAA8 /* Debug (10.7).xcconfig */,
+				EFA64D6613855CAE0091BAA8 /* Release (10.7).xcconfig */,
 				AB915DF812BF92AE00D94397 /* Debug (AppStore).xcconfig */,
 				AB915DF912BF92AE00D94397 /* Release (AppStore).xcconfig */,
 			);
@@ -1009,6 +998,9 @@
 /* Begin PBXProject section */
 		0259C573FE90428111CA0C5A /* Project object */ = {
 			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0410;
+			};
 			buildConfigurationList = C056398B08A954F8003078D8 /* Build configuration list for PBXProject "KTUIKit" */;
 			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = English;
@@ -1023,7 +1015,6 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				AB2AF5E70FEFA6C6000040A7 /* All */,
 				53DF68FC067E5B5A0090B5B0 /* KTUIKitFramework */,
 				8D1AC9600486D14A00FE50C9 /* KTUIKit */,
 			);
@@ -1180,16 +1171,6 @@
 			target = 53DF68FC067E5B5A0090B5B0 /* KTUIKitFramework */;
 			targetProxy = 4C94A8DB0EB48B98000FADE7 /* PBXContainerItemProxy */;
 		};
-		AB2AF5EB0FEFA6D8000040A7 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 53DF68FC067E5B5A0090B5B0 /* KTUIKitFramework */;
-			targetProxy = AB2AF5EA0FEFA6D8000040A7 /* PBXContainerItemProxy */;
-		};
-		AB2AF5ED0FEFA6D8000040A7 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 8D1AC9600486D14A00FE50C9 /* KTUIKit */;
-			targetProxy = AB2AF5EC0FEFA6D8000040A7 /* PBXContainerItemProxy */;
-		};
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
@@ -1240,16 +1221,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = AB915DF212BF92AE00D94397 /* Debug (10.5).xcconfig */;
 			buildSettings = {
-			};
-			name = "Debug (10.5)";
-		};
-		4C1DE64210CD5CE300E34022 /* Debug (10.5) */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				COPY_PHASE_STRIP = NO;
-				GCC_DYNAMIC_NO_PIC = NO;
-				GCC_OPTIMIZATION_LEVEL = 0;
-				PRODUCT_NAME = All;
+				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
 			};
 			name = "Debug (10.5)";
 		};
@@ -1271,16 +1243,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = AB915DF612BF92AE00D94397 /* Debug (10.6).xcconfig */;
 			buildSettings = {
-			};
-			name = "Debug (10.6)";
-		};
-		4C1DE64610CD5CE800E34022 /* Debug (10.6) */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				COPY_PHASE_STRIP = NO;
-				GCC_DYNAMIC_NO_PIC = NO;
-				GCC_OPTIMIZATION_LEVEL = 0;
-				PRODUCT_NAME = All;
+				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
 			};
 			name = "Debug (10.6)";
 		};
@@ -1302,16 +1265,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = AB915DF412BF92AE00D94397 /* Debug (10.5-10.6).xcconfig */;
 			buildSettings = {
-			};
-			name = "Debug (10.5-10.6)";
-		};
-		4C1DE64A10CD5CEE00E34022 /* Debug (10.5-10.6) */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				COPY_PHASE_STRIP = NO;
-				GCC_DYNAMIC_NO_PIC = NO;
-				GCC_OPTIMIZATION_LEVEL = 0;
-				PRODUCT_NAME = All;
+				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
 			};
 			name = "Debug (10.5-10.6)";
 		};
@@ -1333,17 +1287,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = AB915DF312BF92AE00D94397 /* Release (10.5).xcconfig */;
 			buildSettings = {
-			};
-			name = "Release (10.5)";
-		};
-		4C1DE64E10CD5CF600E34022 /* Release (10.5) */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				COPY_PHASE_STRIP = YES;
-				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				GCC_ENABLE_FIX_AND_CONTINUE = NO;
-				PRODUCT_NAME = All;
-				ZERO_LINK = NO;
+				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
 			};
 			name = "Release (10.5)";
 		};
@@ -1365,17 +1309,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = AB915DF712BF92AE00D94397 /* Release (10.6).xcconfig */;
 			buildSettings = {
-			};
-			name = "Release (10.6)";
-		};
-		4C1DE65210CD5CFC00E34022 /* Release (10.6) */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				COPY_PHASE_STRIP = YES;
-				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				GCC_ENABLE_FIX_AND_CONTINUE = NO;
-				PRODUCT_NAME = All;
-				ZERO_LINK = NO;
+				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
 			};
 			name = "Release (10.6)";
 		};
@@ -1397,17 +1331,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = AB915DF512BF92AE00D94397 /* Release (10.5-10.6).xcconfig */;
 			buildSettings = {
-			};
-			name = "Release (10.5-10.6)";
-		};
-		4C1DE65610CD5D0000E34022 /* Release (10.5-10.6) */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				COPY_PHASE_STRIP = YES;
-				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				GCC_ENABLE_FIX_AND_CONTINUE = NO;
-				PRODUCT_NAME = All;
-				ZERO_LINK = NO;
+				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
 			};
 			name = "Release (10.5-10.6)";
 		};
@@ -1429,16 +1353,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = AB915DF812BF92AE00D94397 /* Debug (AppStore).xcconfig */;
 			buildSettings = {
-			};
-			name = "Debug (AppStore)";
-		};
-		4C1DE66410CD5FF900E34022 /* Debug (AppStore) */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				COPY_PHASE_STRIP = NO;
-				GCC_DYNAMIC_NO_PIC = NO;
-				GCC_OPTIMIZATION_LEVEL = 0;
-				PRODUCT_NAME = All;
+				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
 			};
 			name = "Debug (AppStore)";
 		};
@@ -1460,17 +1375,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = AB915DF912BF92AE00D94397 /* Release (AppStore).xcconfig */;
 			buildSettings = {
-			};
-			name = "Release (AppStore)";
-		};
-		4C1DE66C10CD600600E34022 /* Release (AppStore) */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				COPY_PHASE_STRIP = YES;
-				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				GCC_ENABLE_FIX_AND_CONTINUE = NO;
-				PRODUCT_NAME = All;
-				ZERO_LINK = NO;
+				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
 			};
 			name = "Release (AppStore)";
 		};
@@ -1488,33 +1393,156 @@
 			};
 			name = "Release (AppStore)";
 		};
+		EFA64D3F138557B10091BAA8 /* Debug (10.7) */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = EFA64D6513855CA30091BAA8 /* Debug (10.7).xcconfig */;
+			buildSettings = {
+				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
+			};
+			name = "Debug (10.7)";
+		};
+		EFA64D40138557B20091BAA8 /* Debug (10.7) */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = AB87FB3A1309604000CDD70B /* KTUIKit.xcconfig */;
+			buildSettings = {
+			};
+			name = "Debug (10.7)";
+		};
+		EFA64D41138557B20091BAA8 /* Debug (10.7) */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = AB87FB601309698700CDD70B /* IBPlugin.xcconfig */;
+			buildSettings = {
+			};
+			name = "Debug (10.7)";
+		};
+		EFA64D46138557D80091BAA8 /* Debug (10.5-10.7) */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = EFA64D6013855C570091BAA8 /* Debug (10.5-10.7).xcconfig */;
+			buildSettings = {
+				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
+			};
+			name = "Debug (10.5-10.7)";
+		};
+		EFA64D47138557D80091BAA8 /* Debug (10.5-10.7) */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = AB87FB3A1309604000CDD70B /* KTUIKit.xcconfig */;
+			buildSettings = {
+			};
+			name = "Debug (10.5-10.7)";
+		};
+		EFA64D48138557D80091BAA8 /* Debug (10.5-10.7) */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = AB87FB601309698700CDD70B /* IBPlugin.xcconfig */;
+			buildSettings = {
+			};
+			name = "Debug (10.5-10.7)";
+		};
+		EFA64D49138557E00091BAA8 /* Debug (10.6-10.7) */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = EFA64D6313855C7E0091BAA8 /* Debug (10.6-10.7).xcconfig */;
+			buildSettings = {
+				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
+			};
+			name = "Debug (10.6-10.7)";
+		};
+		EFA64D4A138557E00091BAA8 /* Debug (10.6-10.7) */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = AB87FB3A1309604000CDD70B /* KTUIKit.xcconfig */;
+			buildSettings = {
+			};
+			name = "Debug (10.6-10.7)";
+		};
+		EFA64D4B138557E00091BAA8 /* Debug (10.6-10.7) */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = AB87FB601309698700CDD70B /* IBPlugin.xcconfig */;
+			buildSettings = {
+			};
+			name = "Debug (10.6-10.7)";
+		};
+		EFA64D4C138557F80091BAA8 /* Release (10.7) */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = EFA64D6613855CAE0091BAA8 /* Release (10.7).xcconfig */;
+			buildSettings = {
+				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
+			};
+			name = "Release (10.7)";
+		};
+		EFA64D4D138557F80091BAA8 /* Release (10.7) */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = AB87FB3A1309604000CDD70B /* KTUIKit.xcconfig */;
+			buildSettings = {
+			};
+			name = "Release (10.7)";
+		};
+		EFA64D4E138557F80091BAA8 /* Release (10.7) */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = AB87FB601309698700CDD70B /* IBPlugin.xcconfig */;
+			buildSettings = {
+			};
+			name = "Release (10.7)";
+		};
+		EFA64D4F138558020091BAA8 /* Release (10.5-10.7) */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = EFA64D6113855C620091BAA8 /* Release (10.5-10.7).xcconfig */;
+			buildSettings = {
+				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
+			};
+			name = "Release (10.5-10.7)";
+		};
+		EFA64D50138558020091BAA8 /* Release (10.5-10.7) */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = AB87FB3A1309604000CDD70B /* KTUIKit.xcconfig */;
+			buildSettings = {
+			};
+			name = "Release (10.5-10.7)";
+		};
+		EFA64D51138558020091BAA8 /* Release (10.5-10.7) */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = AB87FB601309698700CDD70B /* IBPlugin.xcconfig */;
+			buildSettings = {
+			};
+			name = "Release (10.5-10.7)";
+		};
+		EFA64D521385580A0091BAA8 /* Release (10.6-10.7) */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = EFA64D6413855C8C0091BAA8 /* Release (10.6-10.7).xcconfig */;
+			buildSettings = {
+				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
+			};
+			name = "Release (10.6-10.7)";
+		};
+		EFA64D531385580A0091BAA8 /* Release (10.6-10.7) */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = AB87FB3A1309604000CDD70B /* KTUIKit.xcconfig */;
+			buildSettings = {
+			};
+			name = "Release (10.6-10.7)";
+		};
+		EFA64D541385580A0091BAA8 /* Release (10.6-10.7) */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = AB87FB601309698700CDD70B /* IBPlugin.xcconfig */;
+			buildSettings = {
+			};
+			name = "Release (10.6-10.7)";
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		AB2AF5F60FEFA708000040A7 /* Build configuration list for PBXAggregateTarget "All" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				4C1DE64210CD5CE300E34022 /* Debug (10.5) */,
-				4C1DE64A10CD5CEE00E34022 /* Debug (10.5-10.6) */,
-				4C1DE64610CD5CE800E34022 /* Debug (10.6) */,
-				4C1DE66410CD5FF900E34022 /* Debug (AppStore) */,
-				4C1DE64E10CD5CF600E34022 /* Release (10.5) */,
-				4C1DE65610CD5D0000E34022 /* Release (10.5-10.6) */,
-				4C1DE65210CD5CFC00E34022 /* Release (10.6) */,
-				4C1DE66C10CD600600E34022 /* Release (AppStore) */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = "Debug (10.5)";
-		};
 		C056397F08A954F8003078D8 /* Build configuration list for PBXNativeTarget "KTUIKitFramework" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				4C1DE64310CD5CE300E34022 /* Debug (10.5) */,
+				EFA64D40138557B20091BAA8 /* Debug (10.7) */,
 				4C1DE64B10CD5CEE00E34022 /* Debug (10.5-10.6) */,
+				EFA64D4A138557E00091BAA8 /* Debug (10.6-10.7) */,
+				EFA64D47138557D80091BAA8 /* Debug (10.5-10.7) */,
 				4C1DE64710CD5CE800E34022 /* Debug (10.6) */,
 				4C1DE66510CD5FF900E34022 /* Debug (AppStore) */,
 				4C1DE64F10CD5CF600E34022 /* Release (10.5) */,
+				EFA64D4D138557F80091BAA8 /* Release (10.7) */,
 				4C1DE65710CD5D0000E34022 /* Release (10.5-10.6) */,
+				EFA64D50138558020091BAA8 /* Release (10.5-10.7) */,
+				EFA64D531385580A0091BAA8 /* Release (10.6-10.7) */,
 				4C1DE65310CD5CFC00E34022 /* Release (10.6) */,
 				4C1DE66D10CD600600E34022 /* Release (AppStore) */,
 			);
@@ -1525,11 +1553,17 @@
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				4C1DE64410CD5CE300E34022 /* Debug (10.5) */,
+				EFA64D41138557B20091BAA8 /* Debug (10.7) */,
 				4C1DE64C10CD5CEE00E34022 /* Debug (10.5-10.6) */,
+				EFA64D4B138557E00091BAA8 /* Debug (10.6-10.7) */,
+				EFA64D48138557D80091BAA8 /* Debug (10.5-10.7) */,
 				4C1DE64810CD5CE800E34022 /* Debug (10.6) */,
 				4C1DE66610CD5FF900E34022 /* Debug (AppStore) */,
 				4C1DE65010CD5CF600E34022 /* Release (10.5) */,
+				EFA64D4E138557F80091BAA8 /* Release (10.7) */,
 				4C1DE65810CD5D0000E34022 /* Release (10.5-10.6) */,
+				EFA64D51138558020091BAA8 /* Release (10.5-10.7) */,
+				EFA64D541385580A0091BAA8 /* Release (10.6-10.7) */,
 				4C1DE65410CD5CFC00E34022 /* Release (10.6) */,
 				4C1DE66E10CD600600E34022 /* Release (AppStore) */,
 			);
@@ -1540,11 +1574,17 @@
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				4C1DE64110CD5CE300E34022 /* Debug (10.5) */,
+				EFA64D3F138557B10091BAA8 /* Debug (10.7) */,
 				4C1DE64910CD5CEE00E34022 /* Debug (10.5-10.6) */,
+				EFA64D49138557E00091BAA8 /* Debug (10.6-10.7) */,
+				EFA64D46138557D80091BAA8 /* Debug (10.5-10.7) */,
 				4C1DE64510CD5CE800E34022 /* Debug (10.6) */,
 				4C1DE66310CD5FF900E34022 /* Debug (AppStore) */,
 				4C1DE64D10CD5CF600E34022 /* Release (10.5) */,
+				EFA64D4C138557F80091BAA8 /* Release (10.7) */,
 				4C1DE65510CD5D0000E34022 /* Release (10.5-10.6) */,
+				EFA64D4F138558020091BAA8 /* Release (10.5-10.7) */,
+				EFA64D521385580A0091BAA8 /* Release (10.6-10.7) */,
 				4C1DE65110CD5CFC00E34022 /* Release (10.6) */,
 				4C1DE66B10CD600600E34022 /* Release (AppStore) */,
 			);
