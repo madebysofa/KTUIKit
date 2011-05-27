@@ -1547,7 +1547,7 @@
 				4C1DE66D10CD600600E34022 /* Release (AppStore) */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = "Debug (10.5)";
+			defaultConfigurationName = "Release (10.5-10.6)";
 		};
 		C056398308A954F8003078D8 /* Build configuration list for PBXNativeTarget "KTUIKit" */ = {
 			isa = XCConfigurationList;
@@ -1568,7 +1568,7 @@
 				4C1DE66E10CD600600E34022 /* Release (AppStore) */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = "Debug (10.5)";
+			defaultConfigurationName = "Release (10.5-10.6)";
 		};
 		C056398B08A954F8003078D8 /* Build configuration list for PBXProject "KTUIKit" */ = {
 			isa = XCConfigurationList;
@@ -1589,7 +1589,7 @@
 				4C1DE66B10CD600600E34022 /* Release (AppStore) */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = "Debug (10.5)";
+			defaultConfigurationName = "Release (10.5-10.6)";
 		};
 /* End XCConfigurationList section */
 	};
