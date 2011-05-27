@@ -479,7 +479,7 @@ struct __KTOwningViewControllerContext {
 };
 typedef struct __KTOwningViewControllerContext _KTOwningViewControllerContext;
 
-static void _KTOwningViewControllerCallBack(id <KTController> theController, BOOL *theStopFlag, void *theContext) {
+static void _KTOwningViewControllerCallBack(NSResponder <KTController> *theController, BOOL *theStopFlag, void *theContext) {
 	_KTOwningViewControllerContext *aContext = (_KTOwningViewControllerContext *)theContext;
 	NSCParameterAssert([theController isKindOfClass:[KTViewController class]]);
 	NSCParameterAssert([theController conformsToProtocol:@protocol(KTController)]);

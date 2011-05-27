@@ -169,7 +169,7 @@ NS_INLINE _KTResponderChainContext _KTResponderChainContextMake(void) {
 	return (_KTResponderChainContext){.firstController = nil, .previousController = nil};
 }
 
-void _KTPatchResponderChainEnumeratorCallBack(NSResponder <KTController> *theController, BOOL *theStopFlag, void *theContext) {
+static void _KTPatchResponderChainEnumeratorCallBack(NSResponder <KTController> *theController, BOOL *theStopFlag, void *theContext) {
 
 	[theController setNextResponder:nil]; // All controllers have their next responder cleared out. Originally, the window controller manually set the last non-hidden controller's next responder to nil, now it doesn't have to.
 	if ([theController isHidden]) { // Skip all hidden controllers, these should not respond to selectors passed up the chain.
@@ -210,7 +210,7 @@ void _KTPatchResponderChainEnumeratorCallBack(NSResponder <KTController> *theCon
 		}
 		if (anOwningViewController != nil) break;
 	}
-	return anOwningViewController;
+	return (NSViewController <KTController>*)anOwningViewController;
 }
 
 @end
