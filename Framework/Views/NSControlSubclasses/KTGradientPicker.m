@@ -51,7 +51,7 @@
 		return nil;
 	NSGradient * aGradientValue = [theCoder decodeObjectForKey:@"gradientValue"];
 	if(aGradientValue == nil)
-		aGradientValue = [[NSGradient alloc] initWithStartingColor:[NSColor whiteColor] endingColor:[NSColor blackColor]];
+		aGradientValue = [[[NSGradient alloc] initWithStartingColor:[NSColor whiteColor] endingColor:[NSColor blackColor]] autorelease];
 	[self setGradientValue:aGradientValue];
 	mActiveColorStop = NSNotFound;
 	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleColorWellActivated:) name:KTColorWellDidActivateNotification object:nil];
