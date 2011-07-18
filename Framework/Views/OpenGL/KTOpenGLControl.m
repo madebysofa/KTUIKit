@@ -28,10 +28,9 @@
 //===========================================================
 - (id)initWithFrame:(NSRect)theFrame
 {
-	if(![super initWithFrame:theFrame])
-		return nil;
-		
-	[self setEnabled:YES];
+	if ((self = [super initWithFrame:theFrame]) ) {
+		[self setEnabled:YES];
+	}
 	return self;
 }
 

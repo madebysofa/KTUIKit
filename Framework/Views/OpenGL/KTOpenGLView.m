@@ -46,33 +46,33 @@
 //=========================================================== 
 - (id)initWithFrame:(NSRect)theFrame
 {
+	if ((self = [super initWithFrame:theFrame])) {
+		NSOpenGLPixelFormat * aPixelFormat = [KTOpenGLView defaultPixelFormat];
+		[super initWithFrame:theFrame pixelFormat:aPixelFormat];
 		
-	NSOpenGLPixelFormat * aPixelFormat = [KTOpenGLView defaultPixelFormat];
-	[super initWithFrame:theFrame pixelFormat:aPixelFormat];
-	
-	NSOpenGLContext * anOpenGLContext = [self openGLContext];
-	[anOpenGLContext makeCurrentContext];
-	
-	// swap interval
-	GLint swapInterval = 1;
-	[anOpenGLContext setValues:&swapInterval forParameter:NSOpenGLCPSwapInterval];
+		NSOpenGLContext * anOpenGLContext = [self openGLContext];
+		[anOpenGLContext makeCurrentContext];
+		
+		// swap interval
+		GLint swapInterval = 1;
+		[anOpenGLContext setValues:&swapInterval forParameter:NSOpenGLCPSwapInterval];
 
-	// Layout
-	KTLayoutManager * aLayoutManger = [[[KTLayoutManager alloc] initWithView:self] autorelease];
-	[self setViewLayoutManager:aLayoutManger];
-	[self setAutoresizesSubviews:NO];
-	
-	// Styles
-	KTStyleManager * aStyleManager = [[[KTStyleManager alloc] initWithView:self] autorelease];
-	[self setStyleManager:aStyleManager];
-	
-	// overlay window
-	mOverlayWindows = [[NSMutableArray alloc] init];
-	
-	// For Debugging
-	[self setLabel:@"KTOpenGLView"];
-	[self setOpaque:NO];
-	
+		// Layout
+		KTLayoutManager * aLayoutManger = [[[KTLayoutManager alloc] initWithView:self] autorelease];
+		[self setViewLayoutManager:aLayoutManger];
+		[self setAutoresizesSubviews:NO];
+		
+		// Styles
+		KTStyleManager * aStyleManager = [[[KTStyleManager alloc] initWithView:self] autorelease];
+		[self setStyleManager:aStyleManager];
+		
+		// overlay window
+		mOverlayWindows = [[NSMutableArray alloc] init];
+		
+		// For Debugging
+		[self setLabel:@"KTOpenGLView"];
+		[self setOpaque:NO];
+	}	
 	return self;
 }
 

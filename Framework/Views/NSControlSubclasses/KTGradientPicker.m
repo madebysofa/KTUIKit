@@ -33,12 +33,11 @@
 //=========================================================== 
 - (id)initWithFrame:(NSRect)theFrame
 {
-	if(![super initWithFrame:theFrame])
-		return nil;
-		
-	mGradientValue = [[NSGradient alloc] initWithStartingColor:[NSColor whiteColor] endingColor:[NSColor blackColor]];
-	mActiveColorStop = NSNotFound;
-	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleColorWellActivated:) name:KTColorWellDidActivateNotification object:nil];
+	if ((self = [super initWithFrame:theFrame])) {
+		mGradientValue = [[NSGradient alloc] initWithStartingColor:[NSColor whiteColor] endingColor:[NSColor blackColor]];
+		mActiveColorStop = NSNotFound;
+		[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleColorWellActivated:) name:KTColorWellDidActivateNotification object:nil];
+	}
 	return self;
 }
 
@@ -47,14 +46,14 @@
 //=========================================================== 
 - (id)initWithCoder:(NSCoder*)theCoder
 {
-	if (![super initWithCoder:theCoder])
-		return nil;
-	NSGradient * aGradientValue = [theCoder decodeObjectForKey:@"gradientValue"];
-	if(aGradientValue == nil)
-		aGradientValue = [[[NSGradient alloc] initWithStartingColor:[NSColor whiteColor] endingColor:[NSColor blackColor]] autorelease];
-	[self setGradientValue:aGradientValue];
-	mActiveColorStop = NSNotFound;
-	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleColorWellActivated:) name:KTColorWellDidActivateNotification object:nil];
+	if ((self = [super initWithCoder:theCoder])) {
+		NSGradient * aGradientValue = [theCoder decodeObjectForKey:@"gradientValue"];
+		if(aGradientValue == nil)
+			aGradientValue = [[[NSGradient alloc] initWithStartingColor:[NSColor whiteColor] endingColor:[NSColor blackColor]] autorelease];
+		[self setGradientValue:aGradientValue];
+		mActiveColorStop = NSNotFound;
+		[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleColorWellActivated:) name:KTColorWellDidActivateNotification object:nil];
+	}
 	return self;
 }
 

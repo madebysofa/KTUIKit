@@ -23,9 +23,9 @@
 //=========================================================== 
 - (id)initWithFrame:(NSRect)theFrame
 {
-	if(![super initWithFrame:theFrame])
-		return nil;
-	mIsEnabled = YES;	
+	if((self = [super initWithFrame:theFrame])) {
+		mIsEnabled = YES;
+	}
 	return self;
 }
 
@@ -34,10 +34,9 @@
 //=========================================================== 
 - (id)initWithCoder:(NSCoder*)theCoder
 {
-	if (![super initWithCoder:theCoder])
-		return nil;
-
-	mIsEnabled = YES;
+	if ((self = [super initWithCoder:theCoder])) {
+		mIsEnabled = YES;
+	}	
 	return self;
 }
 

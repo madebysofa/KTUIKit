@@ -58,7 +58,7 @@ NSString *const KTViewLabelKey = @"label";
 
 - (id)initWithFrame:(NSRect)theFrame
 {
-	if (([super initWithFrame:theFrame])) {
+	if ((self = [super initWithFrame:theFrame])) {
 		KTLayoutManager *aLayoutManger = [[[KTLayoutManager alloc] initWithView:self] autorelease];
 		[self setViewLayoutManager:aLayoutManger];
 		[self setAutoresizesSubviews:NO];

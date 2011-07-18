@@ -88,50 +88,48 @@
 - (id)initWithCoder:(NSCoder*)theCoder
 {
 	
-	if (![super initWithCoder:theCoder])
-		return nil;
-	
-	mCanSetDividerPosition = NO; 
-	mFirstView = [[theCoder decodeObjectForKey:@"firstView"] retain];
-	if(mFirstView)
-		[mFirstView removeFromSuperview];
-	else
-		mFirstView = [[KTView alloc] initWithFrame:NSZeroRect];
-	mSecondView = [[theCoder decodeObjectForKey:@"secondView"] retain];
-	if(mSecondView)
-		[mSecondView removeFromSuperview];
-	else
-		mSecondView = [[KTView alloc] initWithFrame:NSZeroRect];
-	mDivider = [[theCoder decodeObjectForKey:@"divider"] retain];
-	if(mDivider)
-	{
-		[mDivider setSplitView:self];
-		[mDivider removeFromSuperview];
-	}
-	else
-		mDivider = [[KTSplitViewDivider alloc] initWithSplitView:self];
-	
-	[self addSubview:mFirstView];
-	[self addSubview:mSecondView];
-	[self addSubview:mDivider];
-	NSNumber * aDividerOrientationAsNSNumber = [theCoder decodeObjectForKey:@"dividerOrienation"];
-	if(aDividerOrientationAsNSNumber)
-		[self setDividerOrientation:[aDividerOrientationAsNSNumber intValue]];
-	else
-		[self setDividerOrientation:KTSplitViewDividerOrientation_Vertical];
-	NSNumber * aUserInteractionEnabledAsNSNumber = [theCoder decodeObjectForKey:@"userInteractionEnabled"];
-	if(aUserInteractionEnabledAsNSNumber)
-		[self setUserInteractionEnabled:[aUserInteractionEnabledAsNSNumber boolValue]];
-	else
-		[self setUserInteractionEnabled:YES];
-	
-	[mDivider setLabel:@"KTSplitView Divider view"];
-	[mFirstView setLabel:@"KTSplitView first view"];
-	[mSecondView setLabel:@"KTSplitView second view"];
-	
-	mPreferredMaxSize = CGFLOAT_MAX;
-	mPreferredMaxSizeRelativeView = KTSplitViewFocusedViewFlag_Unknown;
-	
+	if ((self = [super initWithCoder:theCoder])) {
+		mCanSetDividerPosition = NO; 
+		mFirstView = [[theCoder decodeObjectForKey:@"firstView"] retain];
+		if(mFirstView)
+			[mFirstView removeFromSuperview];
+		else
+			mFirstView = [[KTView alloc] initWithFrame:NSZeroRect];
+		mSecondView = [[theCoder decodeObjectForKey:@"secondView"] retain];
+		if(mSecondView)
+			[mSecondView removeFromSuperview];
+		else
+			mSecondView = [[KTView alloc] initWithFrame:NSZeroRect];
+		mDivider = [[theCoder decodeObjectForKey:@"divider"] retain];
+		if(mDivider)
+		{
+			[mDivider setSplitView:self];
+			[mDivider removeFromSuperview];
+		}
+		else
+			mDivider = [[KTSplitViewDivider alloc] initWithSplitView:self];
+		
+		[self addSubview:mFirstView];
+		[self addSubview:mSecondView];
+		[self addSubview:mDivider];
+		NSNumber * aDividerOrientationAsNSNumber = [theCoder decodeObjectForKey:@"dividerOrienation"];
+		if(aDividerOrientationAsNSNumber)
+			[self setDividerOrientation:[aDividerOrientationAsNSNumber intValue]];
+		else
+			[self setDividerOrientation:KTSplitViewDividerOrientation_Vertical];
+		NSNumber * aUserInteractionEnabledAsNSNumber = [theCoder decodeObjectForKey:@"userInteractionEnabled"];
+		if(aUserInteractionEnabledAsNSNumber)
+			[self setUserInteractionEnabled:[aUserInteractionEnabledAsNSNumber boolValue]];
+		else
+			[self setUserInteractionEnabled:YES];
+		
+		[mDivider setLabel:@"KTSplitView Divider view"];
+		[mFirstView setLabel:@"KTSplitView first view"];
+		[mSecondView setLabel:@"KTSplitView second view"];
+		
+		mPreferredMaxSize = CGFLOAT_MAX;
+		mPreferredMaxSizeRelativeView = KTSplitViewFocusedViewFlag_Unknown;
+	}	
 	return self;
 }
 

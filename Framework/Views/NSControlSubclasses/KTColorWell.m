@@ -17,12 +17,11 @@ NSString* const KTColorWellDidActivateNotification = @"KTColorWellDidActivateNot
 //=========================================================== 
 - (id)initWithFrame:(NSRect)theFrame
 {
-	if(![super initWithFrame:theFrame])
-		return nil;
-	
-	// Layout
-	KTLayoutManager * aLayoutManger = [[[KTLayoutManager alloc] initWithView:self] autorelease];
-	[self setViewLayoutManager:aLayoutManger];
+	if((self = [super initWithFrame:theFrame])) {
+		// Layout
+		KTLayoutManager * aLayoutManger = [[[KTLayoutManager alloc] initWithView:self] autorelease];
+		[self setViewLayoutManager:aLayoutManger];
+	}
 	return self;
 }
 
@@ -40,16 +39,14 @@ NSString* const KTColorWellDidActivateNotification = @"KTColorWellDidActivateNot
 //=========================================================== 
 - (id)initWithCoder:(NSCoder*)theCoder
 {
-	if (![super initWithCoder:theCoder])
-		return nil;
-		
-	KTLayoutManager * aLayoutManager = [theCoder decodeObjectForKey:@"layoutManager"];
-	if(aLayoutManager == nil)
-		aLayoutManager = [[[KTLayoutManager alloc] initWithView:self] autorelease];
-	else
-		[aLayoutManager setView:self];
-	[self setViewLayoutManager:aLayoutManager];
-
+	if ((self = [super initWithCoder:theCoder])) {
+		KTLayoutManager * aLayoutManager = [theCoder decodeObjectForKey:@"layoutManager"];
+		if(aLayoutManager == nil)
+			aLayoutManager = [[[KTLayoutManager alloc] initWithView:self] autorelease];
+		else
+			[aLayoutManager setView:self];
+		[self setViewLayoutManager:aLayoutManager];
+	}
 	return self;
 }
 
